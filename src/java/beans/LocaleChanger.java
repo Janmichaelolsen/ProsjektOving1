@@ -32,11 +32,11 @@ private Locale spraak = context.getViewRoot().getLocale();
     }
     
     public void setNorwegian(){
-        context.getViewRoot().setLocale(Locale.getDefault());
+        context.getViewRoot().setLocale(new Locale("no"));
     }
     
     public void setEnglish(){
-        context.getViewRoot().setLocale(Locale.ENGLISH);
+        context.getViewRoot().setLocale(new Locale("en"));
     }
 
 }
