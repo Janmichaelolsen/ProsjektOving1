@@ -6,37 +6,27 @@
         <title>#{tekster.oversikttittel}</title>
     </h:head>
     <h:body>
-        <div align="right">
-        <h:form>
-        <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
-            <h:graphicImage value="nor.png"></h:graphicImage>
-        </h:commandLink>
-        <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
-            <h:graphicImage value="uk.png"></h:graphicImage>
-        </h:commandLink>
-        </h:form>
-        </div>
         <div align="center">
-        <h1>#{tekster.oversiktheader}</h1>
-        <table border="1">
-            <tr>
-                <td>#{tekster.oktnummer}</td>
-                <td>#{tekster.dato}</td>
-                <td>#{tekster.varighet}</td>
-                <td>#{tekster.kategori}</td>
-                <td>#{tekster.tekst}</td>
-            </tr>
-            <tr>
-                <td>#{variables.oktnummer}</td>
-                <td>#{variables.dato}</td>
-                <td>#{variables.varighet}</td>
-                <td>#{variables.kategori}</td>
-                <td>#{variables.tekst}</td>
-            </tr>
-        </table>
-        <h:form>
-            <h:commandButton value="Registrer ny økt#{variables.nyOktnr()}" action="Register" />
-        </h:form>
+            <h1>#{tekster.oversiktheader}</h1>
+            <table border="1">
+                <tr>
+                    <td>#{tekster.oktnummer}</td>
+                    <td>#{tekster.dato}</td>
+                    <td>#{tekster.varighet}</td>
+                    <td>#{tekster.kategori}</td>
+                    <td>#{tekster.tekst}</td>
+                </tr>
+                <tr>
+                    <td>#{variables.oktnummer}</td>
+                    <td>#{variables.dato}</td>
+                    <td>#{variables.varighet}</td>
+                    <td>#{variables.kategori}</td>
+                    <td>#{variables.tekst}</td>
+                </tr>
+            </table>
+            <h:form>
+                <h:commandButton value="Registrer ny økt#{variables.nyOktnr()}" action="Register" />
+            </h:form>
         </div>
     </h:body>
 </html>
