@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <managed-bean>
+        <managed-bean-name>localeChanger</managed-bean-name>
+        <managed-bean-class>beans.LocaleChanger</managed-bean-class>
+        <managed-bean-scope>scoped</managed-bean-scope>
+    </managed-bean>
+ <application>
+       <locale-config>
+          <default-locale>no</default-locale>       STANDARD SPRÅK
+          <supported-locale>en</supported-locale> EKSTRA SPRÅK
+       </locale-config>
+        <resource-bundle>
+            <base-name>properties.treningsokter</base-name>MAPPE- OG FILNAVN
+            <var>tekster</var> NAVN BRUKT I JSF-KODEN
+        </resource-bundle>
+    </application>
+
+</faces-config>

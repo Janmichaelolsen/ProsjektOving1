@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Registrer Treningsøkt</title>
+    </h:head>
+    <h:body>
+        <div align="right">
+        <h:form>
+        <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
+            <h:graphicImage value="nor.png"></h:graphicImage>
+        </h:commandLink>
+        <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
+            <h:graphicImage value="uk.png"></h:graphicImage>
+        </h:commandLink>
+        </h:form>
+        </div>
+        <div align="center">
+            <h1>#{tekster.Regtittel}</h1>
+            <h:form>
+                <table>
+                    <tr>
+                        <td>#{tekster.oktnummer} </td>
+                        <td>#{variables.oktnummer}</td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.dato}</td>
+                        <td><h:inputText value="#{variables.dato}"></h:inputText></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.varighet}</td>
+                        <td><h:inputText value="#{variables.varighet}"></h:inputText></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.kategori}</td>
+                        <td>
+                            <h:selectOneMenu value="#{variables.kategori}">
+                                <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.tekst}</td>
+                        <td><h:inputText value="#{variables.tekst}"></h:inputText></td>
+                    </tr>
+                </table>
+                <h:commandButton value="Send" action="Oversikt"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

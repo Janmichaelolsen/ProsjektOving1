@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Treningsdagbok</title>
+    </h:head>
+    <h:body>
+        <style type="text/css"> body { background:url('http://spaniardfit.com/images/background.jpg'); }</style>
+        <div align="center">
+            <font color="#FFFFFF"> Velg ditt språk/Choose your language. </font>
+            <hr></hr>
+            <h:form>
+                <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
+                    <h:graphicImage value="nor.png"></h:graphicImage>
+                </h:commandLink>
+                <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
+                    <h:graphicImage value="uk.png"></h:graphicImage>
+                </h:commandLink>
+            </h:form>
+            <hr></hr>
+            <h:form>
+                <h:commandButton value="Log in" action="Register"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
