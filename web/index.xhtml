@@ -11,7 +11,7 @@
 </h:head>
     
     <h:body>
-        <style type="text/css"> body { background:url('http://spaniardfit.com/images/background.jpg'); }</style>
+        <style type="text/css"> body { background-image: url("bg.png"); }</style>
         <div align="center">
             <font color="#FFFFFF"> #{tekster.Velkomst} </font>
             <hr></hr>
@@ -19,7 +19,7 @@
                 <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
                     <h:graphicImage value="nor.png"></h:graphicImage>
                 </h:commandLink>
-        l        <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
+                <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
                     <h:graphicImage value="uk.png"></h:graphicImage>
                 </h:commandLink>
             </h:form>
