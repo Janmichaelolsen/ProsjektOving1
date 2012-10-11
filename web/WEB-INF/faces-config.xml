@@ -9,7 +9,7 @@
     <managed-bean>
         <managed-bean-name>localeChanger</managed-bean-name>
         <managed-bean-class>beans.LocaleChanger</managed-bean-class>
-        <managed-bean-scope>scoped</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
  <application>
        <locale-config>

@@ -2,10 +2,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Registrer Treningsøkt</title>
     </h:head>
+    <ui:composition template="Template.xhtml">
+        <ui:define name="top">
+            Eksempel på bruk av template
+        </ui:define>
+        <ui:define name="content">
+            Dette er vårt første eksempel på bruk av templates.<br></br>
+            Bruker NetBeans standard stilark.<br></br>
+            Og det var det.
+        </ui:define>
+    </ui:composition>
     <h:body>
         <div align="right">
             <h:form>
