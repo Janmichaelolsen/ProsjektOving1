@@ -8,13 +8,13 @@
     <h:body>
         <style type="text/css"> body { background:url('http://spaniardfit.com/images/background.jpg'); }</style>
         <div align="center">
-            <font color="#FFFFFF"> Velg ditt språk/Choose your language. </font>
+            <font color="#FFFFFF"> #{tekster.Velkomst} </font>
             <hr></hr>
             <h:form>
-                <h:commandLink value="#{localeChanger.setNorwegian()}" action="Register">
+                <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
                     <h:graphicImage value="nor.png"></h:graphicImage>
                 </h:commandLink>
-                <h:commandLink value="#{localeChanger.setEnglish()}" action ="Register">
+                <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
                     <h:graphicImage value="uk.png"></h:graphicImage>
                 </h:commandLink>
             </h:form>
