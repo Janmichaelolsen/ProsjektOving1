@@ -4,42 +4,34 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
+    
         <link href="./resources/mini.css" rel="stylesheet" type="text/css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-
-
-    </h:head>
+        
     <ui:composition template="./resources/Temp.xhtml">
         <ui:define name="top">
             <div align="center">
-                <h1>#{tekster.Regtittel}</h1> </div>
-            
-        </ui:define>
-        <div>
-            <div id="left">
-                <ui:insert name="left">Left</ui:insert>
+                <h1>#{tekster.Regtittel}</h1>
             </div>
-        </div>
-        <div>
+        </ui:define>
+
             <div id="right">
                 <ui:define name="right">
-                    
                 <div align="right">
                 <h:form>
                     <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
-                        <h:graphicImage value="nor.png"></h:graphicImage>
+                        <h:graphicImage value="resources/bilder/nor.png"></h:graphicImage>
                     </h:commandLink>
                     <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
-                        <h:graphicImage value="uk.png"></h:graphicImage>
+                        <h:graphicImage value="resources/bilder/uk.png"></h:graphicImage>
                     </h:commandLink>
                 </h:form>
-            </div>
+                </div>
                 </ui:define>
             </div>
-        </div>
+
         <ui:define name="content">
             <div align="center">
                 <h:form>
