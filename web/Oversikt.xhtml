@@ -1,14 +1,27 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>#{tekster.oversikttittel}</title>
-    </h:head>
-    <h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+    
+        <ui:composition template="./resources/overviewtemp.xhtml">
+    
+    
+        <ui:define name="top">
         <div align="center">
             <h1>#{tekster.oversiktheader}</h1>
-            <table border="1">
+        </div>
+        </ui:define>
+            
+            
+            <ui:define name="content">
+            <div align="center">
+                <table border="1" bgcolor="white">
                 <tr>
                     <td>#{tekster.oktnummer}</td>
                     <td>#{tekster.dato}</td>
@@ -24,10 +37,12 @@
                     <td>#{variables.tekst}</td>
                 </tr>
             </table>
-            <h:form>
+                <h:form>
                 <h:commandButton value="#{tekster.nyokt}" action="Register" />
             </h:form>
-        </div>
-    </h:body>
+            </div>
+
+        </ui:define>
+    </ui:composition>
 </html>
 
