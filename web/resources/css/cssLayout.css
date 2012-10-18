@@ -1,26 +1,9 @@
-
-
 #top {
     position: relative;
     background:  URL('../bilder/header.png');
     background-size: cover;
     padding: 20px;
     margin: 0px 0px 10px 0px;
-    
-}
-
-#bottom {
-    position: relative;
-    background-color: #c2dfef;
-    padding: 5px;
-    margin: 10px 0px 0px 0px;
-}
-
-#left {
-    float: left;
-    background-color: #ece3a5;
-    padding: 5px;
-    width: 150px;
 }
 
 #right {
@@ -28,44 +11,12 @@
     background: URL('../bilder/bg2.png');
     background-size: cover;
     padding: 5px;
-    width: 150px;
-    height:  100px;
+    width: 100px;
+    height: 155px;
 }
 #content{
     background: URL('../bilder/bg2.png');
     background-size: cover;
     padding: 5px;
-    margin: 0px 170px 0px 170px; 
+    margin: 0px 120px 0px 0px; 
 }
-
-.right_content {
-    position: relative;
-    padding: 5px;
-}
-
-.left_content {
-    background-color: #dddddd;
-    padding: 5px;
-    margin-left: 170px;
-}
-
-.center_content {
-    background: URL('../bilder/bg2.png');
-    background-size: cover;
-    padding: 5px;
-    margin: 0px 170px 0px 170px;
-}
-
-#top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
-  text-decoration: none;
-}
-
-#top a:link:hover, #top a:visited:hover  {
-  color: black;
-  font-weight : bold;
-  text-decoration : underline;
-}
-
-

@@ -16,15 +16,3 @@ h1 {
     padding: 0px;
     color: #FFFFFF;
 }
-
-a:link, a:visited {
-  color: #045491;
-  font-weight : bold;
-  text-decoration: none;
-}
-
-a:link:hover, a:visited:hover  {
-  color: #045491;
-  font-weight : bold;
-  text-decoration : underline;
-}

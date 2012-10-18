@@ -47,10 +47,6 @@ public class TreningsOkt implements Serializable{
 
     public void setVarighet(int ny) { varighet = ny; }
     
-    public void nyOktnr(){
-        oktnummer++;
-    }
-    
 }
 
 
