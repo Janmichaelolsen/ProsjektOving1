@@ -4,44 +4,42 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
-        <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-    
-        <ui:composition template="./resources/overviewtemp.xhtml">
-    
-    
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+
+    <ui:composition template="./resources/overviewtemp.xhtml">
+
         <ui:define name="top">
-        <div align="center">
-            <h1>#{tekster.oversiktheader}</h1>
-        </div>
+            <div align="center">
+                <h1>#{tekster.oversiktheader}</h1>
+            </div>
         </ui:define>
-            
-            
-            <ui:define name="content">
+
+
+        <ui:define name="content">
             <div align="center">
                 <table border="1" bgcolor="white">
-                <tr>
-                    <td>#{tekster.oktnummer}</td>
-                    <td>#{tekster.dato}</td>
-                    <td>#{tekster.varighet}</td>
-                    <td>#{tekster.kategori}</td>
-                    <td>#{tekster.tekst}</td>
-                </tr>
-                <tr>
-                    <td>#{variables.oktnummer}</td>
-                    <td>#{variables.dato}</td>
-                    <td>#{variables.varighet}</td>
-                    <td>#{variables.kategori}</td>
-                    <td>#{variables.tekst}</td>
-                </tr>
-            </table>
+                    <tr>
+                        <td>#{tekster.oktnummer}</td>
+                        <td>#{tekster.dato}</td>
+                        <td>#{tekster.varighet}</td>
+                        <td>#{tekster.kategori}</td>
+                        <td>#{tekster.tekst}</td>
+                    </tr>
+                    <tr>
+                        <td>#{variables.oktnummer}</td>
+                        <td>#{variables.dato}</td>
+                        <td>#{variables.varighet}</td>
+                        <td>#{variables.kategori}</td>
+                        <td>#{variables.tekst}</td>
+                    </tr>
+                </table>
                 <h:form>
-                <h:commandButton value="#{tekster.nyokt}" action="Register" />
-            </h:form>
+                    <h:commandButton value="#{tekster.nyokt}" action="Register" />
+                </h:form>
             </div>
-
         </ui:define>
     </ui:composition>
 </html>

@@ -4,33 +4,29 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-        <link href="./resources/mini.css" rel="stylesheet" type="text/css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
-        <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-        
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+
     <ui:composition template="./resources/Temp.xhtml">
+        
         <ui:define name="top">
             <div align="center">
                 <h1>#{tekster.Regtittel}</h1>
             </div>
         </ui:define>
 
-            <div id="right">
-                <ui:define name="right">
-                <div align="right">
-                <h:form>
-                    <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
-                        <h:graphicImage value="resources/bilder/nor.png"></h:graphicImage>
-                    </h:commandLink>
-                    <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
-                        <h:graphicImage value="resources/bilder/uk.png"></h:graphicImage>
-                    </h:commandLink>
-                </h:form>
-                </div>
-                </ui:define>
-            </div>
+        <ui:define name="right">
+            <h:form>
+                <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
+                    <h:graphicImage value="resources/bilder/nor.png"></h:graphicImage>
+                </h:commandLink>
+                <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
+                    <h:graphicImage value="resources/bilder/uk.png"></h:graphicImage>
+                </h:commandLink>
+            </h:form>
+        </ui:define>
 
         <ui:define name="content">
             <div align="center">
@@ -68,48 +64,7 @@
                     <h:commandButton value="Send" action="Oversikt"/>
                 </h:form>
             </div>
-
         </ui:define>
-
-        <h:body>
-
-            <div align="center">
-                <h1>#{tekster.Regtittel}</h1>
-                <h:form>
-                    <table>
-                        <tr>
-                            <td>#{tekster.oktnummer} </td>
-                            <td>#{variables.oktnummer}</td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.dato}</td>
-                            <td><h:inputText value="#{variables.dato}"></h:inputText></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.varighet}</td>
-                            <td><h:inputText value="#{variables.varighet}"></h:inputText></td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.kategori}</td>
-                            <td>
-                                <h:selectOneMenu value="#{variables.kategori}">
-                                    <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
-                                    <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
-                                    <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
-                                    <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
-                                    <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
-                                </h:selectOneMenu>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#{tekster.tekst}</td>
-                            <td><h:inputText value="#{variables.tekst}"></h:inputText></td>
-                        </tr>
-                    </table>
-                    <h:commandButton value="Send" action="Oversikt"/>
-                </h:form>
-            </div>
-        </h:body>
     </ui:composition>
 </html>
 
