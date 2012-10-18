@@ -11,20 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+       
 
     </h:head>
     <ui:composition template="./resources/temp.xhtml">
         <ui:define name="top">
-            Eksempel på bruk av template
-        </ui:define>
-        <ui:define name="content">
-            Dette er vårt første eksempel på bruk av templates.<br></br>
-            Bruker NetBeans standard stilark.<br></br>
-            Og det var det.
-        </ui:define>
-    
-    <h:body>
-        <div align="right">
+            <div align="center"> 
+              <h1>#{tekster.Regtittel}</h1> </div>
+              <div align="right">
             <h:form>
                 <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
                     <h:graphicImage value="nor.png"></h:graphicImage>
@@ -34,6 +28,56 @@
                 </h:commandLink>
             </h:form>
         </div>
+        </ui:define>
+        <div>
+            <div id="left">
+                <ui:insert name="left">Left</ui:insert>
+            </div>
+            <div>
+                <div id="right">
+                    <ui:insert name="right">Right</ui:insert>
+                </div>
+        <ui:insert name="content">
+           <div align="center">
+            <h:form>
+                <table>
+                    <tr>
+                        <td>#{tekster.oktnummer} </td>
+                        <td>#{variables.oktnummer}</td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.dato}</td>
+                        <td><h:inputText value="#{variables.dato}"></h:inputText></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.varighet}</td>
+                        <td><h:inputText value="#{variables.varighet}"></h:inputText></td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.kategori}</td>
+                        <td>
+                            <h:selectOneMenu value="#{variables.kategori}">
+                                <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
+                                <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#{tekster.tekst}</td>
+                        <td><h:inputText value="#{variables.tekst}"></h:inputText></td>
+                    </tr>
+                </table>
+                <h:commandButton value="Send" action="Oversikt"/>
+            </h:form>
+        </div>
+            
+        </ui:insert>
+            
+    <h:body>
+        
         <div align="center">
             <h1>#{tekster.Regtittel}</h1>
             <h:form>
