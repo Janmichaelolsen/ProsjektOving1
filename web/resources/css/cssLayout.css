@@ -2,7 +2,8 @@
 
 #top {
     position: relative;
-    background:  URL('../bilder/bg.png');
+    background:  URL('../bilder/header.png');
+    background-size: cover;
     padding: 5px;
     margin: 0px 0px 10px 0px;
     
