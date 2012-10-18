@@ -4,7 +4,7 @@
     position: relative;
     background:  URL('../bilder/header.png');
     background-size: cover;
-    padding: 5px;
+    padding: 20px;
     margin: 0px 0px 10px 0px;
     
 }
@@ -25,15 +25,21 @@
 
 #right {
     float: right;
-    background-color: #ece3a5;
+    background: URL('../bilder/bg2.png');
+    background-size: cover;
     padding: 5px;
     width: 150px;
-    height:  1000px;
+    height:  100px;
+}
+#content{
+    background: URL('../bilder/bg2.png');
+    background-size: cover;
+    padding: 5px;
+    margin: 0px 170px 0px 170px; 
 }
 
-.center_content {
+.right_content {
     position: relative;
-    background-color: #dddddd;
     padding: 5px;
 }
 
@@ -43,8 +49,9 @@
     margin-left: 170px;
 }
 
-.right_content {
-    background-color: #dddddd;
+.center_content {
+    background: URL('../bilder/bg2.png');
+    background-size: cover;
     padding: 5px;
     margin: 0px 170px 0px 170px;
 }

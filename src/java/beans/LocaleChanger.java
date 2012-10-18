@@ -8,7 +8,6 @@ package beans;
 import java.util.Locale;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 
 /**
