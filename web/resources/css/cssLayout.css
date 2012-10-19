@@ -3,7 +3,7 @@
     background:  URL('../bilder/header.png');
     background-size: cover;
     padding: 20px;
-    margin: 0px 0px 10px 0px;
+    margin: 0px 170px 10px 170px;
 }
 
 #right {
@@ -13,12 +13,15 @@
     padding: 5px;
     width: 100px;
     height: 155px;
+    margin: 0px 170px 0px 0px;
+    
+    
 }
 #content{
     background: URL('../bilder/bg2.png');
     background-size: cover;
     padding: 5px;
-    margin: 0px 120px 0px 0px; 
+    margin: 0px 290px 0px 170px; 
 }
 #overview{
     background-size: cover;
