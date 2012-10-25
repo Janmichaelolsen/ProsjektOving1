@@ -6,21 +6,21 @@
     <title>#{tekster.Regtittel}</title>
     <link href="./resources/cssLayout.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
-    <ui:composition template="./resources/indexTemp.xhtml">
+    <ui:composition template="./resources/RegTemp.xhtml">
         <ui:define name="content">
             <div align="center">
                 <font color="#FFFFFF"> #{tekster.Velkomst} </font>
-                <hr></hr>
                 <h:form>
-                    <h:commandLink value="" action="#{localeChanger.setNorwegian()}">
-                        <h:graphicImage value="resources/bilder/nor.png"></h:graphicImage>
-                    </h:commandLink>
-                    <h:commandLink value="" action ="#{localeChanger.setEnglish()}">
-                        <h:graphicImage value="resources/bilder/uk.png"></h:graphicImage>
-                    </h:commandLink>
-                </h:form>
-                <hr></hr>
-                <h:form>
+                    <table>
+                        <tr>
+                            <td>#{tekster.Brukernavn}</td>
+                            <td><h:inputText value="#{variables.brukernavn}"></h:inputText></td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.Passord}</td>
+                            <td><h:inputText value="#{variables.passord}"></h:inputText></td>
+                        </tr>
+                    </table>
                     <h:commandButton value="#{tekster.Login}" action="Register"/>
                 </h:form>
             </div>

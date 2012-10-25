@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 
 public class TreningsOkt implements Serializable{
+    private String brukernavn;
+    private String passord;
     private int oktnummer;
     private String dato = "";
     private int varighet;
@@ -26,6 +28,10 @@ public class TreningsOkt implements Serializable{
         Date date = new Date();
         dato += sdf.format(date);
     }
+    public String getBrukernavn() { return brukernavn;}
+    
+    public String getPassord() { return passord; }
+    
     public int getOktnummer() { return oktnummer; }
     
     public String getDato() { return dato; }
@@ -36,6 +42,10 @@ public class TreningsOkt implements Serializable{
 
     public int getVarighet() { return varighet; }
 
+    
+    public void setBrukernavn(String ny) { brukernavn = ny;}
+    
+    public void setPassord (String ny) { passord = ny;}
     
     public void setDato(String ny) { dato = ny; }
     
