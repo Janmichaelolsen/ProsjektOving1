@@ -17,7 +17,7 @@
             </div>
         </ui:define>
 
-        <ui:define name="content">
+        <ui:define name="left">
             <div align="center">
                 <h:form>
                     <table>
@@ -50,7 +50,39 @@
                             <td><h:inputText value="#{behandler.tekst}"></h:inputText></td>
                         </tr>
                     </table>
-                    <h:commandButton value="Send" action="Oversikt"/>
+                    <h:commandButton value="Send" action="#{behandler.regOkt()}"/>
+                </h:form>
+            </div>
+        </ui:define>
+        <ui:define name="content">
+            <div align="center">
+                <h:form>
+                <h:dataTable value="#{behandler.liste}" var="okter" border="1" bgcolor="white">
+                    <h:column>
+                    <f:facet name="header">#{tekster.oktnummer}</f:facet>   
+                    #{okter.oktnummer}
+                    </h:column>
+                    <h:column>
+                    <f:facet name="header">#{tekster.dato}</f:facet>
+                        <h:inputText value="#{okter.dato}" size="6"></h:inputText>
+                    
+                    </h:column>
+                    <h:column>
+                    <f:facet name="header">#{tekster.varighet}</f:facet>
+                        <h:inputText value="#{okter.varighet}" size="10"></h:inputText>
+                    </h:column>
+                    <h:column>
+                    <f:facet name="header">#{tekster.kategori}</f:facet>
+                        <h:inputText value="#{okter.kategori}" size="7"></h:inputText>
+                    </h:column>
+                    <h:column>
+                    <f:facet name="header">#{tekster.tekst}</f:facet>
+                        <h:inputText value="#{okter.tekst}" size=""></h:inputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Slett</f:facet>
+                    </h:column>
+                </h:dataTable>
                 </h:form>
             </div>
         </ui:define>

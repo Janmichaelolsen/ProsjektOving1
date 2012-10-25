@@ -10,42 +10,7 @@
     <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
 
     <ui:composition template="./resources/RegTemp.xhtml">
-
-        <ui:define name="content">
-            #{behandler.regOkt()}
-            <div align="center">
-                <h:dataTable value="#{behandler.liste}" var="okter" border="1" bgcolor="white">
-                    <h:column>
-                    <f:facet name="header">#{tekster.oktnummer}</f:facet>   
-                    #{okter.oktnummer}
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.dato}</f:facet>
-                        <h:inputText value="#{okter.dato}" ></h:inputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.varighet}</f:facet>
-                        <h:inputText value="#{okter.varighet}"></h:inputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.kategori}</f:facet>
-                        <h:inputText value="#{okter.kategori}"></h:inputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.tekst}</f:facet>
-                        <h:inputText value="#{okter.tekst}"></h:inputText>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Slett</f:facet>
-                        
-                    </h:column>
-                </h:dataTable>
-
-                <h:form>
-                    <h:commandButton value="#{tekster.nyokt}" action="Register" />
-                </h:form>
-            </div>
-        </ui:define>
+        
     </ui:composition>
 </html>
 
