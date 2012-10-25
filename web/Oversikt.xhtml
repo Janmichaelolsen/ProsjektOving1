@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
@@ -12,22 +13,29 @@
 
         <ui:define name="content">
             <div align="center">
-                <table border="1" bgcolor="white">
-                    <tr>
-                        <td>#{tekster.oktnummer}</td>
-                        <td>#{tekster.dato}</td>
-                        <td>#{tekster.varighet}</td>
-                        <td>#{tekster.kategori}</td>
-                        <td>#{tekster.tekst}</td>
-                    </tr>
-                    <tr>
-                        <td>#{variables.oktnummer}</td>
-                        <td>#{variables.dato}</td>
-                        <td>#{variables.varighet}</td>
-                        <td>#{variables.kategori}</td>
-                        <td>#{variables.tekst}</td>
-                    </tr>
-                </table>
+                <h:dataTable value="#{list.liste}" var="okter" border="1" bgcolor="white">
+                    <f:facet name="header">#{tekster.oktnummer}</f:facet>
+                    <h:column>
+                        #{okter.oktnummer}
+                    </h:column>
+                    <f:facet name="header">#{tekster.dato}</f:facet>
+                    <h:column>
+                        #{okter.dato}
+                    </h:column>
+                    <f:facet name="header">#{tekster.varighet}</f:facet>
+                    <h:column>
+                        #{okter.varighet}
+                    </h:column>
+                    <f:facet name="header">#{tekster.kategori}</f:facet>
+                    <h:column>
+                        #{okter.kategori}
+                    </h:column>
+                    <f:facet name="header">#{tekster.tekst}</f:facet>
+                    <h:column>
+                        #{okter.tekst}
+                    </h:column>
+                </h:dataTable>
+
                 <h:form>
                     <h:commandButton value="#{tekster.nyokt}" action="Register" />
                 </h:form>

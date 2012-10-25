@@ -1,6 +1,7 @@
 package beans;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -9,42 +10,45 @@ import javax.inject.Named;
 @SessionScoped
 
 public class Databehandler implements Serializable{
-    private String dato = "";
-    private int varighet;
+    private String tdato = "";
+    private int tvarighet;
     private Okter okter = new Okter();
-    private String kategori;
-    private String tekst;
+    private String tkategori;
+    private String ttekst;
     Date date = new Date();
-    private int oktnummer = okter.liste.size()+1;
+    private int toktnummer;
     
     public Databehandler(){
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        dato += sdf.format(date);
-}
-    public void regOkt(){
-        okter.regNyOkt(oktnummer, dato, varighet, kategori, tekst);
+        tdato += sdf.format(date);
     }
+    public void regOkt(){
+        TreningsOkt nyokt = new TreningsOkt(toktnummer, tdato, tvarighet, tkategori, ttekst);
+        okter.regNyOkt(nyokt);
+    }
+    public ArrayList getListe(){ return okter.getListe();}
     
-    public int getOktnummer() { return oktnummer; }
+    public Okter getOkter() { return okter;}
     
-    public String getDato() { return dato; }
+    public int getOktnummer() { return toktnummer; }
+    
+    public String getDato() { return tdato; }
 
-    public String getKategori() { return kategori; }
+    public String getKategori() { return tkategori; }
 
-    public String getTekst() { return tekst; }
+    public String getTekst() { return ttekst; }
 
-    public int getVarighet() { return varighet; }
+    public int getVarighet() { return tvarighet; }
 
     
-    public void setDato(String ny) { dato = ny; }
+    public void setDato(String ny) { tdato = ny; }
     
-    public void setKategori(String ny) { kategori = ny; }
+    public void setKategori(String ny) { tkategori = ny; }
 
-    public void setOktnummer(int ny) { oktnummer = ny;  }
+    public void setOktnummer(int ny) { toktnummer = ny;  }
 
-    public void setTekst(String ny) { tekst = ny; }
+    public void setTekst(String ny) { ttekst = ny; }
 
-    public void setVarighet(int ny) { varighet = ny; }
+    public void setVarighet(int ny) { tvarighet = ny; }
 
 }

@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 public class TreningsOkt implements Serializable{
     private int oktnummer;
-    private String dato = "";
+    private String dato;
     private int varighet;
     private String kategori;
     private String tekst;
