@@ -16,7 +16,7 @@ public class Databehandler implements Serializable{
     private String tkategori;
     private String ttekst;
     Date date = new Date();
-    private int toktnummer;
+    private int toktnummer = 1;
     
     public Databehandler(){
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -25,6 +25,7 @@ public class Databehandler implements Serializable{
     public void regOkt(){
         TreningsOkt nyokt = new TreningsOkt(toktnummer, tdato, tvarighet, tkategori, ttekst);
         okter.regNyOkt(nyokt);
+        toktnummer++;
     }
     public ArrayList getListe(){ return okter.getListe();}
     
