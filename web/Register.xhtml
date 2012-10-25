@@ -23,20 +23,20 @@
                     <table>
                         <tr>
                             <td>#{tekster.oktnummer} </td>
-                            <td>#{variables.oktnummer}</td>
+                            <td>#{behandler.oktnummer}</td>
                         </tr>
                         <tr>
                             <td>#{tekster.dato}</td>
-                            <td><h:inputText value="#{variables.dato}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.dato}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.varighet}</td>
-                            <td><h:inputText value="#{variables.varighet}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.varighet}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.kategori}</td>
                             <td>
-                                <h:selectOneMenu value="#{variables.kategori}">
+                                <h:selectOneMenu value="#{behandler.kategori}">
                                     <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
@@ -47,10 +47,10 @@
                         </tr>
                         <tr>
                             <td>#{tekster.tekst}</td>
-                            <td><h:inputText value="#{variables.tekst}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.tekst}"></h:inputText></td>
                         </tr>
                     </table>
-                    <h:commandButton value="Send" action="Oversikt"/>
+                    <h:commandButton value="Send#{behandler.regOkt()}" action="Oversikt"/>
                 </h:form>
             </div>
         </ui:define>
