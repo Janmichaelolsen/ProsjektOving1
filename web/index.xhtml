@@ -7,6 +7,11 @@
     <link href="./resources/cssLayout.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
     <ui:composition template="./resources/RegTemp.xhtml">
+        <ui:define name="top">
+            <div align="center">
+                <h1> #{tekster.Starttittel} </h1>
+            </div>
+        </ui:define>
         <ui:define name="content">
             <div align="center">
                 <p> #{tekster.Velkomst} </p>
