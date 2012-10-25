@@ -1,25 +1,29 @@
 package beans;
-
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-@Named("variables")
+@Named("behandler")
 @SessionScoped
 
-public class TreningsOkt implements Serializable{
-    private int oktnummer;
+public class Databehandler implements Serializable{
     private String dato = "";
     private int varighet;
+    private Okter okter = new Okter();
     private String kategori;
     private String tekst;
-
-    public TreningsOkt(int oktnr, String dato, int varighet, String kategori, String tekst){
-        this.oktnummer = oktnr;
-        this.dato = dato;
-        this.varighet = varighet;
-        this.kategori = kategori;
-        this.tekst = tekst;
+    Date date = new Date();
+    private int oktnummer = okter.liste.size()+1;
+    
+    public Databehandler(){
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        dato += sdf.format(date);
+}
+    public void regOkt(){
+        okter.regNyOkt(oktnummer, dato, varighet, kategori, tekst);
     }
     
     public int getOktnummer() { return oktnummer; }
@@ -42,7 +46,5 @@ public class TreningsOkt implements Serializable{
     public void setTekst(String ny) { tekst = ny; }
 
     public void setVarighet(int ny) { varighet = ny; }
-    
+
 }
-
-
