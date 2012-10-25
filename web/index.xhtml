@@ -9,15 +9,15 @@
     <ui:composition template="./resources/RegTemp.xhtml">
         <ui:define name="content">
             <div align="center">
-                <font color="#FFFFFF"> #{tekster.Velkomst} </font>
+                <p> #{tekster.Velkomst} </p>
                 <h:form>
                     <table>
                         <tr>
-                            <td>#{tekster.Brukernavn}</td>
+                            <td><p>#{tekster.Brukernavn}</p></td>
                             <td><h:inputText value="#{variables.brukernavn}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.Passord}</td>
+                            <td><p>#{tekster.Passord}</p></td>
                             <td><h:inputText value="#{variables.passord}"></h:inputText></td>
                         </tr>
                     </table>
