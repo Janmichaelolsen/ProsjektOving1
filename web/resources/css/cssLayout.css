@@ -21,8 +21,9 @@
     background: URL('../bilder/bg2.png');
     background-size: cover;
     padding: 5px;
-    height: 155px;
+    height: min-content;
     margin: 0px 290px 0px 170px; 
+    position: relative;
 }
 #overview{
     background-size: cover;

@@ -13,25 +13,25 @@
 
         <ui:define name="content">
             <div align="center">
-                <h:dataTable value="#{list.liste}" var="okter" border="1" bgcolor="white">
-                    <f:facet name="header">#{tekster.oktnummer}</f:facet>
+                <h:dataTable value="#{behandler.liste}" var="okter" border="1" bgcolor="white">
                     <h:column>
+                    <f:facet name="header">#{tekster.oktnummer}</f:facet>   
                         #{okter.oktnummer}
                     </h:column>
-                    <f:facet name="header">#{tekster.dato}</f:facet>
                     <h:column>
+                    <f:facet name="header">#{tekster.dato}</f:facet>
                         #{okter.dato}
                     </h:column>
-                    <f:facet name="header">#{tekster.varighet}</f:facet>
                     <h:column>
+                    <f:facet name="header">#{tekster.varighet}</f:facet>
                         #{okter.varighet}
                     </h:column>
-                    <f:facet name="header">#{tekster.kategori}</f:facet>
                     <h:column>
+                    <f:facet name="header">#{tekster.kategori}</f:facet>
                         #{okter.kategori}
                     </h:column>
-                    <f:facet name="header">#{tekster.tekst}</f:facet>
                     <h:column>
+                    <f:facet name="header">#{tekster.tekst}</f:facet>
                         #{okter.tekst}
                     </h:column>
                 </h:dataTable>
