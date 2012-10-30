@@ -23,31 +23,41 @@
                     <table>
                         <tr>
                             <td>#{tekster.oktnummer} </td>
-                            <td>#{behandler.oktnummer}</td>
+                            <td><h:outputText value="#{behandler.sisteOktnr}"></h:outputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.dato}</td>
-                            <td><h:inputText value="#{behandler.dato}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.tempOkt.dato}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.varighet}</td>
-                            <td><h:inputText value="#{behandler.varighet}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.tempOkt.varighet}"></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.kategori}</td>
                             <td>
-                                <h:selectOneMenu value="#{behandler.kategori}">
+                                <h:selectOneMenu value="#{behandler.tempOkt.kategori}">
                                     <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
                                     <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
+                                    <f:selectItems value="#{behandler.tillegsOkter}" var="tillegg" 
+                                                   itemLabel="#{tillegg}" itemValue="#{tillegg}"></f:selectItems>
                                 </h:selectOneMenu>
+                                <h:commandButton value="#{tekster.leggtil}" action="#{behandler.setnykat()}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <h:inputText value="#{behandler.tempKat}" size="6" rendered="#{behandler.nykat}"></h:inputText>
+                                <h:commandButton value="#{tekster.lagre}" action="#{behandler.leggTilKategori()}" rendered="#{behandler.nykat}"/>
                             </td>
                         </tr>
                         <tr>
                             <td>#{tekster.tekst}</td>
-                            <td><h:inputText value="#{behandler.tekst}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.tempOkt.tekst}"></h:inputText></td>
                         </tr>
                     </table>
                     <h:commandButton value="Send" action="#{behandler.regOkt()}"/>
@@ -57,32 +67,42 @@
         <ui:define name="content">
             <div align="center">
                 <h:form>
-                <h:dataTable value="#{behandler.liste}" var="okter" border="1" bgcolor="white">
+                <h:dataTable value="#{behandler.synkListe}" var="okter" border="1" bgcolor="white">
                     <h:column>
                     <f:facet name="header">#{tekster.oktnummer}</f:facet>   
-                    #{okter.oktnummer}
+                    <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
                     </h:column>
                     <h:column>
                     <f:facet name="header">#{tekster.dato}</f:facet>
-                        <h:inputText value="#{okter.dato}" size="6"></h:inputText>
+                    <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}"></h:outputText>
+                    <h:inputText value="#{okter.okten.dato}" size="6" rendered="#{okter.editable}"></h:inputText>
                     
                     </h:column>
                     <h:column>
                     <f:facet name="header">#{tekster.varighet}</f:facet>
-                        <h:inputText value="#{okter.varighet}" size="10"></h:inputText>
+                        <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
+                        <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="10"></h:inputText>
                     </h:column>
                     <h:column>
                     <f:facet name="header">#{tekster.kategori}</f:facet>
-                        <h:inputText value="#{okter.kategori}" size="7"></h:inputText>
+                        <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
+                        <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
                     </h:column>
                     <h:column>
                     <f:facet name="header">#{tekster.tekst}</f:facet>
-                        <h:inputText value="#{okter.tekst}" size=""></h:inputText>
+                        <h:outputText value ="#{okter.okten.tekst}" rendered="#{not okter.editable}"></h:outputText>
+                        <h:inputText value="#{okter.okten.tekst}" rendered="#{okter.editable}" size="10"></h:inputText>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Slett</f:facet>
+                        <f:facet name="header">#{tekster.endre}</f:facet>
+                        <h:selectBooleanCheckbox value ="#{okter.editable}" onclick="submit()"></h:selectBooleanCheckbox>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{tekster.slett}</f:facet>
+                        <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
                     </h:column>
                 </h:dataTable>
+                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}"></h:commandButton>
                 </h:form>
             </div>
         </ui:define>

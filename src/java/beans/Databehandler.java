@@ -2,7 +2,9 @@ package beans;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -10,46 +12,69 @@ import javax.inject.Named;
 @SessionScoped
 
 public class Databehandler implements Serializable{
-    private String tdato = "";
-    private int tvarighet;
+    private TreningsOkt okt;
+    private TreningsOkt tempOkt = new TreningsOkt();
     private Okter okter = new Okter();
-    private String tkategori;
-    private String ttekst;
+    List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
+    private ArrayList kategorier = new ArrayList();
+    private boolean nykat = false;
+    private String tempKat;
     Date date = new Date();
-    private int toktnummer = 1;
     
     public Databehandler(){
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        tdato += sdf.format(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        tempOkt.setDato(sdf.format(date));
     }
+    
     public void regOkt(){
-        TreningsOkt nyokt = new TreningsOkt(toktnummer, tdato, tvarighet, tkategori, ttekst);
+        //Registrering
+        TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(), 
+                                            tempOkt.getKategori(), tempOkt.getTekst());
+        nyokt.setOktnummer(okt.lagnyoktnr());
         okter.regNyOkt(nyokt);
-        toktnummer++;
+        synkListe.add(new OktStatus(nyokt));
+        tempOkt.nullstill();
     }
-    public ArrayList getListe(){ return okter.getListe();}
     
+    public void oppdater(){
+        int indeks = synkListe.size() - 1;
+        while (indeks >= 0) {
+            OktStatus os = synkListe.get(indeks);
+            if (os.getSkalslettes()) {
+                okter.fjernOkt(os.getOkten()); // sletter i problemdomeneobjekt
+                synkListe.remove(indeks);  // sletter i presentasjonsobjektet
+                }
+                indeks--;
+        }
+    }
+    
+    public int getSisteOktnr(){ 
+        if(synkListe.isEmpty()){
+            return 1;
+        }
+        return synkListe.get(synkListe.size()-1).getOkten().getOktnummer()+1; 
+ }  
+    public void leggTilKategori(){
+        if(!tempKat.equals("")){
+            kategorier.add(tempKat);
+            tempKat = "";
+        }
+        nykat = false;
+    }
+    
+    public boolean getNykat(){ return nykat; }
+    
+    public void setnykat(){ 
+        if(!nykat){
+            nykat=true;
+        }
+    }
+    public String getTempKat(){ return tempKat; }
+    public void setTempKat(String ny){ tempKat = ny; }
+    public ArrayList getListe(){ return okter.getListe(); }
     public Okter getOkter() { return okter;}
-    
-    public int getOktnummer() { return toktnummer; }
-    
-    public String getDato() { return tdato; }
-
-    public String getKategori() { return tkategori; }
-
-    public String getTekst() { return ttekst; }
-
-    public int getVarighet() { return tvarighet; }
-
-    
-    public void setDato(String ny) { tdato = ny; }
-    
-    public void setKategori(String ny) { tkategori = ny; }
-
-    public void setOktnummer(int ny) { toktnummer = ny;  }
-
-    public void setTekst(String ny) { ttekst = ny; }
-
-    public void setVarighet(int ny) { tvarighet = ny; }
-
+    public synchronized List<OktStatus> getSynkListe(){ return synkListe; }
+    public synchronized TreningsOkt getTempOkt(){ return tempOkt; }
+    public ArrayList getTillegsOkter(){ return kategorier; }
+    public synchronized void setTempOkt(TreningsOkt ny){ tempOkt = ny; }
 }

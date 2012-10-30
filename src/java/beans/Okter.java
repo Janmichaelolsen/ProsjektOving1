@@ -7,14 +7,21 @@ import javax.inject.Named;
 
 @Named("list")
 @SessionScoped
-
 public class Okter implements Serializable {
 
     ArrayList<TreningsOkt> liste = new ArrayList<TreningsOkt>();
-    
 
     public void regNyOkt(TreningsOkt okt) {
-        liste.add(okt);
+        if (okt != null) {
+            liste.add(okt);
+        }
     }
-    public ArrayList<TreningsOkt> getListe() { return liste; }
+
+    public void fjernOkt(TreningsOkt okt) {
+        liste.remove(okt);
+    }
+
+    public ArrayList<TreningsOkt> getListe() {
+        return liste;
+    }
 }
