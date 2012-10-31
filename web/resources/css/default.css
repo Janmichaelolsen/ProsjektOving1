@@ -57,6 +57,9 @@ p {
     overflow-y: scroll;
     background: lightsteelblue;
 }
+.fot{
+    background: snow
+}
 
 .rad1{ width: 50px; text-align: center}
 .rad2{ width: 70px; text-align: center}

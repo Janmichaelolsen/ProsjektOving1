@@ -24,4 +24,16 @@ public class Okter implements Serializable {
     public ArrayList<TreningsOkt> getListe() {
         return liste;
     }
+    
+    public int getAntallokter() {
+        return liste.size();
+    }
+    
+    public double getSnittVarighet(){
+        double sum = 0.0;
+        for(TreningsOkt okt : liste){
+            sum += okt.getVarighet();
+        }
+        return sum/liste.size();
+    }
 }

@@ -12,7 +12,6 @@ import javax.inject.Named;
 @SessionScoped
 
 public class Databehandler implements Serializable{
-    private TreningsOkt okt;
     private TreningsOkt tempOkt = new TreningsOkt();
     private Okter okter = new Okter();
     

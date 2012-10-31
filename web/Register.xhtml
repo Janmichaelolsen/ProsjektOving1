@@ -111,6 +111,7 @@
                             <f:facet name="header">#{tekster.slett}</f:facet>
                             <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
                         </h:column>
+                        <f:facet name="footer">Antall økter: #{behandler.okter.antallokter} Gj.snittlig varighet: #{behandler.okter.snittVarighet}</f:facet>
                     </h:dataTable>
                     <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}" rendered="#{behandler.dataFins}"></h:commandButton>
                 </h:form>
