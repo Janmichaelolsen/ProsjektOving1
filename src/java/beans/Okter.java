@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -29,11 +30,12 @@ public class Okter implements Serializable {
         return liste.size();
     }
     
-    public double getSnittVarighet(){
+    public String getSnittVarighet(){
         double sum = 0.0;
         for(TreningsOkt okt : liste){
             sum += okt.getVarighet();
         }
-        return sum/liste.size();
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(sum/liste.size());
     }
 }
