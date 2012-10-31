@@ -3,13 +3,11 @@ package beans;
 public class TreningsOkt{
     private int oktnummer;
     private String dato;
-    private int varighet;
+    private String varighet;
     private String kategori;
     private String tekst;
-    
-    private static int sisteOktnr = 0;
 
-    public TreningsOkt(String dato, int varighet, String kategori, String tekst){
+    public TreningsOkt(String dato, String varighet, String kategori, String tekst){
         this.dato = dato;
         this.varighet = varighet;
         this.kategori = kategori;
@@ -20,14 +18,9 @@ public class TreningsOkt{
         nullstill();
     }
     
-    public static int lagnyoktnr(){
-        sisteOktnr++;
-        return sisteOktnr;
-    }
-    
     public final synchronized void nullstill(){
         oktnummer = 0;
-        varighet = 0;
+        varighet = null;
         kategori = null;
         tekst = null;
     }
@@ -40,7 +33,7 @@ public class TreningsOkt{
 
     public synchronized String getTekst() { return tekst; }
 
-    public synchronized int getVarighet() { return varighet; }
+    public synchronized String getVarighet() { return varighet; }
 
     
     public synchronized void setDato(String ny) { dato = ny; }
@@ -51,7 +44,7 @@ public class TreningsOkt{
 
     public synchronized void setTekst(String ny) { tekst = ny; }
 
-    public synchronized void setVarighet(int ny) { varighet = ny; }
+    public synchronized void setVarighet(String ny) { varighet = ny; }
     
 }
 

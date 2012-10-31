@@ -15,10 +15,13 @@ public class Databehandler implements Serializable{
     private TreningsOkt okt;
     private TreningsOkt tempOkt = new TreningsOkt();
     private Okter okter = new Okter();
-    List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
+    
     private ArrayList kategorier = new ArrayList();
     private boolean nykat = false;
     private String tempKat;
+    
+    List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
+    
     Date date = new Date();
     
     public Databehandler(){
@@ -26,11 +29,15 @@ public class Databehandler implements Serializable{
         tempOkt.setDato(sdf.format(date));
     }
     
+    public synchronized boolean getDataFins(){
+        return synkListe.size() > 0;
+    }
+    
     public void regOkt(){
         //Registrering
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(), 
                                             tempOkt.getKategori(), tempOkt.getTekst());
-        nyokt.setOktnummer(okt.lagnyoktnr());
+        nyokt.setOktnummer(getSisteOktnr());
         okter.regNyOkt(nyokt);
         synkListe.add(new OktStatus(nyokt));
         tempOkt.nullstill();
@@ -62,13 +69,12 @@ public class Databehandler implements Serializable{
         nykat = false;
     }
     
-    public boolean getNykat(){ return nykat; }
-    
     public void setnykat(){ 
         if(!nykat){
             nykat=true;
         }
     }
+    public boolean getNykat(){ return nykat; }
     public String getTempKat(){ return tempKat; }
     public void setTempKat(String ny){ tempKat = ny; }
     public ArrayList getListe(){ return okter.getListe(); }

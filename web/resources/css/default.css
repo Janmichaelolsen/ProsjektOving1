@@ -32,3 +32,36 @@ p {
     padding: 0px;
     color: #000000;
 }
+
+.standard{
+    
+}
+
+.hode {
+    text-align: center;
+    color: black;
+    background: snow
+}
+
+.likeRad{
+    height: 25px;
+    width: 100px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    background: snow;
+}
+.oddeRad{
+    height: 25px;
+    width: 100px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    background: lightsteelblue;
+}
+
+.rad1{ width: 50px; text-align: center}
+.rad2{ width: 70px; text-align: center}
+.rad3{ width: 80px; text-align: center}
+.rad4{ width: 100px; text-align: center}
+.rad5{ width: 200px; text-align: center}
+.rad6{ width: 50px; text-align: center}
+.rad7{ width: 50px; text-align: center}

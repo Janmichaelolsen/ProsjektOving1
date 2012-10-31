@@ -15,5 +15,4 @@ public String getPassword(){ return password; }
 
 public void setUsername(String ny){ username = ny;}
 public void setPassword(String ny){ password = ny;}
-
 }

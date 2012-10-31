@@ -8,9 +8,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-
     <ui:composition template="./resources/RegTemp.xhtml">
-        
+
         <ui:define name="top">
             <div align="center">
                 <h1>#{tekster.Regtittel}</h1>
@@ -22,19 +21,19 @@
                 <h:form>
                     <table>
                         <tr>
-                            <td>#{tekster.oktnummer} </td>
+                            <td>#{tekster.oktnummer}: </td>
                             <td><h:outputText value="#{behandler.sisteOktnr}"></h:outputText></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.dato}</td>
+                            <td>#{tekster.dato}:</td>
                             <td><h:inputText value="#{behandler.tempOkt.dato}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.varighet}</td>
+                            <td>#{tekster.varighet}:</td>
                             <td><h:inputText value="#{behandler.tempOkt.varighet}"></h:inputText></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.kategori}</td>
+                            <td>#{tekster.kategori}:</td>
                             <td>
                                 <h:selectOneMenu value="#{behandler.tempOkt.kategori}">
                                     <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
@@ -56,53 +55,64 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>#{tekster.tekst}</td>
+                            <td>#{tekster.tekst}:</td>
                             <td><h:inputText value="#{behandler.tempOkt.tekst}"></h:inputText></td>
                         </tr>
+                        <tr>
+                            <td><h:commandButton value="#{tekster.Logout}" action="index.xhtml"/></td>
+                            <td><h:commandButton value="Send" action="#{behandler.regOkt()}"/></td>
+                        </tr>
                     </table>
-                    <h:commandButton value="Send" action="#{behandler.regOkt()}"/>
+                    
                 </h:form>
             </div>
         </ui:define>
+
         <ui:define name="content">
             <div align="center">
+                <h:outputStylesheet library ="css" name= "default.css"/>
                 <h:form>
-                <h:dataTable value="#{behandler.synkListe}" var="okter" border="1" bgcolor="white">
-                    <h:column>
-                    <f:facet name="header">#{tekster.oktnummer}</f:facet>   
-                    <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.dato}</f:facet>
-                    <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}"></h:outputText>
-                    <h:inputText value="#{okter.okten.dato}" size="6" rendered="#{okter.editable}"></h:inputText>
-                    
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.varighet}</f:facet>
-                        <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
-                        <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="10"></h:inputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.kategori}</f:facet>
-                        <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
-                        <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
-                    </h:column>
-                    <h:column>
-                    <f:facet name="header">#{tekster.tekst}</f:facet>
-                        <h:outputText value ="#{okter.okten.tekst}" rendered="#{not okter.editable}"></h:outputText>
-                        <h:inputText value="#{okter.okten.tekst}" rendered="#{okter.editable}" size="10"></h:inputText>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{tekster.endre}</f:facet>
-                        <h:selectBooleanCheckbox value ="#{okter.editable}" onclick="submit()"></h:selectBooleanCheckbox>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{tekster.slett}</f:facet>
-                        <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
-                    </h:column>
-                </h:dataTable>
-                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}"></h:commandButton>
+                    <h:outputText rendered="#{not behandler.dataFins}" value="#{tekster.regmelding}"></h:outputText>
+                    <h:dataTable value="#{behandler.synkListe}" var="okter" rendered="#{behandler.dataFins}"
+                                 border="1" bgcolor="white" 
+                                 rowClasses="oddeRad, likeRad" headerClass="hode"
+                                 columnClasses="rad1, rad2, rad3, rad4, rad5, rad6, rad7"
+                                 styleClass="standard">
+                        <h:column>
+                            <f:facet name="header">#{tekster.oktnummer}</f:facet>   
+                            <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.dato}</f:facet>
+                            <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" ></h:outputText>
+                            <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="4"></h:inputText>
+
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.varighet}</f:facet>
+                            <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
+                            <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="5"></h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.kategori}</f:facet>
+                            <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
+                            <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.tekst}</f:facet>
+                            <h:outputText value ="#{okter.okten.tekst}" rendered="#{not okter.editable}"></h:outputText>
+                            <h:inputText value="#{okter.okten.tekst}" rendered="#{okter.editable}" size="20"></h:inputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.endre}</f:facet>
+                            <h:selectBooleanCheckbox value ="#{okter.editable}" onclick="submit()"></h:selectBooleanCheckbox>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{tekster.slett}</f:facet>
+                            <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}" rendered="#{behandler.dataFins}"></h:commandButton>
                 </h:form>
             </div>
         </ui:define>
