@@ -21,12 +21,12 @@ public class Databehandler implements Serializable{
     private String tempKat;
     List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
     Date date = new Date();
-    private ArrayList<OktStatus> sortert = new ArrayList<OktStatus>();
+    private List<OktStatus> alleOkter = Collections.synchronizedList(new ArrayList<OktStatus>());
+    private List<OktStatus> sortert = Collections.synchronizedList(new ArrayList<OktStatus>());
     private ArrayList aar = new ArrayList();
     private ArrayList mnd = new ArrayList();
     private int valgtaar;
     private int valgtmnd;
-    private boolean sortering;
     
     public Databehandler(){
         tempOkt.setDato(date);
@@ -59,6 +59,41 @@ public class Databehandler implements Serializable{
         }
     }
     
+    public void oppdatersort(){
+        for(int i=0; i<synkListe.size(); i++){
+                alleOkter.add(synkListe.get(i));
+        }
+        if(valgtaar!=0){
+            for(int i=0; i<synkListe.size(); i++){
+                if(synkListe.get(i).getOkten().getDato().getYear() == valgtaar){
+                    sortert.add(synkListe.get(i));
+                    
+                }
+            }
+            synkListe.clear();
+            for(int i=0; i<sortert.size(); i++){
+                synkListe.add(sortert.get(i));
+        }
+        }
+        if(valgtmnd!=0){
+            for(int i=0; i<synkListe.size(); i++){
+                if(synkListe.get(i).getOkten().getDato().getMonth()+1 == valgtmnd){
+                    sortert.add(synkListe.get(i));
+                }
+            }
+            synkListe.clear();
+            for(int i=0; i<sortert.size(); i++){
+                synkListe.add(sortert.get(i));
+            }
+        }
+        if(valgtmnd == 0 && valgtaar == 0){
+            synkListe.clear();
+            for(int i=0; i<alleOkter.size(); i++){
+                synkListe.add(alleOkter.get(i));
+        }
+        }
+    }
+    
     //Sletting
     public void oppdater(){
         int indeks = synkListe.size() - 1;
@@ -70,6 +105,7 @@ public class Databehandler implements Serializable{
                 }
                 indeks--;
         }
+        
     }
     
     //Henter ut øktnummeret som er det neste etter tabellens siste.
@@ -103,29 +139,7 @@ public class Databehandler implements Serializable{
     
     public void setnykat(){ nykat = true; }
     public void setTempKat(String ny){ tempKat = ny; }
-
     
-    public void setSortert(){
-        if(valgtaar!=0){
-            
-            for(int i=0; i<synkListe.size(); i++){
-                if(synkListe.get(i).getOkten().getDato().getYear() == valgtaar){
-                    sortert.add(synkListe.get(i));
-                }
-            }
-        }
-        if(valgtmnd!=0){
-            for(int i=0; i<synkListe.size(); i++){
-                if(synkListe.get(i).getOkten().getDato().getMonth() == valgtmnd-1){
-                    sortert.add(synkListe.get(i));
-                }
-            }
-        }
-        
-        for(int i=0; i<sortert.size(); i++){
-            synkListe.add(sortert.get(i));
-        }
-    }
     public int getValgtaar() {
         return valgtaar;
     }
@@ -140,22 +154,6 @@ public class Databehandler implements Serializable{
 
     public void setValgtmnd(int valgtmnd) {
         this.valgtmnd = valgtmnd;
-    }
-
-    public ArrayList<OktStatus> getSortert() {
-        return sortert;
-    }
-
-
-    public void setSorteringt() {
-        sortering = true;
-    }
-    public void setSorteringf() {
-        sortering = false;
-    }
-
-    public boolean isSortering() {
-        return sortering;
     }
 
     public ArrayList getAar() {
@@ -173,4 +171,26 @@ public class Databehandler implements Serializable{
     public void setMnd(ArrayList mnd) {
         this.mnd = mnd;
     }  
+    
+    public void setAlleOkter(ArrayList<OktStatus> alleOkter) {
+        this.alleOkter = alleOkter;
+    }
+
+    public List<OktStatus> getAlleOkter() {
+        return alleOkter;
+    }
+
+    public List<OktStatus> getSortert() {
+        return sortert;
+    }
+
+    public void setAlleOkter(List<OktStatus> alleOkter) {
+        this.alleOkter = alleOkter;
+    }
+
+    public void setSortert(List<OktStatus> sortert) {
+        this.sortert = sortert;
+    }
+    
+    
 }

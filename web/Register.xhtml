@@ -73,7 +73,7 @@
         <!--Ruten i midten med oversikttabell over økter-->
         <ui:define name="content">
             <h:form>
-                <h:selectOneMenu value="#{behandler.valgtaar}" onselect="#{behandler.setSortert()}">
+                <h:selectOneMenu value="#{behandler.valgtaar}">
                     <f:selectItem itemLabel="Alle" itemValue="0"></f:selectItem>
                 <f:selectItems value="#{behandler.aar}" var="aar"
                                itemLabel="#{aar}" itemValue="#{aar}"></f:selectItems>
@@ -83,6 +83,7 @@
                 <f:selectItems value="#{behandler.mnd}" var="mnd"
                                itemLabel="#{mnd}" itemValue="#{mnd}"></f:selectItems>
             </h:selectOneMenu>
+                <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdatersort()}"/>
             </h:form>
             <div align="center">
                 <h:outputStylesheet library ="css" name= "default.css"/>
@@ -101,8 +102,10 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">#{tekster.dato}</f:facet>
-                            <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" ></h:outputText>
-                            <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="4"></h:inputText>
+                            <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" >
+                                <f:convertDateTime pattern="dd/MM/yy"/></h:outputText>
+                            <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="4">
+                                <f:convertDateTime pattern="dd/MM/yy"/></h:inputText>
 
                         </h:column>
                         <h:column>
