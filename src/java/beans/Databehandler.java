@@ -137,7 +137,7 @@ public class Databehandler implements Serializable{
  }  
     
     public ArrayList getListe(){ return okter.getListe(); }
-    public Okter getOkter() { return okter;}
+    public Okter getOkter() { return okter; }
     
     public synchronized List<OktStatus> getSynkListe(){ return synkListe; }
     public synchronized TreningsOkt getTempOkt(){ return tempOkt; }
@@ -156,61 +156,17 @@ public class Databehandler implements Serializable{
     public boolean getNykat(){ return nykat; }
     public String getTempKat(){ return tempKat; }
     public ArrayList getTillegsOkter(){ return kategorier; }
-    
     public void setnykat(){ nykat = true; }
     public void setTempKat(String ny){ tempKat = ny; }
-    
-    public int getValgtaar() {
-        return valgtaar;
-    }
-
-    public int getValgtmnd() {
-        return valgtmnd+1;
-    }
-
-    public void setValgtaar(int valgtaar) {
-        this.valgtaar = valgtaar;
-    }
-
-    public void setValgtmnd(int valgtmnd) {
-        this.valgtmnd = valgtmnd;
-    }
-
-    public ArrayList getAar() {
-        return aar;
-    }
-
-    public ArrayList getMnd() {
-        return mnd;
-    }
-
-    public void setAar(ArrayList aar) {
-        this.aar = aar;
-    }
-
-    public void setMnd(ArrayList mnd) {
-        this.mnd = mnd;
-    }  
-    
-    public void setAlleOkter(ArrayList<OktStatus> alleOkter) {
-        this.alleOkter = alleOkter;
-    }
-
-    public List<OktStatus> getAlleOkter() {
-        return alleOkter;
-    }
-
-    public List<OktStatus> getSortert() {
-        return sortert;
-    }
-
-    public void setAlleOkter(List<OktStatus> alleOkter) {
-        this.alleOkter = alleOkter;
-    }
-
-    public void setSortert(List<OktStatus> sortert) {
-        this.sortert = sortert;
-    }
-    
-    
+   
+    public int getValgtaar() { return valgtaar; }
+    public int getValgtmnd() { return valgtmnd; }
+    public void setValgtaar(int valgtaar) { this.valgtaar = valgtaar; }
+    public void setValgtmnd(int valgtmnd) { this.valgtmnd = valgtmnd; }
+    public ArrayList getAar() { return aar; }
+    public ArrayList getMnd() { return mnd; }
+    public void setAar(ArrayList aar) { this.aar = aar; }
+    public void setMnd(ArrayList mnd) { this.mnd = mnd; }  
+    public List<OktStatus> getAlleOkter() { return alleOkter; }
+    public void setAlleOkter(List<OktStatus> alleOkter) { this.alleOkter = alleOkter; }
 }
