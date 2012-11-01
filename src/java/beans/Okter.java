@@ -20,14 +20,14 @@ public class Okter {
     public ArrayList<TreningsOkt> getListe() {
         return liste;
     }
-    
+
     public int getAntallokter() {
         return liste.size();
     }
     
     public String getSnittVarighet(){
         double sum = 0.0;
-        for(TreningsOkt okt : liste){
+        for (TreningsOkt okt : liste) {
             sum += okt.getVarighet();
         }
         DecimalFormat df = new DecimalFormat("0.00");
