@@ -26,7 +26,8 @@
                         </tr>
                         <tr>
                             <td>#{tekster.dato}:</td>
-                            <td><h:inputText value="#{behandler.tempOkt.dato}"></h:inputText></td>
+                            <td><h:inputText value="#{behandler.tempOkt.dato}">
+                                <f:convertDateTime pattern="dd/MM/yy"/></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.varighet}:</td>
@@ -71,10 +72,22 @@
         
         <!--Ruten i midten med oversikttabell over økter-->
         <ui:define name="content">
+            <h:form>
+                <h:selectOneMenu value="#{behandler.valgtaar}" onselect="#{behandler.setSortert()}">
+                    <f:selectItem itemLabel="Alle" itemValue="0"></f:selectItem>
+                <f:selectItems value="#{behandler.aar}" var="aar"
+                               itemLabel="#{aar}" itemValue="#{aar}"></f:selectItems>
+            </h:selectOneMenu>
+            <h:selectOneMenu value="#{behandler.valgtmnd}">
+                <f:selectItem itemLabel="Alle" itemValue="0"></f:selectItem>
+                <f:selectItems value="#{behandler.mnd}" var="mnd"
+                               itemLabel="#{mnd}" itemValue="#{mnd}"></f:selectItems>
+            </h:selectOneMenu>
+            </h:form>
             <div align="center">
                 <h:outputStylesheet library ="css" name= "default.css"/>
                 <h:form>
-                    <h:outputText rendered="#{not behandler.dataFins}" value="#{tekster.regmelding}"></h:outputText>
+                    <h:outputText rendered="#{not behandler.dataFins}"  value="#{tekster.regmelding}"></h:outputText>
                     <div style="overflow:auto; width:700px; max-height:500px;">
                     <h:dataTable value="#{behandler.synkListe}" var="okter" 
                                  rendered="#{behandler.dataFins}" border="1"

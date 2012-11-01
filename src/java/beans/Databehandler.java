@@ -3,7 +3,6 @@
  */
 package beans;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -22,10 +21,15 @@ public class Databehandler implements Serializable{
     private String tempKat;
     List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
     Date date = new Date();
+    private ArrayList<OktStatus> sortert = new ArrayList<OktStatus>();
+    private ArrayList aar = new ArrayList();
+    private ArrayList mnd = new ArrayList();
+    private int valgtaar;
+    private int valgtmnd;
+    private boolean sortering;
     
     public Databehandler(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-        tempOkt.setDato(sdf.format(date));
+        tempOkt.setDato(date);
     }
     
     //Returnerer true hvis data finnes i tabellen
@@ -41,6 +45,18 @@ public class Databehandler implements Serializable{
         okter.regNyOkt(nyokt);
         synkListe.add(new OktStatus(nyokt));
         tempOkt.nullstill();
+        
+        for(int i=0; i<synkListe.size(); i++){
+            int oktaar = synkListe.get(i).getOkten().getDato().getYear();
+            int oktmnd = synkListe.get(i).getOkten().getDato().getMonth();
+            if(!aar.contains(oktaar)){
+                aar.add(oktaar);
+            }
+            if(!mnd.contains(oktmnd + 1)){
+                mnd.add(oktmnd + 1);
+            }
+            
+        }
     }
     
     //Sletting
@@ -87,5 +103,74 @@ public class Databehandler implements Serializable{
     
     public void setnykat(){ nykat = true; }
     public void setTempKat(String ny){ tempKat = ny; }
-   
+
+    
+    public void setSortert(){
+        if(valgtaar!=0){
+            
+            for(int i=0; i<synkListe.size(); i++){
+                if(synkListe.get(i).getOkten().getDato().getYear() == valgtaar){
+                    sortert.add(synkListe.get(i));
+                }
+            }
+        }
+        if(valgtmnd!=0){
+            for(int i=0; i<synkListe.size(); i++){
+                if(synkListe.get(i).getOkten().getDato().getMonth() == valgtmnd-1){
+                    sortert.add(synkListe.get(i));
+                }
+            }
+        }
+        
+        for(int i=0; i<sortert.size(); i++){
+            synkListe.add(sortert.get(i));
+        }
+    }
+    public int getValgtaar() {
+        return valgtaar;
+    }
+
+    public int getValgtmnd() {
+        return valgtmnd;
+    }
+
+    public void setValgtaar(int valgtaar) {
+        this.valgtaar = valgtaar;
+    }
+
+    public void setValgtmnd(int valgtmnd) {
+        this.valgtmnd = valgtmnd;
+    }
+
+    public ArrayList<OktStatus> getSortert() {
+        return sortert;
+    }
+
+
+    public void setSorteringt() {
+        sortering = true;
+    }
+    public void setSorteringf() {
+        sortering = false;
+    }
+
+    public boolean isSortering() {
+        return sortering;
+    }
+
+    public ArrayList getAar() {
+        return aar;
+    }
+
+    public ArrayList getMnd() {
+        return mnd;
+    }
+
+    public void setAar(ArrayList aar) {
+        this.aar = aar;
+    }
+
+    public void setMnd(ArrayList mnd) {
+        this.mnd = mnd;
+    }  
 }
