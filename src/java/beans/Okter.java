@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import java.sql.*;
 
 @Named("list")
 @SessionScoped
@@ -24,16 +25,27 @@ public class Okter implements Serializable {
     public ArrayList<TreningsOkt> getListe() {
         return liste;
     }
-    
+
     public int getAntallokter() {
         return liste.size();
     }
-    
-    public double getSnittVarighet(){
+
+    public double getSnittVarighet() {
         double sum = 0.0;
-        for(TreningsOkt okt : liste){
+        for (TreningsOkt okt : liste) {
             sum += okt.getVarighet();
         }
-        return sum/liste.size();
+        return sum / liste.size();
+    }
+}
+
+class DatabaseKontakt {
+
+    public static void main(String[] args) throws Exception {
+        String databasedriver = "org.apache.derby.jdbc.ClientDriver";
+        Class.forName(databasedriver);  // laster inn driverklassen
+        String databasenavn =
+                "jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj";
+        Connection forbindelse = DriverManager.getConnection(databasenavn);
     }
 }
