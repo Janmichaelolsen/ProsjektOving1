@@ -7,6 +7,7 @@ public class TreningsOkt{
     private String kategori;
     private String tekst;
 
+    //To konstruktører avhengig av inndataene. Ingen data gitt resulterer i en "null"-økt.
     public TreningsOkt(String dato, int varighet, String kategori, String tekst){
         this.dato = dato;
         this.varighet = varighet;
@@ -18,6 +19,7 @@ public class TreningsOkt{
         nullstill();
     }
     
+    //Metode for å nullstille en økt
     public final synchronized void nullstill(){
         oktnummer = 0;
         varighet = 0;
@@ -25,25 +27,17 @@ public class TreningsOkt{
         tekst = null;
     }
     
+    //Get og set metoder
     public synchronized int getOktnummer() { return oktnummer; }
-    
     public synchronized String getDato() { return dato; }
-
     public synchronized String getKategori() { return kategori; }
-
     public synchronized String getTekst() { return tekst; }
-
     public synchronized int getVarighet() { return varighet; }
-
     
     public synchronized void setDato(String ny) { dato = ny; }
-    
     public synchronized void setKategori(String ny) { kategori = ny; }
-
     public synchronized void setOktnummer(int ny) { oktnummer = ny;  }
-
     public synchronized void setTekst(String ny) { tekst = ny; }
-
     public synchronized void setVarighet(int ny) { varighet = ny; }
     
 }

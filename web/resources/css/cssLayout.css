@@ -30,7 +30,7 @@
     background: URL('../bilder/bg2.png');
     background-size: cover;
     padding: 5px;
-    height: min-content;
+    height: max-content;
     margin: 0px 220px 0px 380px; 
     position: relative;
 }

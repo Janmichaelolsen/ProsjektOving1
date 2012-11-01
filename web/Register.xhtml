@@ -9,13 +9,13 @@
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
     <ui:composition template="./resources/RegTemp.xhtml">
-
+        <!--Ruten øverst med tittel-->
         <ui:define name="top">
             <div align="center">
                 <h1>#{tekster.Regtittel}</h1>
             </div>
         </ui:define>
-
+        <!--Ruten til venstre med registrering av ny økt-->
         <ui:define name="left">
             <div align="center">
                 <h:form>
@@ -68,19 +68,23 @@
             </div>
         </ui:define>
 
+        
+        <!--Ruten i midten med oversikttabell over økter-->
         <ui:define name="content">
             <div align="center">
                 <h:outputStylesheet library ="css" name= "default.css"/>
                 <h:form>
                     <h:outputText rendered="#{not behandler.dataFins}" value="#{tekster.regmelding}"></h:outputText>
-                    <h:dataTable value="#{behandler.synkListe}" var="okter" rendered="#{behandler.dataFins}"
-                                 border="1" bgcolor="white" 
-                                 rowClasses="oddeRad, likeRad" headerClass="hode"
+                    <div style="overflow:auto; width:700px; max-height:500px;">
+                    <h:dataTable value="#{behandler.synkListe}" var="okter" 
+                                 rendered="#{behandler.dataFins}" border="1"
+                                 rowClasses="oddeRad, likeRad" headerClass="hode" footerClass="fot"
                                  columnClasses="rad1, rad2, rad3, rad4, rad5, rad6, rad7"
-                                 styleClass="standard">
+                                 styleClass="standard" bgcolor="whitesmoke">
                         <h:column>
-                            <f:facet name="header">#{tekster.oktnummer}</f:facet>   
+                            <f:facet name="header">#{tekster.oktnummer}</f:facet>
                             <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
+                            <f:facet name="footer">#{tekster.antokt}#{behandler.okter.antallokter}</f:facet>
                         </h:column>
                         <h:column>
                             <f:facet name="header">#{tekster.dato}</f:facet>
@@ -92,6 +96,7 @@
                             <f:facet name="header">#{tekster.varighet}</f:facet>
                             <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
                             <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="5"></h:inputText>
+                            <f:facet name="footer">#{tekster.gjsnitt}#{behandler.okter.snittVarighet}</f:facet>
                         </h:column>
                         <h:column>
                             <f:facet name="header">#{tekster.kategori}</f:facet>
@@ -111,8 +116,8 @@
                             <f:facet name="header">#{tekster.slett}</f:facet>
                             <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
                         </h:column>
-                        <f:facet name="footer">Antall økter: #{behandler.okter.antallokter} Gj.snittlig varighet: #{behandler.okter.snittVarighet}</f:facet>
                     </h:dataTable>
+                    </div>
                     <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}" rendered="#{behandler.dataFins}"></h:commandButton>
                 </h:form>
             </div>

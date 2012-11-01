@@ -1,14 +1,9 @@
 package beans;
 
-import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import java.sql.*;
 
-@Named("list")
-@SessionScoped
-public class Okter implements Serializable {
+public class Okter {
 
     ArrayList<TreningsOkt> liste = new ArrayList<TreningsOkt>();
 
@@ -29,23 +24,13 @@ public class Okter implements Serializable {
     public int getAntallokter() {
         return liste.size();
     }
-
-    public double getSnittVarighet() {
+    
+    public String getSnittVarighet(){
         double sum = 0.0;
         for (TreningsOkt okt : liste) {
             sum += okt.getVarighet();
         }
-        return sum / liste.size();
-    }
-}
-
-class DatabaseKontakt {
-
-    public static void main(String[] args) throws Exception {
-        String databasedriver = "org.apache.derby.jdbc.ClientDriver";
-        Class.forName(databasedriver);  // laster inn driverklassen
-        String databasenavn =
-                "jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj";
-        Connection forbindelse = DriverManager.getConnection(databasenavn);
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(sum/liste.size());
     }
 }
