@@ -44,6 +44,7 @@ public class Databehandler implements Serializable{
         nyokt.setOktnummer(getSisteOktnr());
         okter.regNyOkt(nyokt);
         synkListe.add(new OktStatus(nyokt));
+        alleOkter.add(new OktStatus(nyokt));
         tempOkt.nullstill();
         
         for(int i=0; i<synkListe.size(); i++){
@@ -60,37 +61,56 @@ public class Databehandler implements Serializable{
     }
     
     public void oppdatersort(){
-        for(int i=0; i<synkListe.size(); i++){
-                alleOkter.add(synkListe.get(i));
-        }
         if(valgtaar!=0){
+            synkListe.clear();
+            for(int i=0; i<alleOkter.size(); i++){
+                synkListe.add(alleOkter.get(i));
+            }
             for(int i=0; i<synkListe.size(); i++){
                 if(synkListe.get(i).getOkten().getDato().getYear() == valgtaar){
                     sortert.add(synkListe.get(i));
-                    
                 }
             }
             synkListe.clear();
             for(int i=0; i<sortert.size(); i++){
-                synkListe.add(sortert.get(i));
+                synkListe.add(sortert.get(i)); 
+            }
+            sortert.clear();
         }
-        }
+        
+        
         if(valgtmnd!=0){
-            for(int i=0; i<synkListe.size(); i++){
-                if(synkListe.get(i).getOkten().getDato().getMonth()+1 == valgtmnd){
-                    sortert.add(synkListe.get(i));
+            for(int i=0; i<alleOkter.size(); i++){
+                if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd){
+                    sortert.add(alleOkter.get(i));
                 }
             }
             synkListe.clear();
             for(int i=0; i<sortert.size(); i++){
                 synkListe.add(sortert.get(i));
             }
+            sortert.clear();
         }
+        
+        
         if(valgtmnd == 0 && valgtaar == 0){
             synkListe.clear();
             for(int i=0; i<alleOkter.size(); i++){
                 synkListe.add(alleOkter.get(i));
+            }
         }
+        
+         if(valgtmnd != 0 && valgtaar != 0){
+             for(int i=0; i<alleOkter.size(); i++){
+                if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd && alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
+                    sortert.add(alleOkter.get(i));
+                }
+            }
+            synkListe.clear();
+            for(int i=0; i<sortert.size(); i++){
+                synkListe.add(sortert.get(i));
+            }
+            sortert.clear();
         }
     }
     
@@ -145,7 +165,7 @@ public class Databehandler implements Serializable{
     }
 
     public int getValgtmnd() {
-        return valgtmnd;
+        return valgtmnd+1;
     }
 
     public void setValgtaar(int valgtaar) {
