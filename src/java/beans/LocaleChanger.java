@@ -1,12 +1,12 @@
 package beans;
 
 import java.util.Locale;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 
-@Named(value = "localeChanger")
+@Named("localeChanger")
 @Dependent
 public class LocaleChanger {
 

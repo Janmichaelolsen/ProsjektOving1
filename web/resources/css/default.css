@@ -5,7 +5,6 @@ body {
     margin: 10px;
     background: url('../bilder/bg.png') fixed;
     background-size: cover;
-
 }
 
 h1 {
@@ -19,7 +18,7 @@ h1 {
 
 h2 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-    font-size:  20px;
+    font-size:  30px;
     font-weight: bold;
     margin: 0px;
     padding: 0px;
@@ -41,15 +40,13 @@ p {
 
 .likeRad{
     height: 25px;
-    width: 100px;
     background: whitesmoke;
 }
 .likeRad:hover{
-    background: snow;
+    background: white;
 }
 .oddeRad{
     height: 25px;
-    width: 100px;
     background: lightsteelblue;
 }
 .oddeRad:hover{
@@ -61,10 +58,10 @@ p {
     font-weight: bold;
 }
 
-.rad1{ width: 50px; text-align: center}
-.rad2{ width: 70px; text-align: center}
-.rad3{ width: 80px; text-align: center}
-.rad4{ width: 100px; text-align: center}
-.rad5{ width: 200px; text-align: center}
-.rad6{ width: 50px; text-align: center}
-.rad7{ width: 50px; text-align: center}
+.rad1{ width: 30px; text-align: center}
+.rad2{ width: 200px; text-align: center}
+.rad3{ width: 150px; text-align: center}
+.rad4{ width: 200px; text-align: center}
+.rad5{ width: 500px; text-align: center}
+.rad6{ width: 100px; text-align: center}
+.rad7{ width: 100px; text-align: center}

@@ -1,14 +1,9 @@
 package beans;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 
-@Named("list")
-@SessionScoped
-public class Okter implements Serializable {
+public class Okter {
 
     ArrayList<TreningsOkt> liste = new ArrayList<TreningsOkt>();
 

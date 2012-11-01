@@ -1,3 +1,6 @@
+/* 
+ Dette er kontrollklassen som jsf kommuniserer med
+ */
 package beans;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -14,13 +17,10 @@ import javax.inject.Named;
 public class Databehandler implements Serializable{
     private TreningsOkt tempOkt = new TreningsOkt();
     private Okter okter = new Okter();
-    
     private ArrayList kategorier = new ArrayList();
     private boolean nykat = false;
     private String tempKat;
-    
     List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
-    
     Date date = new Date();
     
     public Databehandler(){
@@ -28,12 +28,13 @@ public class Databehandler implements Serializable{
         tempOkt.setDato(sdf.format(date));
     }
     
+    //Returnerer true hvis data finnes i tabellen
     public synchronized boolean getDataFins(){
         return synkListe.size() > 0;
     }
     
+    //Registrering
     public void regOkt(){
-        //Registrering
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(), 
                                             tempOkt.getKategori(), tempOkt.getTekst());
         nyokt.setOktnummer(getSisteOktnr());
@@ -42,6 +43,7 @@ public class Databehandler implements Serializable{
         tempOkt.nullstill();
     }
     
+    //Sletting
     public void oppdater(){
         int indeks = synkListe.size() - 1;
         while (indeks >= 0) {
@@ -54,12 +56,23 @@ public class Databehandler implements Serializable{
         }
     }
     
+    //Henter ut øktnummeret som er det neste etter tabellens siste.
     public int getSisteOktnr(){ 
         if(synkListe.isEmpty()){
             return 1;
         }
         return synkListe.get(synkListe.size()-1).getOkten().getOktnummer()+1; 
  }  
+    
+    public ArrayList getListe(){ return okter.getListe(); }
+    public Okter getOkter() { return okter;}
+    
+    public synchronized List<OktStatus> getSynkListe(){ return synkListe; }
+    public synchronized TreningsOkt getTempOkt(){ return tempOkt; }
+    public synchronized void setTempOkt(TreningsOkt ny){ tempOkt = ny; }
+    
+    
+    //Metoder for tillegg av kategori
     public void leggTilKategori(){
         if(!tempKat.equals("")){
             kategorier.add(tempKat);
@@ -68,18 +81,11 @@ public class Databehandler implements Serializable{
         nykat = false;
     }
     
-    public void setnykat(){ 
-        if(!nykat){
-            nykat=true;
-        }
-    }
     public boolean getNykat(){ return nykat; }
     public String getTempKat(){ return tempKat; }
-    public void setTempKat(String ny){ tempKat = ny; }
-    public ArrayList getListe(){ return okter.getListe(); }
-    public Okter getOkter() { return okter;}
-    public synchronized List<OktStatus> getSynkListe(){ return synkListe; }
-    public synchronized TreningsOkt getTempOkt(){ return tempOkt; }
     public ArrayList getTillegsOkter(){ return kategorier; }
-    public synchronized void setTempOkt(TreningsOkt ny){ tempOkt = ny; }
+    
+    public void setnykat(){ nykat = true; }
+    public void setTempKat(String ny){ tempKat = ny; }
+   
 }
