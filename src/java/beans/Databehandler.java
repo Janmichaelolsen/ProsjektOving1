@@ -3,6 +3,7 @@
  */
 package beans;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -51,7 +52,7 @@ public class Databehandler implements Serializable{
     //Legger til nye år i listen til filtreringen.
     public void leggtilFilt(){
         for(int i=0; i<synkListe.size(); i++){
-            int oktaar = synkListe.get(i).getOkten().getDato().getYear();
+            int oktaar = synkListe.get(i).getOkten().getDato().getYear()+1900;
             int oktmnd = synkListe.get(i).getOkten().getDato().getMonth();
             if(!aar.contains(oktaar)){
                 aar.add(oktaar);
@@ -60,14 +61,17 @@ public class Databehandler implements Serializable{
                 mnd.add(oktmnd + 1);
             }
         }
+        Collections.sort(aar);
+        Collections.sort(mnd);
     }
     
     //Metoden for å filtrere og legge til aktuelle økter i listen.
     public void filtrer(){
+        leggtilFilt();
         synkListe.clear();
         for(int i=0; i<alleOkter.size(); i++){
         if(valgtaar!=0 && valgtmnd == 0){
-                if(alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
+                if(alleOkter.get(i).getOkten().getDato().getYear()+1900 == valgtaar){
                     synkListe.add(alleOkter.get(i));
                 }
             }
@@ -81,7 +85,7 @@ public class Databehandler implements Serializable{
         }
          if(valgtmnd != 0 && valgtaar != 0){
                 if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd && 
-                        alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
+                        alleOkter.get(i).getOkten().getDato().getYear()+1900 == valgtaar){
                     synkListe.add(alleOkter.get(i));
                 }
             }
@@ -126,6 +130,20 @@ public class Databehandler implements Serializable{
         }
         nykat = false;
     }
+    
+    public int getAntallokter() {
+        return synkListe.size();
+    }
+    
+    public String getSnittVarighet(){
+        double sum = 0.0;
+        for (OktStatus okt : synkListe) {
+            sum += okt.getOkten().getVarighet();
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(sum/synkListe.size());
+    }
+    
     
     public boolean getNykat(){ return nykat; }
     public String getTempKat(){ return tempKat; }

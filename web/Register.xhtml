@@ -111,14 +111,14 @@
                             <h:column>
                                 <f:facet name="header">#{tekster.oktnummer}</f:facet>
                                 <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
-                                <f:facet name="footer">#{tekster.antokt}#{behandler.okter.antallokter}</f:facet>
+                                <f:facet name="footer">#{tekster.antokt}#{behandler.antallokter}</f:facet>
                             </h:column>
 
                             <h:column>
                                 <f:facet name="header">#{tekster.dato}</f:facet>
                                 <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
-                                <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="4">
+                                <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="6">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/></h:inputText>
                             </h:column>
 
@@ -126,7 +126,7 @@
                                 <f:facet name="header">#{tekster.varighet}</f:facet>
                                 <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="5"></h:inputText>
-                                <f:facet name="footer">#{tekster.gjsnitt}#{behandler.okter.snittVarighet}</f:facet>
+                                <f:facet name="footer">#{tekster.gjsnitt}#{behandler.snittVarighet}</f:facet>
                             </h:column>
 
                             <h:column>
@@ -143,7 +143,7 @@
 
                             <h:column>
                                 <f:facet name="header">#{tekster.endre}</f:facet>
-                                <h:selectBooleanCheckbox value ="#{okter.editable}" onclick="submit()"></h:selectBooleanCheckbox>
+                                <h:selectBooleanCheckbox value="#{okter.editable}" onclick="submit()#{behandler.filtrer()}"></h:selectBooleanCheckbox>
                             </h:column>
 
                             <h:column>
