@@ -6,10 +6,17 @@ import java.util.ArrayList;
 public class Okter {
 
     ArrayList<TreningsOkt> liste = new ArrayList<TreningsOkt>();
+    DBOkter db = new DBOkter();
 
     public void regNyOkt(TreningsOkt okt) {
         if (okt != null) {
             liste.add(okt);
+        }
+    }
+    
+    public void lesDB(TreningsOkt okt) throws Exception{
+        if (okt!= null){
+            liste.add(db.lesInn());
         }
     }
 
