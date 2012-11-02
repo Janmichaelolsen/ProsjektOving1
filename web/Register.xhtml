@@ -64,11 +64,9 @@
                             <td><h:commandButton value="Send" action="#{behandler.regOkt()}"/></td>
                         </tr>
                     </table>
-
                 </h:form>
             </div>
         </ui:define>
-
 
         <!--Ruten i midten med oversikttabell over økter-->
         <ui:define name="content">
@@ -76,7 +74,7 @@
                 <table>
                     <tr>
                         <td>
-                        <h:outputText value="#{tekster.sorter}:" rendered="#{behandler.dataFins}"></h:outputText>
+                            <h:outputText value="#{tekster.sorter}:" rendered="#{behandler.dataFins}"></h:outputText>
                         </td>
                     </tr>
                     <tr>
@@ -93,9 +91,9 @@
                                 <f:selectItems value="#{behandler.mnd}" var="mnd"
                                                itemLabel="#{mnd}" itemValue="#{mnd}"></f:selectItems>
                             </h:selectOneMenu>
-                            <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdatersort()}" 
+                            <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.filtrer()}" 
                                              rendered="#{behandler.dataFins}"/>
-                            </td>
+                        </td>
                     </tr>
                 </table>
             </h:form>
@@ -109,46 +107,52 @@
                                      rowClasses="oddeRad, likeRad" headerClass="hode" footerClass="fot"
                                      columnClasses="rad1, rad2, rad3, rad4, rad5, rad6, rad7"
                                      styleClass="standard" bgcolor="whitesmoke">
+
                             <h:column>
                                 <f:facet name="header">#{tekster.oktnummer}</f:facet>
                                 <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
                                 <f:facet name="footer">#{tekster.antokt}#{behandler.okter.antallokter}</f:facet>
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.dato}</f:facet>
                                 <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
                                 <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="4">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/></h:inputText>
-
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.varighet}</f:facet>
                                 <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="5"></h:inputText>
                                 <f:facet name="footer">#{tekster.gjsnitt}#{behandler.okter.snittVarighet}</f:facet>
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.kategori}</f:facet>
                                 <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.tekst}</f:facet>
                                 <h:outputText value ="#{okter.okten.tekst}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.tekst}" rendered="#{okter.editable}" size="20"></h:inputText>
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.endre}</f:facet>
                                 <h:selectBooleanCheckbox value ="#{okter.editable}" onclick="submit()"></h:selectBooleanCheckbox>
                             </h:column>
+
                             <h:column>
                                 <f:facet name="header">#{tekster.slett}</f:facet>
                                 <h:selectBooleanCheckbox value ="#{okter.skalslettes}" onclick="submit()"></h:selectBooleanCheckbox>
                             </h:column>
                         </h:dataTable>
                     </div>
-                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.oppdater()}" rendered="#{behandler.dataFins}"></h:commandButton>
+                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.slett()}" rendered="#{behandler.dataFins}"></h:commandButton>
                 </h:form>
             </div>
         </ui:define>

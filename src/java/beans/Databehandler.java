@@ -22,7 +22,6 @@ public class Databehandler implements Serializable{
     List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
     Date date = new Date();
     private List<OktStatus> alleOkter = Collections.synchronizedList(new ArrayList<OktStatus>());
-    private List<OktStatus> sortert = Collections.synchronizedList(new ArrayList<OktStatus>());
     private ArrayList aar = new ArrayList();
     private ArrayList mnd = new ArrayList();
     private int valgtaar;
@@ -46,7 +45,11 @@ public class Databehandler implements Serializable{
         synkListe.add(new OktStatus(nyokt));
         alleOkter.add(new OktStatus(nyokt));
         tempOkt.nullstill();
-        
+        leggtilFilt();
+    }
+    
+    //Legger til nye år i listen til filtreringen.
+    public void leggtilFilt(){
         for(int i=0; i<synkListe.size(); i++){
             int oktaar = synkListe.get(i).getOkten().getDato().getYear();
             int oktmnd = synkListe.get(i).getOkten().getDato().getMonth();
@@ -56,66 +59,37 @@ public class Databehandler implements Serializable{
             if(!mnd.contains(oktmnd + 1)){
                 mnd.add(oktmnd + 1);
             }
-            
         }
     }
     
-    public void oppdatersort(){
-        if(valgtaar!=0){
-            synkListe.clear();
-            for(int i=0; i<alleOkter.size(); i++){
-                synkListe.add(alleOkter.get(i));
-            }
-            for(int i=0; i<synkListe.size(); i++){
-                if(synkListe.get(i).getOkten().getDato().getYear() == valgtaar){
-                    sortert.add(synkListe.get(i));
+    //Metoden for å filtrere og legge til aktuelle økter i listen.
+    public void filtrer(){
+        synkListe.clear();
+        for(int i=0; i<alleOkter.size(); i++){
+        if(valgtaar!=0 && valgtmnd == 0){
+                if(alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
+                    synkListe.add(alleOkter.get(i));
                 }
             }
-            synkListe.clear();
-            for(int i=0; i<sortert.size(); i++){
-                synkListe.add(sortert.get(i)); 
-            }
-            sortert.clear();
-        }
-        
-        
-        if(valgtmnd!=0){
-            for(int i=0; i<alleOkter.size(); i++){
+        if(valgtmnd!=0 && valgtaar == 0){
                 if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd){
-                    sortert.add(alleOkter.get(i));
+                    synkListe.add(alleOkter.get(i));
                 }
             }
-            synkListe.clear();
-            for(int i=0; i<sortert.size(); i++){
-                synkListe.add(sortert.get(i));
-            }
-            sortert.clear();
-        }
-        
-        
         if(valgtmnd == 0 && valgtaar == 0){
-            synkListe.clear();
-            for(int i=0; i<alleOkter.size(); i++){
-                synkListe.add(alleOkter.get(i));
-            }
+                synkListe.add(alleOkter.get(i));   
         }
-        
          if(valgtmnd != 0 && valgtaar != 0){
-             for(int i=0; i<alleOkter.size(); i++){
-                if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd && alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
-                    sortert.add(alleOkter.get(i));
+                if(alleOkter.get(i).getOkten().getDato().getMonth()+1 == valgtmnd && 
+                        alleOkter.get(i).getOkten().getDato().getYear() == valgtaar){
+                    synkListe.add(alleOkter.get(i));
                 }
             }
-            synkListe.clear();
-            for(int i=0; i<sortert.size(); i++){
-                synkListe.add(sortert.get(i));
-            }
-            sortert.clear();
         }
     }
     
     //Sletting
-    public void oppdater(){
+    public void slett(){
         int indeks = synkListe.size() - 1;
         while (indeks >= 0) {
             OktStatus os = synkListe.get(indeks);
@@ -126,7 +100,6 @@ public class Databehandler implements Serializable{
                 }
                 indeks--;
         }
-        
     }
     
     //Henter ut øktnummeret som er det neste etter tabellens siste.
@@ -169,5 +142,4 @@ public class Databehandler implements Serializable{
     public void setAar(ArrayList aar) { this.aar = aar; }
     public void setMnd(ArrayList mnd) { this.mnd = mnd; }  
     public List<OktStatus> getAlleOkter() { return alleOkter; }
-    public void setAlleOkter(List<OktStatus> alleOkter) { this.alleOkter = alleOkter; }
 }
