@@ -34,7 +34,7 @@ public class Databehandler implements Serializable{
     
     //Returnerer true hvis data finnes i tabellen
     public synchronized boolean getDataFins(){
-        return synkListe.size() > 0;
+        return alleOkter.size() > 0;
     }
     
     //Registrering
@@ -122,6 +122,7 @@ public class Databehandler implements Serializable{
             if (os.getSkalslettes()) {
                 okter.fjernOkt(os.getOkten()); // sletter i problemdomeneobjekt
                 synkListe.remove(indeks);  // sletter i presentasjonsobjektet
+                alleOkter.remove(indeks);
                 }
                 indeks--;
         }
