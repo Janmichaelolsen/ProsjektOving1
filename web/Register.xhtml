@@ -109,13 +109,21 @@
                                      styleClass="standard" bgcolor="whitesmoke">
 
                             <h:column>
-                                <f:facet name="header">#{tekster.oktnummer}</f:facet>
+                                <f:facet name="header">
+                                    <h:commandLink action="#{behandler.sorterListeOktnr}">
+                                        #{tekster.oktnummer}
+                                    </h:commandLink>
+                                </f:facet>
                                 <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
                                 <f:facet name="footer">#{tekster.antokt}#{behandler.antallokter}</f:facet>
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">#{tekster.dato}</f:facet>
+                                <f:facet name="header">
+                                    <h:commandLink action="#{behandler.sorterListeDato}">
+                                        #{tekster.dato}
+                                    </h:commandLink>
+                                </f:facet>
                                 <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
                                 <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="6">
@@ -123,20 +131,32 @@
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">#{tekster.varighet}</f:facet>
+                                <f:facet name="header">
+                                    <h:commandLink action="#{behandler.sorterListeVarighet}">
+                                        #{tekster.varighet}
+                                    </h:commandLink>
+                                </f:facet>
                                 <h:outputText value ="#{okter.okten.varighet}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.varighet}" rendered="#{okter.editable}" size="5"></h:inputText>
                                 <f:facet name="footer">#{tekster.gjsnitt}#{behandler.snittVarighet}</f:facet>
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">#{tekster.kategori}</f:facet>
+                                <f:facet name="header">
+                                    <h:commandLink action="#{behandler.sorterListeKategori}">
+                                        #{tekster.kategori}
+                                    </h:commandLink>
+                                </f:facet>
                                 <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">#{tekster.tekst}</f:facet>
+                                <f:facet name="header">
+                                     <h:commandLink action="#{behandler.sorterListeTekst}">
+                                        #{tekster.tekst}
+                                    </h:commandLink>
+                                </f:facet>
                                 <h:outputText value ="#{okter.okten.tekst}" rendered="#{not okter.editable}"></h:outputText>
                                 <h:inputText value="#{okter.okten.tekst}" rendered="#{okter.editable}" size="20"></h:inputText>
                             </h:column>

@@ -4,7 +4,7 @@ import java.util.Date;
 public class TreningsOkt{
     private int oktnummer;
     private Date dato;
-    private int varighet;
+    private Integer varighet;
     private String kategori;
     private String tekst;
 
@@ -29,17 +29,17 @@ public class TreningsOkt{
     }
     
     //Get og set metoder
-    public synchronized int getOktnummer() { return oktnummer; }
+    public synchronized Integer getOktnummer() { return oktnummer; }
     public synchronized Date getDato() { return dato; }
     public synchronized String getKategori() { return kategori; }
     public synchronized String getTekst() { return tekst; }
-    public synchronized int getVarighet() { return varighet; }
+    public synchronized Integer getVarighet() { return varighet; }
     
     public synchronized void setDato(Date ny) { dato = ny; }
     public synchronized void setKategori(String ny) { kategori = ny; }
-    public synchronized void setOktnummer(int ny) { oktnummer = ny;  }
+    public synchronized void setOktnummer(Integer ny) { oktnummer = ny;  }
     public synchronized void setTekst(String ny) { tekst = ny; }
-    public synchronized void setVarighet(int ny) { varighet = ny; }
+    public synchronized void setVarighet(Integer ny) { varighet = ny; }
     
 }
 
