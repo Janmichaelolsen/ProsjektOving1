@@ -18,6 +18,7 @@ import javax.inject.Named;
 public class Databehandler implements Serializable {
 
     private TreningsOkt tempOkt = new TreningsOkt();
+    DBOkter db;
     private Okter okter = new Okter();
     private ArrayList kategorier = new ArrayList();
     private boolean nykat = false;
@@ -33,6 +34,11 @@ public class Databehandler implements Serializable {
 
     public Databehandler() {
         tempOkt.setDato(date);
+        try{
+            alleOkter = db.lesInn();
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     //Returnerer true hvis data finnes i tabellen
