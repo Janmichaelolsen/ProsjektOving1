@@ -27,7 +27,7 @@
                         <tr>
                             <td>#{tekster.dato}:</td>
                             <td><h:inputText value="#{behandler.tempOkt.dato}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/></h:inputText></td>
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/></h:inputText></td>
                         </tr>
                         <tr>
                             <td>#{tekster.varighet}:</td>
@@ -91,7 +91,7 @@
                                 <f:selectItems value="#{behandler.mnd}" var="mnd"
                                                itemLabel="#{mnd}" itemValue="#{mnd}"></f:selectItems>
                             </h:selectOneMenu>
-                            <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.filtrer()}" 
+                            <h:commandButton value ="#{tekster.filtrer}" action="#{behandler.filtrer()}" 
                                              rendered="#{behandler.dataFins}"/>
                         </td>
                     </tr>
@@ -125,9 +125,9 @@
                                     </h:commandLink>
                                 </f:facet>
                                 <h:outputText value ="#{okter.okten.dato}" rendered="#{not okter.editable}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/></h:outputText>
                                 <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="6">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/></h:inputText>
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/></h:inputText>
                             </h:column>
 
                             <h:column>
@@ -180,7 +180,7 @@
                             </h:column>
                         </h:dataTable>
                     </div>
-                    <h:commandButton value ="#{tekster.oppdater}" action="#{behandler.slett()}" rendered="#{behandler.dataFins}"></h:commandButton>
+                    <h:commandButton value ="#{tekster.slett}" action="#{behandler.slett()}" rendered="#{behandler.dataFins}"></h:commandButton>
                 </h:form>
             </div>
         </ui:define>

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TimeZone;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -145,6 +146,10 @@ public class Databehandler implements Serializable {
                 }
             }
         }
+    }
+    public TimeZone getTimeZone(){
+        TimeZone tz = TimeZone.getDefault();
+        return tz;
     }
 
     public String sorterListeOktnr() {
