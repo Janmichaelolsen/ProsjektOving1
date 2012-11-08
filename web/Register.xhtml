@@ -148,7 +148,15 @@
                                     </h:commandLink>
                                 </f:facet>
                                 <h:outputText value ="#{okter.okten.kategori}" rendered="#{not okter.editable}"></h:outputText>
-                                <h:inputText value="#{okter.okten.kategori}" rendered="#{okter.editable}" size="7"></h:inputText>
+                                <h:selectOneMenu value ="#{okter.okten.kategori}" rendered="#{okter.editable}">
+                                    <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
+                                    <f:selectItem itemLabel="#{tekster.svømming}" itemValue="#{tekster.svømming}"></f:selectItem>
+                                    <f:selectItem itemLabel="#{tekster.løping}" itemValue="#{tekster.løping}"></f:selectItem>
+                                    <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
+                                    <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
+                                    <f:selectItems value="#{behandler.tillegsOkter}" var="tillegg" 
+                                                   itemLabel="#{tillegg}" itemValue="#{tillegg}"></f:selectItems>
+                                </h:selectOneMenu>
                             </h:column>
 
                             <h:column>

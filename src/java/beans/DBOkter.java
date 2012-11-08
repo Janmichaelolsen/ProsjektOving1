@@ -8,7 +8,6 @@ package beans;
  *
  * @author Sigve
  */
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,50 +17,105 @@ public class DBOkter {
 
     private String dbdriver = "org.apache.derby.jdbc.ClientDriver";
     private String dbnavn = "jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj";
+    Connection forbindelse;
+    private int nr = 1;
 
-//    public void lesInn() throws Exception{
-//        List<OktStatus> dbliste = Collections.synchronizedList(new ArrayList<OktStatus>());
-//        Class.forName(dbdriver);  // laster inn driverklassen
-//        Connection forbindelse = DriverManager.getConnection(dbnavn);
-//        Statement setning = forbindelse.createStatement();
-//        ResultSet res = setning.executeQuery("select * from WAPLJ_TRENING");
-//        while (res.next()) {
-//            Date dato = res.getDate("dato");
-//            String kategori = res.getString("kategori");
-//            tekst = res.getString("tekst");
-//            int varighet = res.getInt("varighet");
-//            System.out.println(dato + kategori + tekst + varighet);
-//            TreningsOkt nyokt = new TreningsOkt(dato, varighet, kategori, tekst);
-//            OktStatus stat = new OktStatus(nyokt);
-//            dbliste.add(stat);
-//            
-//            
-//        }
-//        res.close();
-//        setning.close();
-//        forbindelse.close();
-//    }
-    
-    public List<OktStatus> lesInn() throws Exception{
-        List<OktStatus> dbliste = Collections.synchronizedList(new ArrayList<OktStatus>());
-        Class.forName("org.apache.derby.jdbc.ClientDriver");  // laster inn driverklassen
-        Connection forbindelse = DriverManager.getConnection("jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj");
-        Statement setning = forbindelse.createStatement();
-        ResultSet res = setning.executeQuery("select * from WAPLJ.TRENING");
-        while (res.next()) {
-            Date dato = res.getDate("dato");
-            String kategori = res.getString("kategorinavn");
-            String tekst = res.getString("tekst");
-            int varighet = res.getInt("varighet");
-            TreningsOkt nyokt = new TreningsOkt(dato, varighet, kategori, tekst);
-            OktStatus stat = new OktStatus(nyokt);
-            dbliste.add(stat);
-            
-            
+    private void åpneForbindelse() {
+        try {
+            forbindelse = DriverManager.getConnection(dbnavn);
+        } catch (SQLException e) {
+            Opprydder.skrivMelding(e, "Konstruktøren");
+            Opprydder.lukkForbindelse(forbindelse);
         }
-        res.close();
-        setning.close();
-        forbindelse.close();
+    }
+
+    private void lukkForbindelse() {
+        System.out.println("Lukker databaseforbindelsen");
+        Opprydder.lukkForbindelse(forbindelse);
+    }
+
+    public ArrayList<TreningsOkt> lesInn() {
+        ArrayList<TreningsOkt> dbliste = new ArrayList<TreningsOkt>();
+        try {
+            Class.forName(dbdriver);  // laster inn driverklassen
+            forbindelse = DriverManager.getConnection(dbnavn);
+            Statement setning = forbindelse.createStatement();
+            ResultSet res = setning.executeQuery("select * from WAPLJ.TRENING");
+            while (res.next()) {
+                int oktnr = res.getInt("Oktnr");
+                Date dato = res.getDate("Dato");
+                String kategori = res.getString("Kategorinavn");
+                String tekst = res.getString("Tekst");
+                int varighet = res.getInt("Varighet");
+                TreningsOkt nyokt = new TreningsOkt(oktnr, dato, varighet, kategori, tekst);
+                dbliste.add(nyokt);
+            }
+            res.close();
+            setning.close();
+            forbindelse.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException q) {
+            System.out.println(q);
+        }
         return dbliste;
+    }
+
+    public void SkrivTil(TreningsOkt okt) {
+        PreparedStatement regnyokt = null;
+        åpneForbindelse();
+        try {
+            Class.forName(dbdriver);  // laster inn driverklassen
+            forbindelse = DriverManager.getConnection(dbnavn);
+            forbindelse.setAutoCommit(false);
+            regnyokt = forbindelse.prepareStatement("insert into TRENING(DATO, VARIGHET, KATEGORINAVN, TEKST, BRUKERNAVN) values(?, ?, ?, ?, ?)");
+            regnyokt.setDate(1, new java.sql.Date(okt.getDato().getTime()));
+            regnyokt.setInt(2, okt.getVarighet());
+            regnyokt.setString(3, okt.getKategori());
+            regnyokt.setString(4, okt.getTekst());
+            regnyokt.setString(5, "anne");
+            System.out.println("Registrerer");
+            regnyokt.executeUpdate();
+
+            forbindelse.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(regnyokt);
+        }
+        lukkForbindelse();
+    }
+    
+    public void Endre(TreningsOkt okt) {
+        PreparedStatement endre = null;
+        åpneForbindelse();
+        try {
+            Class.forName(dbdriver);
+            forbindelse = DriverManager.getConnection(dbnavn);
+            forbindelse.setAutoCommit(false);
+            endre = forbindelse.prepareStatement("update trening set dato=?, varighet=?, kategorinavn=?, tekst=? where oktnr=?");
+            endre.setDate(1, new java.sql.Date(okt.getDato().getTime()));
+            endre.setInt(2, okt.getVarighet());
+            endre.setString(3, okt.getKategori());
+            endre.setString(4, okt.getTekst());
+            endre.setInt(5, okt.getOktnummer());
+            
+            endre.executeUpdate();
+
+            forbindelse.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(endre);
+        }
+        lukkForbindelse();
     }
 }

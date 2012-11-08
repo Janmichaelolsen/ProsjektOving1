@@ -20,6 +20,14 @@ public class TreningsOkt{
         nullstill();
     }
     
+    public TreningsOkt(int oktnr, Date dato, int varighet, String kategori, String tekst){
+        this.oktnummer = oktnr;
+        this.dato = dato;
+        this.varighet = varighet;
+        this.kategori = kategori;
+        this.tekst = tekst;
+    }
+    
     //Metode for å nullstille en økt
     public final synchronized void nullstill(){
         oktnummer = 0;

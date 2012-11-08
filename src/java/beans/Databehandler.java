@@ -5,10 +5,10 @@ package beans;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -18,14 +18,14 @@ import javax.inject.Named;
 public class Databehandler implements Serializable {
 
     private TreningsOkt tempOkt = new TreningsOkt();
-    DBOkter db;
+    DBOkter db = new DBOkter();
     private Okter okter = new Okter();
     private ArrayList kategorier = new ArrayList();
     private boolean nykat = false;
     private String tempKat;
-    List<OktStatus> synkListe = Collections.synchronizedList(new ArrayList<OktStatus>());
+    List<OktStatus> synkListe = hentfraDB();
     Date date = new Date();
-    private List<OktStatus> alleOkter = Collections.synchronizedList(new ArrayList<OktStatus>());
+    private List<OktStatus> alleOkter = hentfraDB();
     private ArrayList aar = new ArrayList();
     private ArrayList mnd = new ArrayList();
     private int valgtaar;
@@ -34,13 +34,34 @@ public class Databehandler implements Serializable {
 
     public Databehandler() {
         tempOkt.setDato(date);
+        filtrer();
+    }
+    
+    public List<OktStatus> hentfraDB(){
+        List<OktStatus> dbokter = Collections.synchronizedList(new ArrayList<OktStatus>());
+        ArrayList<TreningsOkt> liste = okter.getListe();
+        for(int i=0; i<liste.size(); i++){
+            OktStatus nyokt = new OktStatus(liste.get(i));
+            dbokter.add(nyokt);
+        }
+        return dbokter;
+    }
+    
+    public void skrivtilDB(TreningsOkt okt){
         try{
-            alleOkter = db.lesInn();
-        } catch(Exception e){
+        db.SkrivTil(okt);
+        }catch(Exception e){
             System.out.println(e);
         }
     }
-
+    
+    public void endreDB(TreningsOkt okt){
+        try{
+        db.Endre(okt);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
     //Returnerer true hvis data finnes i tabellen
     public synchronized boolean getDataFins() {
         return alleOkter.size() > 0;
@@ -50,10 +71,12 @@ public class Databehandler implements Serializable {
     public void regOkt() {
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(),
                 tempOkt.getKategori(), tempOkt.getTekst());
+        skrivtilDB(nyokt);
         nyokt.setOktnummer(getSisteOktnr());
         okter.regNyOkt(nyokt);
-        synkListe.add(new OktStatus(nyokt));
-        alleOkter.add(new OktStatus(nyokt));
+        OktStatus nystat = new OktStatus(nyokt);
+        synkListe.add(nystat);
+        alleOkter.add(nystat);
         tempOkt.nullstill();
         leggtilFilt();
     }
@@ -95,7 +118,7 @@ public class Databehandler implements Serializable {
                 synkListe.add(alleOkter.get(i));
             }
             if (valgtmnd != 0 && valgtaar != 0) {
-                if (oktmnd == valgtmnd && oktmnd == valgtaar) {
+                if (oktmnd == valgtmnd && oktaar == valgtaar) {
                     synkListe.add(alleOkter.get(i));
                 }
             }
