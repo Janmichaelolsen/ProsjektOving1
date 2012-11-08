@@ -49,14 +49,15 @@ public class Databehandler implements Serializable {
     public void regOkt() {
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(),
                 tempOkt.getKategori(), tempOkt.getTekst());
-        skrivtilDB(nyokt);
-        nyokt.setOktnummer(getSisteOktnr());
-        okter.regNyOkt(nyokt);
-        OktStatus nystat = new OktStatus(nyokt);
-        synkListe.add(nystat);
-        alleOkter.add(nystat);
-        tempOkt.nullstill();
-        leggtilFilt();
+        if(skrivtilDB(nyokt)){
+            nyokt.setOktnummer(getSisteOktnr());
+            okter.regNyOkt(nyokt);
+            OktStatus nystat = new OktStatus(nyokt);
+            synkListe.add(nystat);
+            alleOkter.add(nystat);
+            tempOkt.nullstill();
+            leggtilFilt();
+        }
     }
 
     //Sletting
@@ -97,12 +98,13 @@ public class Databehandler implements Serializable {
     
     //Metoder for tillegg av kategori
     public void leggTilKategori() {
+        if (!tempKat.equals("")) {
         try{
             db.Leggtilkat(tempKat);
         } catch(Exception e){
             System.out.println(e);
+            e.printStackTrace();
         }
-        if (!tempKat.equals("")) {
             kategorier.add(tempKat);
             tempKat = "";
         }
@@ -285,12 +287,15 @@ public class Databehandler implements Serializable {
         }
         return dbokter;
     }
-    public void skrivtilDB(TreningsOkt okt){
+    public boolean skrivtilDB(TreningsOkt okt){
         try{
         db.SkrivTil(okt);
         }catch(Exception e){
             System.out.println(e);
+            return false;
         }
+        return true;
+        
     }
     
     public void endreDB(TreningsOkt okt){
