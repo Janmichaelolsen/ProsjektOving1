@@ -58,8 +58,6 @@ public class Databehandler implements Serializable {
         leggtilFilt();
     }
 
-    
-
     //Sletting
     public void slett() {
         slettDB();

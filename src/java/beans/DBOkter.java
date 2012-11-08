@@ -39,7 +39,7 @@ public class DBOkter {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
-            ResultSet res = setning.executeQuery("select * from WAPLJ.TRENING");
+            ResultSet res = setning.executeQuery("select * from trening");
             while (res.next()) {
                 int oktnr = res.getInt("Oktnr");
                 Date dato = res.getDate("Dato");
@@ -105,7 +105,6 @@ public class DBOkter {
             endre.setInt(5, okt.getOktnummer());
             
             endre.executeUpdate();
-            
 
             forbindelse.commit();
         } catch (SQLException e) {
