@@ -21,7 +21,7 @@
 #left{
     float: left;
     position: fixed;
-    background: URL('../bilder/bg2.png');
+    background: URL('../bilder/bg3.png');
     background-size: cover;
     padding: 5px;
     width: 260px;
@@ -30,7 +30,7 @@
 }
 #content{
     position: relative;
-    background: URL('../bilder/bg2.png');
+    background: URL('../bilder/bg3.png');
     background-size: cover;
     padding: 5px;
     height: max-content;
@@ -39,7 +39,7 @@
 }
 #login{
 
-    background: URL('../bilder/bg2.png');
+    background: URL('../bilder/bg3.png');
     background-size: cover;
     padding: 5px;
     margin: 0px 220px 0px 100px; 
