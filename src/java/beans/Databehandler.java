@@ -17,61 +17,28 @@ import javax.inject.Named;
 @SessionScoped
 public class Databehandler implements Serializable {
 
-    private TreningsOkt tempOkt = new TreningsOkt();
+    Date date = new Date();
     DBOkter db = new DBOkter();
     private Okter okter = new Okter();
+    
     private ArrayList kategorier = new ArrayList();
-    private boolean nykat = false;
-    private String tempKat;
-    List<OktStatus> synkListe = hentfraDB();
-    Date date = new Date();
+    private List<OktStatus> synkListe = hentfraDB();
     private List<OktStatus> alleOkter = hentfraDB();
+    private TreningsOkt tempOkt = new TreningsOkt();
     private ArrayList aar = new ArrayList();
     private ArrayList mnd = new ArrayList();
+    private boolean nykat = false;
+    private boolean ascending = true;
+    private String tempKat;
     private int valgtaar;
     private int valgtmnd;
-    private boolean ascending = true;
-
+    
+    
     public Databehandler() {
         tempOkt.setDato(date);
         filtrer();
     }
     
-    public List<OktStatus> hentfraDB(){
-        List<OktStatus> dbokter = Collections.synchronizedList(new ArrayList<OktStatus>());
-        ArrayList<TreningsOkt> liste = okter.getListe();
-        for(int i=0; i<liste.size(); i++){
-            OktStatus nyokt = new OktStatus(liste.get(i));
-            dbokter.add(nyokt);
-        }
-        return dbokter;
-    }
-    public void skrivtilDB(TreningsOkt okt){
-        try{
-        db.SkrivTil(okt);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-    
-    public void endreDB(TreningsOkt okt){
-        try{
-        db.Endre(okt);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }
-    public void slettDB(){
-        for(int i=0; i<alleOkter.size(); i++){
-            if(alleOkter.get(i).getSkalslettes()){
-                try{
-                db.Slette(alleOkter.get(i).getOkten());
-                }catch(Exception e){
-                    System.out.println(e);
-                }
-            }
-        }
-    }
     //Returnerer true hvis data finnes i tabellen
     public synchronized boolean getDataFins() {
         return alleOkter.size() > 0;
@@ -89,6 +56,53 @@ public class Databehandler implements Serializable {
         alleOkter.add(nystat);
         tempOkt.nullstill();
         leggtilFilt();
+    }
+
+    
+
+    //Sletting
+    public void slett() {
+        slettDB();
+        int indeks = synkListe.size() - 1;
+        while (indeks >= 0) {
+            OktStatus os = synkListe.get(indeks);
+            if (os.getSkalslettes()) {
+                okter.fjernOkt(os.getOkten()); // sletter i problemdomeneobjekt
+                synkListe.remove(indeks);  // sletter i presentasjonsobjektet
+                alleOkter.remove(indeks);
+            }
+            indeks--;
+        }
+    }
+
+    //Henter ut øktnummeret som er det neste etter tabellens siste.
+    public int getSisteOktnr() {
+        if (synkListe.isEmpty()) {
+            return 1;
+        }
+        return synkListe.get(synkListe.size() - 1).getOkten().getOktnummer() + 1;
+    }
+
+    public int getAntallokter() {
+        return synkListe.size();
+    }
+
+    public String getSnittVarighet() {
+        double sum = 0.0;
+        for (OktStatus okt : synkListe) {
+            sum += okt.getOkten().getVarighet();
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(sum / synkListe.size());
+    }
+    
+    //Metoder for tillegg av kategori
+    public void leggTilKategori() {
+        if (!tempKat.equals("")) {
+            kategorier.add(tempKat);
+            tempKat = "";
+        }
+        nykat = false;
     }
 
     //Legger til nye år i listen til filtreringen.
@@ -133,129 +147,6 @@ public class Databehandler implements Serializable {
                 }
             }
         }
-    }
-
-    //Sletting
-    public void slett() {
-        slettDB();
-        int indeks = synkListe.size() - 1;
-        while (indeks >= 0) {
-            OktStatus os = synkListe.get(indeks);
-            if (os.getSkalslettes()) {
-                okter.fjernOkt(os.getOkten()); // sletter i problemdomeneobjekt
-                synkListe.remove(indeks);  // sletter i presentasjonsobjektet
-                alleOkter.remove(indeks);
-            }
-            indeks--;
-        }
-    }
-
-    //Henter ut øktnummeret som er det neste etter tabellens siste.
-    public int getSisteOktnr() {
-        if (synkListe.isEmpty()) {
-            return 1;
-        }
-        return synkListe.get(synkListe.size() - 1).getOkten().getOktnummer() + 1;
-    }
-
-    public ArrayList getListe() {
-        return okter.getListe();
-    }
-
-    public Okter getOkter() {
-        return okter;
-    }
-
-    public synchronized List<OktStatus> getSynkListe() {
-        return synkListe;
-    }
-
-    public synchronized void setSynkListe(List<OktStatus> ny) {
-        synkListe = ny;
-    }
-
-    public synchronized TreningsOkt getTempOkt() {
-        return tempOkt;
-    }
-
-    public synchronized void setTempOkt(TreningsOkt ny) {
-        tempOkt = ny;
-    }
-
-    //Metoder for tillegg av kategori
-    public void leggTilKategori() {
-        if (!tempKat.equals("")) {
-            kategorier.add(tempKat);
-            tempKat = "";
-        }
-        nykat = false;
-    }
-
-    public int getAntallokter() {
-        return synkListe.size();
-    }
-
-    public String getSnittVarighet() {
-        double sum = 0.0;
-        for (OktStatus okt : synkListe) {
-            sum += okt.getOkten().getVarighet();
-        }
-        DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(sum / synkListe.size());
-    }
-
-    public boolean getNykat() {
-        return nykat;
-    }
-
-    public String getTempKat() {
-        return tempKat;
-    }
-
-    public ArrayList getTillegsOkter() {
-        return kategorier;
-    }
-
-    public void setnykat() {
-        nykat = true;
-    }
-
-    public void setTempKat(String ny) {
-        tempKat = ny;
-    }
-
-    public int getValgtaar() {
-        return valgtaar;
-    }
-
-    public int getValgtmnd() {
-        return valgtmnd;
-    }
-
-    public void setValgtaar(int valgtaar) {
-        this.valgtaar = valgtaar;
-    }
-
-    public void setValgtmnd(int valgtmnd) {
-        this.valgtmnd = valgtmnd;
-    }
-
-    public ArrayList getAar() {return aar;}
-
-    public ArrayList getMnd() {
-        return mnd;
-    }
-
-    public void setAar(ArrayList aar) {
-        this.aar = aar;
-    }
-
-    public void setMnd(ArrayList mnd) {
-        this.mnd = mnd;
-    }
-
-    public List<OktStatus> getAlleOkter() {
-        return alleOkter;
     }
 
     public String sorterListeOktnr() {
@@ -365,5 +256,121 @@ public class Databehandler implements Serializable {
         }
         filtrer();
         return null;
+    }
+    
+    public List<OktStatus> hentfraDB(){
+        List<OktStatus> dbokter = Collections.synchronizedList(new ArrayList<OktStatus>());
+        ArrayList<TreningsOkt> liste = okter.getListe();
+        for(int i=0; i<liste.size(); i++){
+            OktStatus nyokt = new OktStatus(liste.get(i));
+            dbokter.add(nyokt);
+        }
+        return dbokter;
+    }
+    public void skrivtilDB(TreningsOkt okt){
+        try{
+        db.SkrivTil(okt);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    
+    public void endreDB(TreningsOkt okt){
+        try{
+        db.Endre(okt);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    public void slettDB(){
+        for(int i=0; i<alleOkter.size(); i++){
+            if(alleOkter.get(i).getSkalslettes()){
+                try{
+                db.Slette(alleOkter.get(i).getOkten());
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+    
+    public ArrayList getListe() {
+        return okter.getListe();
+    }
+
+    public Okter getOkter() {
+        return okter;
+    }
+
+    public synchronized List<OktStatus> getSynkListe() {
+        return synkListe;
+    }
+
+    public synchronized void setSynkListe(List<OktStatus> ny) {
+        synkListe = ny;
+    }
+
+    public synchronized TreningsOkt getTempOkt() {
+        return tempOkt;
+    }
+
+    public synchronized void setTempOkt(TreningsOkt ny) {
+        tempOkt = ny;
+    }
+    
+    public boolean getNykat() {
+        return nykat;
+    }
+
+    public String getTempKat() {
+        return tempKat;
+    }
+
+    public ArrayList getTillegsOkter() {
+        return kategorier;
+    }
+
+    public void setnykat() {
+        nykat = true;
+    }
+
+    public void setTempKat(String ny) {
+        tempKat = ny;
+    }
+
+    public int getValgtaar() {
+        return valgtaar;
+    }
+
+    public int getValgtmnd() {
+        return valgtmnd;
+    }
+
+    public void setValgtaar(int valgtaar) {
+        this.valgtaar = valgtaar;
+    }
+
+    public void setValgtmnd(int valgtmnd) {
+        this.valgtmnd = valgtmnd;
+    }
+
+    public ArrayList getAar() {
+        return aar;
+    }
+
+    public ArrayList getMnd() {
+        return mnd;
+    }
+
+    public void setAar(ArrayList aar) {
+        this.aar = aar;
+    }
+
+    public void setMnd(ArrayList mnd) {
+        this.mnd = mnd;
+    }
+
+    public List<OktStatus> getAlleOkter() {
+        return alleOkter;
     }
 }

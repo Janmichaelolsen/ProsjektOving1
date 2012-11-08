@@ -18,7 +18,6 @@ public class DBOkter {
     private String dbdriver = "org.apache.derby.jdbc.ClientDriver";
     private String dbnavn = "jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj";
     Connection forbindelse;
-    private int nr = 1;
 
     private void åpneForbindelse() {
         try {
