@@ -46,7 +46,6 @@ public class Databehandler implements Serializable {
         }
         return dbokter;
     }
-    
     public void skrivtilDB(TreningsOkt okt){
         try{
         db.SkrivTil(okt);
@@ -60,6 +59,17 @@ public class Databehandler implements Serializable {
         db.Endre(okt);
         }catch(Exception e){
             System.out.println(e);
+        }
+    }
+    public void slettDB(){
+        for(int i=0; i<alleOkter.size(); i++){
+            if(alleOkter.get(i).getSkalslettes()){
+                try{
+                db.Slette(alleOkter.get(i).getOkten());
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+            }
         }
     }
     //Returnerer true hvis data finnes i tabellen
@@ -127,6 +137,7 @@ public class Databehandler implements Serializable {
 
     //Sletting
     public void slett() {
+        slettDB();
         int indeks = synkListe.size() - 1;
         while (indeks >= 0) {
             OktStatus os = synkListe.get(indeks);
@@ -229,9 +240,7 @@ public class Databehandler implements Serializable {
         this.valgtmnd = valgtmnd;
     }
 
-    public ArrayList getAar() {
-        return aar;
-    }
+    public ArrayList getAar() {return aar;}
 
     public ArrayList getMnd() {
         return mnd;

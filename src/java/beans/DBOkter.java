@@ -50,6 +50,7 @@ public class DBOkter {
                 TreningsOkt nyokt = new TreningsOkt(oktnr, dato, varighet, kategori, tekst);
                 dbliste.add(nyokt);
             }
+            System.out.println("Henter");
             res.close();
             setning.close();
             forbindelse.close();
@@ -105,7 +106,33 @@ public class DBOkter {
             endre.setInt(5, okt.getOktnummer());
             
             endre.executeUpdate();
+            
 
+            forbindelse.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(endre);
+        }
+        lukkForbindelse();
+    }
+    
+    public void Slette(TreningsOkt okt) {
+        PreparedStatement endre = null;
+        åpneForbindelse();
+        try {
+            Class.forName(dbdriver);
+            forbindelse = DriverManager.getConnection(dbnavn);
+            forbindelse.setAutoCommit(false);
+            endre = forbindelse.prepareStatement("delete from trening where oktnr=?");
+            endre.setInt(1, okt.getOktnummer());
+            
+            endre.executeUpdate();
+            System.out.println("Sletter");
             forbindelse.commit();
         } catch (SQLException e) {
             System.out.println(e);
