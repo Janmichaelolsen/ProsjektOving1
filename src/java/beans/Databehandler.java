@@ -22,7 +22,7 @@ public class Databehandler implements Serializable {
     DBOkter db = new DBOkter();
     private Okter okter = new Okter();
     
-    private ArrayList kategorier = new ArrayList();
+    private ArrayList kategorier = hentKat();
     private List<OktStatus> synkListe = hentfraDB();
     private List<OktStatus> alleOkter = hentfraDB();
     private TreningsOkt tempOkt = new TreningsOkt();
@@ -97,11 +97,26 @@ public class Databehandler implements Serializable {
     
     //Metoder for tillegg av kategori
     public void leggTilKategori() {
+        try{
+            db.Leggtilkat(tempKat);
+        } catch(Exception e){
+            System.out.println(e);
+        }
         if (!tempKat.equals("")) {
             kategorier.add(tempKat);
             tempKat = "";
         }
         nykat = false;
+    }
+    
+    public ArrayList hentKat(){
+        ArrayList kateg = new ArrayList();
+        try{
+            kateg = db.lesInnKat();
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return kateg;
     }
 
     //Legger til nye år i listen til filtreringen.

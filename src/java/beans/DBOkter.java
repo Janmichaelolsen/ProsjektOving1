@@ -10,8 +10,6 @@ package beans;
  */
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class DBOkter {
 
@@ -140,6 +138,54 @@ public class DBOkter {
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(endre);
+        }
+        lukkForbindelse();
+    }
+    
+    public ArrayList lesInnKat() {
+        ArrayList katliste = new ArrayList();
+        try {
+            Class.forName(dbdriver);  // laster inn driverklassen
+            forbindelse = DriverManager.getConnection(dbnavn);
+            Statement setning = forbindelse.createStatement();
+            ResultSet res = setning.executeQuery("select * from tilleggskat");
+            while (res.next()) {
+                String kat = res.getString("tilleggkat");
+                katliste.add(kat);
+            }
+            System.out.println("Henter");
+            res.close();
+            setning.close();
+            forbindelse.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException q) {
+            System.out.println(q);
+        }
+        return katliste;
+    }
+    
+    public void Leggtilkat(String kat) {
+        PreparedStatement regnykat = null;
+        åpneForbindelse();
+        try {
+            Class.forName(dbdriver);  // laster inn driverklassen
+            forbindelse = DriverManager.getConnection(dbnavn);
+            forbindelse.setAutoCommit(false);
+            regnykat = forbindelse.prepareStatement("insert into tilleggskat(tilleggkat) values(?)");
+            regnykat.setString(1, kat);
+            System.out.println("Registrerer");
+            regnykat.executeUpdate();
+
+            forbindelse.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(regnykat);
         }
         lukkForbindelse();
     }
