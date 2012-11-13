@@ -30,6 +30,8 @@ public class Databehandler implements Serializable {
     private ArrayList mnd = new ArrayList();
     private boolean nykat = false;
     private boolean ascending = true;
+    private boolean alleslett = false;
+    private boolean alleendre = false;
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
@@ -49,8 +51,8 @@ public class Databehandler implements Serializable {
     public void regOkt() {
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(),
                 tempOkt.getKategori(), tempOkt.getTekst());
-        if(skrivtilDB(nyokt)){
             nyokt.setOktnummer(getSisteOktnr());
+        if(skrivtilDB(nyokt)){
             okter.regNyOkt(nyokt);
             OktStatus nystat = new OktStatus(nyokt);
             synkListe.add(nystat);
@@ -77,10 +79,40 @@ public class Databehandler implements Serializable {
 
     //Henter ut øktnummeret som er det neste etter tabellens siste.
     public int getSisteOktnr() {
-        if (synkListe.isEmpty()) {
+        if (alleOkter.isEmpty()) {
             return 1;
         }
-        return synkListe.get(synkListe.size() - 1).getOkten().getOktnummer() + 1;
+        int størst = 0;
+        for(int i=0; i<alleOkter.size(); i++){
+            int denne = alleOkter.get(i).getOkten().getOktnummer();
+            if(denne > størst){
+                størst = denne;
+            }
+        }
+        return størst + 1;
+    }
+    
+    public void velgAlleSlett(){
+        for(int i=0; i<synkListe.size(); i++){
+            if(alleslett){
+                synkListe.get(i).setSkalslettes(true);
+            }
+            else{
+               synkListe.get(i).setSkalslettes(false); 
+            }
+        }
+    }
+    
+    public void velgAlleEndre(){
+        System.out.println("brukes");
+        for(int i=0; i<synkListe.size(); i++){
+            if(alleendre){
+                synkListe.get(i).setEditable(true);
+            }
+            else{
+               synkListe.get(i).setEditable(false); 
+            }
+        }
     }
 
     public int getAntallokter() {
@@ -103,7 +135,6 @@ public class Databehandler implements Serializable {
             db.Leggtilkat(tempKat);
         } catch(Exception e){
             System.out.println(e);
-            e.printStackTrace();
         }
             kategorier.add(tempKat);
             tempKat = "";
@@ -240,7 +271,7 @@ public class Databehandler implements Serializable {
             Collections.sort(alleOkter, new Comparator<OktStatus>() {
                 @Override
                 public int compare(OktStatus o1, OktStatus o2) {
-                    return o1.getOkten().getDato().compareTo(o2.getOkten().getDato());
+                    return o1.getOkten().getKategori().compareTo(o2.getOkten().getKategori());
                 }
             });
             ascending = false;
@@ -269,7 +300,7 @@ public class Databehandler implements Serializable {
             Collections.sort(alleOkter, new Comparator<OktStatus>() {
                 @Override
                 public int compare(OktStatus o1, OktStatus o2) {
-                    return o2.getOkten().getKategori().compareTo(o1.getOkten().getKategori());
+                    return o2.getOkten().getTekst().compareTo(o1.getOkten().getTekst());
                 }
             });
             ascending = true;
@@ -395,5 +426,17 @@ public class Databehandler implements Serializable {
 
     public List<OktStatus> getAlleOkter() {
         return alleOkter;
+    }
+    public boolean getAlleendre(){
+        return alleendre;
+    }
+    public void setAlleendre(boolean ny){
+        alleendre = ny;
+    }
+    public boolean getAlleslett(){
+        return alleslett;
+    }
+    public void setAlleslett(boolean ny){
+        alleslett = ny;
     }
 }

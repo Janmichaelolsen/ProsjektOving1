@@ -27,7 +27,6 @@ public class DBOkter {
     }
 
     private void lukkForbindelse() {
-        System.out.println("Lukker databaseforbindelsen");
         Opprydder.lukkForbindelse(forbindelse);
     }
 
@@ -66,12 +65,13 @@ public class DBOkter {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
             forbindelse.setAutoCommit(false);
-            regnyokt = forbindelse.prepareStatement("insert into TRENING(DATO, VARIGHET, KATEGORINAVN, TEKST, BRUKERNAVN) values(?, ?, ?, ?, ?)");
-            regnyokt.setDate(1, new java.sql.Date(okt.getDato().getTime()));
-            regnyokt.setInt(2, okt.getVarighet());
-            regnyokt.setString(3, okt.getKategori());
-            regnyokt.setString(4, okt.getTekst());
-            regnyokt.setString(5, "anne");
+            regnyokt = forbindelse.prepareStatement("insert into TRENING(OKTNR, DATO, VARIGHET, KATEGORINAVN, TEKST, BRUKERNAVN) values(?, ?, ?, ?, ?, ?)");
+            regnyokt.setInt(1, okt.getOktnummer());
+            regnyokt.setDate(2, new java.sql.Date(okt.getDato().getTime()));
+            regnyokt.setInt(3, okt.getVarighet());
+            regnyokt.setString(4, okt.getKategori());
+            regnyokt.setString(5, okt.getTekst());
+            regnyokt.setString(6, "anne");
             System.out.println("Registrerer");
             regnyokt.executeUpdate();
 
