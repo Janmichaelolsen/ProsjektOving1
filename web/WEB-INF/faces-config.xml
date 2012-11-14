@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0' encoding='ISO-8859-1'?>
 
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
@@ -13,8 +13,8 @@
     </managed-bean>
  <application>
        <locale-config>
-          <default-locale>no</default-locale>       STANDARD SPRÃ…K
-          <supported-locale>en</supported-locale> EKSTRA SPRÃ…K
+          <default-locale>no</default-locale>       STANDARD SPRÅK
+          <supported-locale>en</supported-locale> EKSTRA SPRÅK
        </locale-config>
         <resource-bundle>
             <base-name>properties.treningsokter</base-name>MAPPE- OG FILNAVN

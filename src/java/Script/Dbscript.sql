@@ -4,8 +4,6 @@ DROP TABLE trening;
 DROP TABLE kategori;
 DROP TABLE bruker;
 
-
- 
 CREATE TABLE trening(
   oktnr        INTEGER NOT NULL,
   dato         DATE NOT NULL,
@@ -45,14 +43,14 @@ ALTER TABLE rolle
 
 INSERT INTO kategori(kategorinavn) VALUES('Sykling');
 INSERT INTO kategori(kategorinavn) VALUES('Styrke');
-INSERT INTO kategori(kategorinavn) VALUES('SvÃ¸mming');
-INSERT INTO kategori(kategorinavn) VALUES('LÃ¸ping');
+INSERT INTO kategori(kategorinavn) VALUES('Svømming');
+INSERT INTO kategori(kategorinavn) VALUES('Løping');
 INSERT INTO kategori(kategorinavn) VALUES('Yoga');
 INSERT INTO kategori(kategorinavn) VALUES('Biking');
 INSERT INTO kategori(kategorinavn) VALUES('Strength');
 INSERT INTO kategori(kategorinavn) VALUES('Swimming');
 INSERT INTO kategori(kategorinavn) VALUES('Running');
- 
+
 INSERT INTO bruker(brukernavn, passord) VALUES('anne', 'xyz_1b');
 INSERT INTO bruker(brukernavn, passord) VALUES('tore', 'xcg_5');
 INSERT INTO bruker(brukernavn, passord) VALUES('as','df');

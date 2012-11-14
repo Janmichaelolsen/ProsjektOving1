@@ -1,10 +1,10 @@
 package beans;
 
 import java.sql.*;
-import javax.sql.DataSource;
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.sql.DataSource;
 
 @Named("login")
 @RequestScoped
@@ -27,7 +27,7 @@ public class Login {
     }
 
     public boolean loggInn() {
-        Ã¥pneForbindelse();
+        ÅpneForbindelse();
         PreparedStatement setning = null;
         ResultSet res = null;
         boolean returverdi = false;
@@ -55,7 +55,7 @@ public class Login {
         return returverdi;
     }
 
-    private void Ã¥pneForbindelse() {
+    private void ÅpneForbindelse() {
         try {
             if (ds == null) {
                 throw new SQLException("Ingen datasource");
