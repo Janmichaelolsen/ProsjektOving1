@@ -1,7 +1,10 @@
+DROP TABLE rolle;
+DROP TABLE tilleggskat;
 DROP TABLE trening;
 DROP TABLE kategori;
 DROP TABLE bruker;
-DROP TABLE tilleggskat;
+
+
  
 CREATE TABLE trening(
   oktnr        INTEGER NOT NULL,
@@ -39,8 +42,7 @@ ALTER TABLE rolle
   ADD CONSTRAINT rolle_fk1 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
 
-INSERT INTO rolle(brukernavn, rolle) VALUES('anne', 'bruker');
-INSERT INTO rolle(brukernavn, rolle) VALUES('tore', 'bruker');
+
 INSERT INTO kategori(kategorinavn) VALUES('Sykling');
 INSERT INTO kategori(kategorinavn) VALUES('Styrke');
 INSERT INTO kategori(kategorinavn) VALUES('Svømming');
@@ -53,3 +55,8 @@ INSERT INTO kategori(kategorinavn) VALUES('Running');
  
 INSERT INTO bruker(brukernavn, passord) VALUES('anne', 'xyz_1b');
 INSERT INTO bruker(brukernavn, passord) VALUES('tore', 'xcg_5');
+INSERT INTO bruker(brukernavn, passord) VALUES('as','df');
+
+INSERT INTO rolle(brukernavn, rolle) VALUES('anne', 'bruker');
+INSERT INTO rolle(brukernavn, rolle) VALUES('tore', 'bruker');
+INSERT INTO rolle(brukernavn, rolle) VALUES('as', 'bruker');

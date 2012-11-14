@@ -25,4 +25,26 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+      <web-resource-collection>
+         <web-resource-name>Protected Pages</web-resource-name>
+         <url-pattern>/faces/protected/Register.xhtml</url-pattern>
+         <url-pattern>/protected/Register.xhtml</url-pattern>
+      </web-resource-collection>
+      <auth-constraint>
+         <role-name>bruker</role-name>
+         <role-name>system</role-name>
+      </auth-constraint>
+   </security-constraint>
+   <login-config>
+      <auth-method>FORM</auth-method>
+      <realm-name>waplj_prosjekt</realm-name>
+      <form-login-config>
+          <form-login-page>/index.xhtml</form-login-page>
+          <form-error-page>/feil.xhtml</form-error-page>
+      </form-login-config>
+   </login-config>
+   <security-role>
+      <role-name>bruker</role-name>
+   </security-role>
 </web-app>
