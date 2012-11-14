@@ -102,12 +102,13 @@ public class DBOkter {
             Class.forName(dbdriver);
             forbindelse = DriverManager.getConnection(dbnavn);
             forbindelse.setAutoCommit(false);
-            endre = forbindelse.prepareStatement("update trening set dato=?, varighet=?, kategorinavn=?, tekst=? where oktnr=?");
+            endre = forbindelse.prepareStatement("update trening set dato=?, varighet=?, kategorinavn=?, tekst=? where oktnr=? and brukernavn=?");
             endre.setDate(1, new java.sql.Date(okt.getDato().getTime()));
             endre.setInt(2, okt.getVarighet());
             endre.setString(3, okt.getKategori());
             endre.setString(4, okt.getTekst());
             endre.setInt(5, okt.getOktnummer());
+            endre.setString(6, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             
             endre.executeUpdate();
 
@@ -131,11 +132,37 @@ public class DBOkter {
             Class.forName(dbdriver);
             forbindelse = DriverManager.getConnection(dbnavn);
             forbindelse.setAutoCommit(false);
-            endre = forbindelse.prepareStatement("delete from trening where oktnr=?");
+            endre = forbindelse.prepareStatement("delete from trening where oktnr=? and brukernavn=?");
             endre.setInt(1, okt.getOktnummer());
+            endre.setString(2, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             
             endre.executeUpdate();
             System.out.println("Sletter");
+            forbindelse.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(endre);
+        }
+        lukkForbindelse();
+    }
+    
+    public void EndrePassord(String nyttpassord) {
+        PreparedStatement endre = null;
+        åpneForbindelse();
+        try {
+            Class.forName(dbdriver);
+            forbindelse = DriverManager.getConnection(dbnavn);
+            forbindelse.setAutoCommit(false);
+            endre = forbindelse.prepareStatement("update bruker set passord=? where brukernavn = ?");
+            endre.setString(1, nyttpassord);
+            endre.setString(2, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+            endre.executeUpdate();
+
             forbindelse.commit();
         } catch (SQLException e) {
             System.out.println(e);

@@ -1,43 +1,43 @@
 package beans;
-public class InputFilter {
-  private static final char erstattMed = '_';
-  private static final String spesialtegn = "- ,.";
 
-  public static String filtrer(String tekst) {
-    if (tekst == null) return null;
-    StringBuffer resultat = new StringBuffer(tekst);
-    for (int i = 0; i < tekst.length(); i++) {
-      char tegn = tekst.charAt(i);
+import javax.faces.context.FacesContext;
+
+public class InputFilter {
+  private final String spesialtegn = "-_,.";
+  private String passord1;
+  private String passord2;
+  private DBOkter db;
+
+  public String sjekkPassord() {
+      int antallspestegn = 0;
+      int antallsiffer = 0;
+      int antbokstaver = 0;
+      int antalltegn = 0;
+    if (passord1 == null) {
+        return "Vennligst skriv inn et passord.";
+    }
+    if(!passord1.equals(passord2)){
+        return "Passordene må være like.";
+    }
+    
+    for (int i = 0; i < passord1.length(); i++) {
+      char tegn = passord1.charAt(i);
+      
       /* isLetterOrDigit() bruker tegnsettet som maskinen er satt opp med */
       if (!(Character.isLetterOrDigit(tegn) || spesialtegn.indexOf(tegn) >= 0)) {
-        resultat.setCharAt(i, erstattMed);
+          return "Passordet kan bare inneholde følgende spesialtegn: bindestrek, understrek, komma, punktum.";
       }
+      if(Character.isLetter(tegn)) antbokstaver++;
+      if(Character.isDigit(tegn)) antallsiffer++;
+      if(spesialtegn.indexOf(tegn) >= 0) antallspestegn++;
+      antalltegn++;
+      
+      
     }
-    return resultat.toString();
+    if(antallspestegn > 0 && antallsiffer > 0 && antallspestegn > 0 && antalltegn >= 6){
+          db.EndrePassord(passord1);
+          return "Passord endret!";
+      }
+    return "Noe gikk galt.";
   }
-
-  public static String[] filtrer(String[] tekster) {
-    if (tekster == null) return null;
-    for (int i = 0; i < tekster.length; i++) {
-      tekster[i] = filtrer(tekster[i]);
-    }
-    return tekster;
-  }
-
-  /* Testprogram */
-//  public static void main(String[] args) {
-//    String test = "æøåÆØÅ ., bare lovlige tegn erstattes med \n" +
-//                        InputFilter.filtrer("æøåÆØÅ ., bare lovlige tegn") + "\n" +
-//                       "litt av hvert %&/(=)?>A>< erstattes med\n" +
-//                        InputFilter.filtrer("litt av hvert %&/(=)?>A><");
-//   javax.swing.JOptionPane.showMessageDialog(null, test);
-//
-//   String[] tekster = { "æøåÆØÅ ., bare lovlige tegn",
-//                               "litt av hvert %&/(=)?>A><" };
-//
-//   InputFilter.filtrer(tekster);
-//   test = "";
-//   for (String t : tekster) test += t + "\n";
-//   javax.swing.JOptionPane.showMessageDialog(null, test);
-// }
 }
