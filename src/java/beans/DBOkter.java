@@ -10,6 +10,7 @@ package beans;
  */
 import java.sql.*;
 import java.util.ArrayList;
+import javax.faces.context.FacesContext;
 
 public class DBOkter {
 
@@ -36,7 +37,9 @@ public class DBOkter {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
-            ResultSet res = setning.executeQuery("select * from trening");
+            String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+            System.out.println(bruker);
+            ResultSet res = setning.executeQuery("select * from trening where brukernavn = '" + bruker + "'");
             while (res.next()) {
                 int oktnr = res.getInt("Oktnr");
                 Date dato = res.getDate("Dato");
@@ -58,9 +61,10 @@ public class DBOkter {
         return dbliste;
     }
 
-    public void SkrivTil(TreningsOkt okt) {
+    public boolean SkrivTil(TreningsOkt okt) {
         PreparedStatement regnyokt = null;
         åpneForbindelse();
+        boolean returverdi = true;
         try {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
@@ -71,21 +75,24 @@ public class DBOkter {
             regnyokt.setInt(3, okt.getVarighet());
             regnyokt.setString(4, okt.getKategori());
             regnyokt.setString(5, okt.getTekst());
-            regnyokt.setString(6, "anne");
+            regnyokt.setString(6, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             System.out.println("Registrerer");
             regnyokt.executeUpdate();
 
             forbindelse.commit();
         } catch (SQLException e) {
+            returverdi = false;
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
         } catch (ClassNotFoundException e) {
+            returverdi = false;
             System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(regnyokt);
         }
         lukkForbindelse();
+        return returverdi;
     }
     
     public void Endre(TreningsOkt okt) {

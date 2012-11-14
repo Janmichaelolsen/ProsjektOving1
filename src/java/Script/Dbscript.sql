@@ -11,7 +11,7 @@ CREATE TABLE trening(
   kategorinavn VARCHAR(15),
   tekst        VARCHAR(30),
   brukernavn   VARCHAR(10),
-  CONSTRAINT trenings_pk PRIMARY KEY(oktnr));
+  CONSTRAINT trenings_pk PRIMARY KEY(oktnr, brukernavn));
  
 CREATE TABLE bruker(
   brukernavn VARCHAR(10) PRIMARY KEY,
@@ -43,8 +43,8 @@ ALTER TABLE rolle
 
 INSERT INTO kategori(kategorinavn) VALUES('Sykling');
 INSERT INTO kategori(kategorinavn) VALUES('Styrke');
-INSERT INTO kategori(kategorinavn) VALUES('Svømming');
-INSERT INTO kategori(kategorinavn) VALUES('Løping');
+INSERT INTO kategori(kategorinavn) VALUES('Svï¿½mming');
+INSERT INTO kategori(kategorinavn) VALUES('Lï¿½ping');
 INSERT INTO kategori(kategorinavn) VALUES('Yoga');
 INSERT INTO kategori(kategorinavn) VALUES('Biking');
 INSERT INTO kategori(kategorinavn) VALUES('Strength');

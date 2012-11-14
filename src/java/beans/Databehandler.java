@@ -326,7 +326,6 @@ public class Databehandler implements Serializable {
             return false;
         }
         return true;
-        
     }
     
     public void endreDB(TreningsOkt okt){
