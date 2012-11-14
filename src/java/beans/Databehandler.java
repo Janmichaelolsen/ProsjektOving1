@@ -5,10 +5,10 @@ package beans;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.enterprise.context.SessionScoped;
@@ -82,14 +82,14 @@ public class Databehandler implements Serializable {
         if (alleOkter.isEmpty()) {
             return 1;
         }
-        int stÃ¸rst = 0;
+        int størst = 0;
         for(int i=0; i<alleOkter.size(); i++){
             int denne = alleOkter.get(i).getOkten().getOktnummer();
-            if(denne > stÃ¸rst){
-                stÃ¸rst = denne;
+            if(denne > størst){
+                størst = denne;
             }
         }
-        return stÃ¸rst + 1;
+        return størst + 1;
     }
     
     public void velgAlleSlett(){
