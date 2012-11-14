@@ -21,7 +21,9 @@ CREATE TABLE kategori(
   kategorinavn VARCHAR(15)PRIMARY KEY);
 
 CREATE TABLE tilleggskat(
-  tilleggkat VARCHAR(15)PRIMARY KEY);
+  tilleggkat VARCHAR(15),
+  brukernavn VARCHAR(10),
+  CONSTRAINT tilleggskat_pk PRIMARY KEY(tilleggkat, brukernavn));
 
 CREATE TABLE rolle(
    brukernavn VARCHAR(10),
@@ -36,6 +38,10 @@ ALTER TABLE trening
   ADD CONSTRAINT trening_fk2 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
 
+ALTER TABLE tilleggskat
+  ADD CONSTRAINT trening_fk3 FOREIGN KEY (brukernavn)
+  REFERENCES bruker;
+
 ALTER TABLE rolle
   ADD CONSTRAINT rolle_fk1 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
@@ -43,8 +49,8 @@ ALTER TABLE rolle
 
 INSERT INTO kategori(kategorinavn) VALUES('Sykling');
 INSERT INTO kategori(kategorinavn) VALUES('Styrke');
-INSERT INTO kategori(kategorinavn) VALUES('Sv�mming');
-INSERT INTO kategori(kategorinavn) VALUES('L�ping');
+INSERT INTO kategori(kategorinavn) VALUES('Svømming');
+INSERT INTO kategori(kategorinavn) VALUES('Løping');
 INSERT INTO kategori(kategorinavn) VALUES('Yoga');
 INSERT INTO kategori(kategorinavn) VALUES('Biking');
 INSERT INTO kategori(kategorinavn) VALUES('Strength');

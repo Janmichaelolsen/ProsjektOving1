@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 @Named("behandler")
 @SessionScoped
@@ -21,7 +23,6 @@ public class Databehandler implements Serializable {
     Date date = new Date();
     DBOkter db = new DBOkter();
     private Okter okter = new Okter();
-    
     private ArrayList kategorier = hentKat();
     private List<OktStatus> synkListe = hentfraDB();
     private List<OktStatus> alleOkter = hentfraDB();
@@ -35,13 +36,19 @@ public class Databehandler implements Serializable {
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
-    
-    
+
     public Databehandler() {
         tempOkt.setDato(date);
         filtrer();
     }
-    
+
+    public String logout() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession httpSession = (HttpSession) facesContext.getExternalContext().getSession(false);
+        httpSession.invalidate();
+        return "../index.xhtml?faces-redirect=true";
+    }
+
     //Returnerer true hvis data finnes i tabellen
     public synchronized boolean getDataFins() {
         return alleOkter.size() > 0;
@@ -51,8 +58,8 @@ public class Databehandler implements Serializable {
     public void regOkt() {
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(),
                 tempOkt.getKategori(), tempOkt.getTekst());
-            nyokt.setOktnummer(getSisteOktnr());
-        if(skrivtilDB(nyokt)){
+        nyokt.setOktnummer(getSisteOktnr());
+        if (skrivtilDB(nyokt)) {
             okter.regNyOkt(nyokt);
             OktStatus nystat = new OktStatus(nyokt);
             synkListe.add(nystat);
@@ -83,34 +90,32 @@ public class Databehandler implements Serializable {
             return 1;
         }
         int storst = 0;
-        for(int i=0; i<alleOkter.size(); i++){
+        for (int i = 0; i < alleOkter.size(); i++) {
             int denne = alleOkter.get(i).getOkten().getOktnummer();
-            if(denne > storst){
+            if (denne > storst) {
                 storst = denne;
             }
         }
         return storst + 1;
     }
-    
-    public void velgAlleSlett(){
-        for(int i=0; i<synkListe.size(); i++){
-            if(alleslett){
+
+    public void velgAlleSlett() {
+        for (int i = 0; i < synkListe.size(); i++) {
+            if (alleslett) {
                 synkListe.get(i).setSkalslettes(true);
-            }
-            else{
-               synkListe.get(i).setSkalslettes(false); 
+            } else {
+                synkListe.get(i).setSkalslettes(false);
             }
         }
     }
-    
-    public void velgAlleEndre(){
+
+    public void velgAlleEndre() {
         System.out.println("brukes");
-        for(int i=0; i<synkListe.size(); i++){
-            if(alleendre){
+        for (int i = 0; i < synkListe.size(); i++) {
+            if (alleendre) {
                 synkListe.get(i).setEditable(true);
-            }
-            else{
-               synkListe.get(i).setEditable(false); 
+            } else {
+                synkListe.get(i).setEditable(false);
             }
         }
     }
@@ -127,26 +132,26 @@ public class Databehandler implements Serializable {
         DecimalFormat df = new DecimalFormat("0.00");
         return df.format(sum / synkListe.size());
     }
-    
+
     //Metoder for tillegg av kategori
     public void leggTilKategori() {
         if (!tempKat.equals("")) {
-        try{
-            db.Leggtilkat(tempKat);
-        } catch(Exception e){
-            System.out.println(e);
-        }
+            try {
+                db.Leggtilkat(tempKat);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             kategorier.add(tempKat);
             tempKat = "";
         }
         nykat = false;
     }
-    
-    public ArrayList hentKat(){
+
+    public ArrayList hentKat() {
         ArrayList kateg = new ArrayList();
-        try{
+        try {
             kateg = db.lesInnKat();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return kateg;
@@ -195,7 +200,8 @@ public class Databehandler implements Serializable {
             }
         }
     }
-    public TimeZone getTimeZone(){
+
+    public TimeZone getTimeZone() {
         TimeZone tz = TimeZone.getDefault();
         return tz;
     }
@@ -222,7 +228,7 @@ public class Databehandler implements Serializable {
         return null;
     }
 
-    public String sorterListeDato(){
+    public String sorterListeDato() {
         if (ascending) {
             Collections.sort(alleOkter, new Comparator<OktStatus>() {
                 @Override
@@ -243,7 +249,7 @@ public class Databehandler implements Serializable {
         filtrer();
         return null;
     }
-    
+
     public String sorterListeVarighet() {
         if (ascending) {
             Collections.sort(alleOkter, new Comparator<OktStatus>() {
@@ -287,6 +293,7 @@ public class Databehandler implements Serializable {
         filtrer();
         return null;
     }
+
     public String sorterListeTekst() {
         if (ascending) {
             Collections.sort(alleOkter, new Comparator<OktStatus>() {
@@ -308,45 +315,47 @@ public class Databehandler implements Serializable {
         filtrer();
         return null;
     }
-    
-    public List<OktStatus> hentfraDB(){
+
+    public List<OktStatus> hentfraDB() {
         List<OktStatus> dbokter = Collections.synchronizedList(new ArrayList<OktStatus>());
         ArrayList<TreningsOkt> liste = okter.getListe();
-        for(int i=0; i<liste.size(); i++){
+        for (int i = 0; i < liste.size(); i++) {
             OktStatus nyokt = new OktStatus(liste.get(i));
             dbokter.add(nyokt);
         }
         return dbokter;
     }
-    public boolean skrivtilDB(TreningsOkt okt){
-        try{
-        db.SkrivTil(okt);
-        }catch(Exception e){
+
+    public boolean skrivtilDB(TreningsOkt okt) {
+        try {
+            db.SkrivTil(okt);
+        } catch (Exception e) {
             System.out.println(e);
             return false;
         }
         return true;
     }
-    
-    public void endreDB(TreningsOkt okt){
-        try{
-        db.Endre(okt);
-        }catch(Exception e){
+
+    public void endreDB(TreningsOkt okt) {
+        try {
+            db.Endre(okt);
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    public void slettDB(){
-        for(int i=0; i<alleOkter.size(); i++){
-            if(alleOkter.get(i).getSkalslettes()){
-                try{
-                db.Slette(alleOkter.get(i).getOkten());
-                }catch(Exception e){
+
+    public void slettDB() {
+        for (int i = 0; i < alleOkter.size(); i++) {
+            if (alleOkter.get(i).getSkalslettes()) {
+                try {
+                    db.Slette(alleOkter.get(i).getOkten());
+                } catch (Exception e) {
                     System.out.println(e);
                 }
             }
         }
     }
-    
+
     public ArrayList getListe() {
         return okter.getListe();
     }
@@ -370,7 +379,7 @@ public class Databehandler implements Serializable {
     public synchronized void setTempOkt(TreningsOkt ny) {
         tempOkt = ny;
     }
-    
+
     public boolean getNykat() {
         return nykat;
     }
@@ -426,16 +435,20 @@ public class Databehandler implements Serializable {
     public List<OktStatus> getAlleOkter() {
         return alleOkter;
     }
-    public boolean getAlleendre(){
+
+    public boolean getAlleendre() {
         return alleendre;
     }
-    public void setAlleendre(boolean ny){
+
+    public void setAlleendre(boolean ny) {
         alleendre = ny;
     }
-    public boolean getAlleslett(){
+
+    public boolean getAlleslett() {
         return alleslett;
     }
-    public void setAlleslett(boolean ny){
+
+    public void setAlleslett(boolean ny) {
         alleslett = ny;
     }
 }

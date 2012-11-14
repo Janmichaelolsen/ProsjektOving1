@@ -155,7 +155,8 @@ public class DBOkter {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
-            ResultSet res = setning.executeQuery("select * from tilleggskat");
+            String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+            ResultSet res = setning.executeQuery("select * from tilleggskat where brukernavn = '"+bruker+"'");
             while (res.next()) {
                 String kat = res.getString("tilleggkat");
                 katliste.add(kat);
@@ -179,9 +180,9 @@ public class DBOkter {
             Class.forName(dbdriver);  // laster inn driverklassen
             forbindelse = DriverManager.getConnection(dbnavn);
             forbindelse.setAutoCommit(false);
-            regnykat = forbindelse.prepareStatement("insert into tilleggskat(tilleggkat) values(?)");
+            regnykat = forbindelse.prepareStatement("insert into tilleggskat(tilleggkat, brukernavn) values(?, ?)");
             regnykat.setString(1, kat);
-            System.out.println("Registrerer");
+            regnykat.setString(2, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             regnykat.executeUpdate();
 
             forbindelse.commit();
