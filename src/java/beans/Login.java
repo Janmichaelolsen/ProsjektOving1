@@ -27,7 +27,7 @@ public class Login {
     }
 
     public boolean loggInn() {
-        ÅpneForbindelse();
+        apneForbindelse();
         PreparedStatement setning = null;
         ResultSet res = null;
         boolean returverdi = false;
@@ -55,7 +55,7 @@ public class Login {
         return returverdi;
     }
 
-    private void ÅpneForbindelse() {
+    private void apneForbindelse() {
         try {
             if (ds == null) {
                 throw new SQLException("Ingen datasource");

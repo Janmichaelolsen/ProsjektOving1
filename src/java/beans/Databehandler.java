@@ -82,14 +82,14 @@ public class Databehandler implements Serializable {
         if (alleOkter.isEmpty()) {
             return 1;
         }
-        int størst = 0;
+        int storst = 0;
         for(int i=0; i<alleOkter.size(); i++){
             int denne = alleOkter.get(i).getOkten().getOktnummer();
-            if(denne > størst){
-                størst = denne;
+            if(denne > storst){
+                storst = denne;
             }
         }
-        return størst + 1;
+        return storst + 1;
     }
     
     public void velgAlleSlett(){
