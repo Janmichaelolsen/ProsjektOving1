@@ -1,0 +1,57 @@
+#top {
+    position: relative;
+    background:  URL('../bilder/header3.png');
+    background-size: cover;
+    padding: 20px;
+    margin: 0px 100px 10px 100px;
+}
+
+#flag {
+    float: left;
+    position: relative;
+    background: URL('../bilder/bg3.png');
+    background-size: cover;
+    padding: 5px;
+    width: 260px;
+    height: max-content;
+    margin: 0px 0px 0px 100px;
+}
+
+#menu {
+    float: left;
+    position: fixed;
+    background: URL('../bilder/bg3.png');
+    background-size: cover;
+    padding: 5px;
+    width: 260px;
+    height: max-content;
+    margin: 265px 0px 0px 100px;
+}
+
+#left{
+    float: left;
+    position: fixed;
+    background: URL('../bilder/bg3.png');
+    background-size: cover;
+    padding: 5px;
+    width: 260px;
+    height: max-content;
+    margin: 70px 0px 0px 100px;
+}
+#content{
+    position: relative;
+    background: URL('../bilder/bg3.png');
+    background-size: cover;
+    padding: 5px;
+    height: max-content;
+    margin: 0px 100px 0px 380px; 
+    position: relative;
+}
+#login{
+
+    background: URL('../bilder/bg3.png');
+    background-size: cover;
+    padding: 5px;
+    margin: 0px 220px 0px 100px; 
+    position: relative;
+}
