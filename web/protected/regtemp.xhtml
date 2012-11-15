@@ -39,19 +39,23 @@
             <ui:insert name="menu">
                 <table>
                     <tr>
-                        <td><h:outputText value="Logget inn som: #{request.remoteUser}"></h:outputText></td>
+                        <td><p>Logget inn som: #{request.remoteUser}</p></td>
                     </tr>
-                    <tr>
-                        <h:form>
+                    <h:form>
+                        <tr>
                             <td><h:commandButton value="#{tekster.Logout}" action="#{behandler.logout()}"/></td>
-
+                        </tr>
+                        <tr>
                             <td><h:commandButton value="Skift passord" action="#{nypass.setNyttpass()}" rendered="#{not nypass.nyttpass}"/></td>
-                        </h:form>
-                    </tr>
+                        </tr>
+                    </h:form>
                 </table>
 
                 <h:form rendered="#{nypass.nyttpass}">
                     <table>
+                        <tr>
+                            <td><h:outputText value="Mist ett tall. Minst 6 bokstaver. Må inneholde et av: -_,."></h:outputText></td>
+                        </tr>
                         <tr>
                             <td><h:outputText value="Nytt passord: "></h:outputText></td>
                             <td><h:inputText value="#{nypass.passord1}"></h:inputText></td>

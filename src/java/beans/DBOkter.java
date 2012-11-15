@@ -10,20 +10,37 @@ package beans;
  */
 import java.sql.*;
 import java.util.ArrayList;
+
+import javax.annotation.Resource;
+import javax.naming.Context;
 import javax.faces.context.FacesContext;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class DBOkter {
-
-    private String dbdriver = "org.apache.derby.jdbc.ClientDriver";
-    private String dbnavn = "jdbc:derby://localhost:1527/waplj_prosjekt;user=waplj;password=waplj";
-    Connection forbindelse;
+    @Resource(name="jdbc/waplj_prosjekt")
+    private DataSource ds;
+    private Connection forbindelse;
+    
+    public DBOkter(){
+        try{
+            Context con = new InitialContext();
+            ds = (DataSource) con.lookup("jdbc/waplj_prosjekt");
+        } catch (NamingException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
     private void åpneForbindelse() {
         try {
-            forbindelse = DriverManager.getConnection(dbnavn);
+            if(ds == null){
+                throw new SQLException("Ingen forbindelse");
+            }
+            forbindelse = ds.getConnection();
+            System.out.println("Forbindelse opprettet");
         } catch (SQLException e) {
             Opprydder.skrivMelding(e, "Konstruktøren");
-            Opprydder.lukkForbindelse(forbindelse);
         }
     }
 
@@ -33,9 +50,8 @@ public class DBOkter {
 
     public ArrayList<TreningsOkt> lesInn() {
         ArrayList<TreningsOkt> dbliste = new ArrayList<TreningsOkt>();
+        åpneForbindelse();
         try {
-            Class.forName(dbdriver);  // laster inn driverklassen
-            forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
             String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
             ResultSet res = setning.executeQuery("select * from trening where brukernavn = '" + bruker + "'");
@@ -54,8 +70,6 @@ public class DBOkter {
             forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
-        } catch (ClassNotFoundException q) {
-            System.out.println(q);
         }
         return dbliste;
     }
@@ -65,8 +79,7 @@ public class DBOkter {
         åpneForbindelse();
         boolean returverdi = true;
         try {
-            Class.forName(dbdriver);  // laster inn driverklassen
-            forbindelse = DriverManager.getConnection(dbnavn);
+        
             forbindelse.setAutoCommit(false);
             regnyokt = forbindelse.prepareStatement("insert into TRENING(OKTNR, DATO, VARIGHET, KATEGORINAVN, TEKST, BRUKERNAVN) values(?, ?, ?, ?, ?, ?)");
             regnyokt.setInt(1, okt.getOktnummer());
@@ -82,9 +95,6 @@ public class DBOkter {
             returverdi = false;
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
-        } catch (ClassNotFoundException e) {
-            returverdi = false;
-            System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(regnyokt);
@@ -97,8 +107,7 @@ public class DBOkter {
         PreparedStatement endre = null;
         åpneForbindelse();
         try {
-            Class.forName(dbdriver);
-            forbindelse = DriverManager.getConnection(dbnavn);
+            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             endre = forbindelse.prepareStatement("update trening set dato=?, varighet=?, kategorinavn=?, tekst=? where oktnr=? and brukernavn=?");
             endre.setDate(1, new java.sql.Date(okt.getDato().getTime()));
@@ -114,8 +123,6 @@ public class DBOkter {
         } catch (SQLException e) {
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(endre);
@@ -127,8 +134,7 @@ public class DBOkter {
         PreparedStatement endre = null;
         åpneForbindelse();
         try {
-            Class.forName(dbdriver);
-            forbindelse = DriverManager.getConnection(dbnavn);
+            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             endre = forbindelse.prepareStatement("delete from trening where oktnr=? and brukernavn=?");
             endre.setInt(1, okt.getOktnummer());
@@ -140,8 +146,6 @@ public class DBOkter {
         } catch (SQLException e) {
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(endre);
@@ -153,8 +157,7 @@ public class DBOkter {
         PreparedStatement endre = null;
         åpneForbindelse();
         try {
-            Class.forName(dbdriver);
-            forbindelse = DriverManager.getConnection(dbnavn);
+            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             System.out.println("Passord" + nyttpassord);
             endre = forbindelse.prepareStatement("update bruker set passord=? where brukernavn = ?");
@@ -166,8 +169,6 @@ public class DBOkter {
         } catch (SQLException e) {
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(endre);
@@ -177,9 +178,8 @@ public class DBOkter {
     
     public ArrayList lesInnKat() {
         ArrayList katliste = new ArrayList();
+        åpneForbindelse();
         try {
-            Class.forName(dbdriver);  // laster inn driverklassen
-            forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
             String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
             ResultSet res = setning.executeQuery("select * from tilleggskat where brukernavn = '"+bruker+"'");
@@ -193,8 +193,6 @@ public class DBOkter {
             forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
-        } catch (ClassNotFoundException q) {
-            System.out.println(q);
         }
         return katliste;
     }
@@ -203,8 +201,7 @@ public class DBOkter {
         PreparedStatement regnykat = null;
         åpneForbindelse();
         try {
-            Class.forName(dbdriver);  // laster inn driverklassen
-            forbindelse = DriverManager.getConnection(dbnavn);
+            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             regnykat = forbindelse.prepareStatement("insert into tilleggskat(tilleggkat, brukernavn) values(?, ?)");
             regnykat.setString(1, kat);
@@ -215,8 +212,6 @@ public class DBOkter {
         } catch (SQLException e) {
             System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
         } finally {
             Opprydder.settAutoCommit(forbindelse);
             Opprydder.lukkSetning(regnykat);
