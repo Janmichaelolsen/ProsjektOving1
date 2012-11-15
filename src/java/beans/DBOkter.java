@@ -38,7 +38,6 @@ public class DBOkter {
             forbindelse = DriverManager.getConnection(dbnavn);
             Statement setning = forbindelse.createStatement();
             String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-            System.out.println(bruker);
             ResultSet res = setning.executeQuery("select * from trening where brukernavn = '" + bruker + "'");
             while (res.next()) {
                 int oktnr = res.getInt("Oktnr");
@@ -76,7 +75,6 @@ public class DBOkter {
             regnyokt.setString(4, okt.getKategori());
             regnyokt.setString(5, okt.getTekst());
             regnyokt.setString(6, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-            System.out.println("Registrerer");
             regnyokt.executeUpdate();
 
             forbindelse.commit();
