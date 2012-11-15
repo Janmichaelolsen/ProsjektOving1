@@ -156,6 +156,7 @@ public class DBOkter {
             Class.forName(dbdriver);
             forbindelse = DriverManager.getConnection(dbnavn);
             forbindelse.setAutoCommit(false);
+            System.out.println("Passord" + nyttpassord);
             endre = forbindelse.prepareStatement("update bruker set passord=? where brukernavn = ?");
             endre.setString(1, nyttpassord);
             endre.setString(2, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
