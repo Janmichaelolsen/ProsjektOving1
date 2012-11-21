@@ -1,57 +1,132 @@
 #top {
     position: relative;
-    background:  URL('../bilder/header3.png');
+    background:  URL('../bilder/header.png');
     background-size: cover;
     padding: 20px;
-    margin: 0px 100px 10px 100px;
+    margin: 0px 70px 0px 70px;
 }
 
 #flag {
     float: left;
     position: relative;
-    background: URL('../bilder/bg3.png');
+    background: URL('../bilder/bg.png');
     background-size: cover;
+    width: 200px;
     padding: 5px;
-    width: 260px;
     height: max-content;
-    margin: 0px 0px 0px 100px;
+    margin: 10px 0px 0px 70px;
 }
 
 #menu {
     float: left;
     position: fixed;
-    background: URL('../bilder/bg3.png');
-    background-size: cover;
+    width: 200px;
     padding: 5px;
-    width: 260px;
+    background: URL('../bilder/bg.png');
+    background-size: cover;
     height: max-content;
-    margin: 265px 0px 0px 100px;
+    margin: 80px 0px 0px 70px;
 }
 
-#left{
-    float: left;
-    position: fixed;
-    background: URL('../bilder/bg3.png');
-    background-size: cover;
+ #reg{
+    float: right;
+    position: relative;
+    background: URL('../bilder/bg.png');
     padding: 5px;
-    width: 260px;
+    background-size: cover;
     height: max-content;
-    margin: 70px 0px 0px 100px;
+    width: 235px;
+    margin: 10px 70px 0px 0px;
 }
 #content{
     position: relative;
-    background: URL('../bilder/bg3.png');
-    background-size: cover;
+    background: URL('../bilder/bg.png');
     padding: 5px;
+    background-size: cover;
     height: max-content;
-    margin: 0px 100px 0px 380px; 
-    position: relative;
+    margin: 10px 325px 0px 290px; 
 }
 #login{
-
-    background: URL('../bilder/bg3.png');
+    position: relative;
+    background: URL('../bilder/bg.png');
     background-size: cover;
     padding: 5px;
-    margin: 0px 220px 0px 100px; 
-    position: relative;
+    margin: 10px 200px 100px 270px; 
 }
+body {
+    font-size: 12px;
+    font-family: Arial;
+    color: #000000;
+    margin: 10px;
+    background: url('../bilder/bakgrunn.png') fixed;
+}
+
+a:link, a:visited{
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+
+a:link:hover{
+    color: steelblue;
+}
+
+h1 {
+    font-family: "Helvetica CE";
+    font-size:  36px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+}
+
+h2 {
+    font-family: Arial;
+    font-size:  30px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+}
+p {
+    font-family: Arial;
+    font-size:  13px;
+    margin: 0px;
+    padding: 0px;
+    color: #000000;
+}
+
+.hode {
+    text-align: center;
+    color: black;
+    background: whitesmoke;
+}
+
+.likeRad{
+    height: 25px;
+    background: whitesmoke;
+}
+.likeRad:hover{
+    background: white;
+}
+.oddeRad{
+    height: 25px;
+    background: lightsteelblue;
+}
+.oddeRad:hover{
+    background: powderblue;
+}
+.fot{
+    background: whitesmoke;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rad1{ width: 30px; text-align: center}
+.rad2{ width: 200px; text-align: center}
+.rad3{ width: 150px; text-align: center}
+.rad4{ width: 200px; text-align: center}
+.rad5{ width: 500px; text-align: center}
+.rad6{ width: 100px; text-align: center}
+.rad7{ width: 100px; text-align: center}
+

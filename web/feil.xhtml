@@ -1,26 +1,16 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <title>#{tekster.Regtittel}</title>
+    
     <ui:composition template="logintemp.xhtml">
-        <ui:define name="top">
-            <div align="center">
-                <h1> #{tekster.Starttittel} </h1>
-            </div>
-        </ui:define>
-        <ui:define name="left">
+        <ui:define name="login">
             <div align="center">
                 <h:outputText value ="#{tekster.feil}"/>
                 <h:form>
                 <h:commandButton value="#{tekster.tilbake}" action="index.xhtml"></h:commandButton>
                 </h:form>
-            </div>
-        </ui:define>
-        <ui:define name="content">
-            <div align="center">
-            <h:outputText value="#{tekster.startmelding}"></h:outputText>
             </div>
         </ui:define>
     </ui:composition>

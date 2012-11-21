@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="../regtemp.xhtml">
+        <!--Ruten til venstre med registrering av ny okt-->
+        <ui:define name="reg">
+            <ui:include src="pageparts/register.xhtml"></ui:include>
+        </ui:define>
+
+        <!--Ruten i midten med oversikttabell over okter-->
+        <ui:define name="content">
+            <ui:include src="pageparts/filtrer.xhtml"></ui:include>
+            <ui:include src="pageparts/tabell.xhtml"></ui:include>
+        </ui:define>
+        
+        <ui:define name="menu">
+            <ui:include src="pageparts/menu.xhtml"></ui:include>
+            <ui:include src="pageparts/endrepass.xhtml"></ui:include>
+        </ui:define>
+    </ui:composition>
+</html>
+

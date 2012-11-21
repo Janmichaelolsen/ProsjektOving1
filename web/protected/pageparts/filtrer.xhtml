@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:form>
+                <table>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{tekster.sorter}:" rendered="#{behandler.dataFins}"></h:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{tekster.aar}: " rendered="#{behandler.dataFins}"></h:outputText>
+                            <h:selectOneMenu value="#{behandler.valgtaar}" rendered="#{behandler.dataFins}">
+                                <f:selectItem itemLabel="#{tekster.alle}" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{behandler.aar}" var="aar"
+                                               itemLabel="#{aar}" itemValue="#{aar}"></f:selectItems>
+                            </h:selectOneMenu>
+                            <h:outputText value="#{tekster.mnd}: " rendered="#{behandler.dataFins}"></h:outputText>
+                            <h:selectOneMenu value="#{behandler.valgtmnd}" rendered="#{behandler.dataFins}">
+                                <f:selectItem itemLabel="#{tekster.alle}" itemValue="0"></f:selectItem>
+                                <f:selectItems value="#{behandler.mnd}" var="mnd"
+                                               itemLabel="#{mnd}" itemValue="#{mnd}"></f:selectItems>
+                            </h:selectOneMenu>
+                            <h:commandButton value ="#{tekster.filtrer}" action="#{behandler.filtrer()}" 
+                                             rendered="#{behandler.dataFins}"/>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+</html>
+

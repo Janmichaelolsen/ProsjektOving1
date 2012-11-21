@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <h:form rendered="#{nypass.nyttpass}">
+        <table>
+            <tr>
+                <h:outputText value="Mist ett tall. Minst 6 bokstaver. Må inneholde et av: -_,."></h:outputText>
+            </tr>
+            <tr>
+                <td><h:outputText value="Gammelt passord: "></h:outputText></td>
+                <td><h:inputSecret value="#{nypass.gammelt}" size="10"></h:inputSecret></td>
+            </tr>
+            <tr>
+                <td><h:outputText value="Nytt passord: "></h:outputText></td>
+                <td><h:inputSecret value="#{nypass.passord1}" size="10"></h:inputSecret></td>
+            </tr>
+            <tr>
+                <td><h:outputText value="Gjenta passord"></h:outputText></td>
+                <td><h:inputSecret value="#{nypass.passord2}" size="10"></h:inputSecret></td>
+            </tr>
+            <tr>
+                <td><h:commandButton value="Endre" action="#{nypass.sjekkPassord}"></h:commandButton></td>
+                <td><h:outputText value="#{nypass.resultat}"></h:outputText></td>
+            </tr>
+            <tr>
+                <td><h:commandButton value="Ferdig" action="#{nypass.setNyttpassf}"></h:commandButton></td>
+            </tr>
+        </table>
+    </h:form>
+</html>
+

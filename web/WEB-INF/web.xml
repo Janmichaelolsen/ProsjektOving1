@@ -26,7 +26,7 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/protected/register.xhtml</welcome-file>
+        <welcome-file>faces/protected/mainpage.xhtml</welcome-file>
     </welcome-file-list>
     
     <security-constraint>

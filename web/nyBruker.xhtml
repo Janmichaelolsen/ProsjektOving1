@@ -4,24 +4,38 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="logintemp.xhtml">
-    <title>Lag en Ny bruker YOLOLOOLOLLO</title>
+        <title>Lag en Ny bruker YOLOLOOLOLLO</title>
 
-    <ui:define name="top">
+        <ui:define name="top">
             <div align="center">
                 <h1> Lag ny bruker </h1>
             </div>
         </ui:define>
-        <ui:define name="content">
+        <ui:define name="login">
             <div align="center">
-        <h:form>
-            #{regitest}
-            #{tekster.brukernavn}<h:inputText value="#{behandler.yolo.brukernavn}"/>
-            #{tekster.passord1}<h:inputText value="#{behandler.yolo.passord1}"></h:inputText>
-            #{tekster.passord2}<h:inputText value="#{behandler.yolo.passord2}"></h:inputText>
-            <h:commandButton value ="Registrer ny bruker" action="#{behandler.registrerBruker()}"/>
-        </h:form>
-                <h:form> <h:commandButton value="Registrer" action="index.xhtml"/> 
-                </h:form>
+                <table>
+                    <h:form>
+                        <tr>
+                            <td>#{tekster.brukernavn}</td>
+                            <td><h:inputText value="#{behandler.nybruker.brukernavn}"/></td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.passord}</td>
+                            <td><h:inputText value="#{behandler.nybruker.passord1}"/></td>
+                        </tr>
+                        <tr>
+                            <td>#{tekster.brukernavn}</td>
+                            <td><h:inputText value="#{behandler.nybruker.passord2}"/></td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton value ="Registrer ny bruker" action="#{behandler.registrerBruker()}"/></td>
+                            <td><h:commandButton value="Registrer" action="index.xhtml"/> </td>
+                        </tr>
+                        <tr>
+                            <td><h:outputText value="#{behandler.nybruker.resultat}"/></td>
+                        </tr>
+                    </h:form>
+                </table>
             </div>
         </ui:define>
     </ui:composition>

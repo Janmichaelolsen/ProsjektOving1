@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <div align="center">
+        <h:form>
+            <table>
+                <tr>
+                    <td>#{tekster.oktnummer}: </td>
+                    <td><h:outputText value="#{behandler.sisteOktnr}"></h:outputText></td>
+                </tr>
+                <tr>
+                    <td>#{tekster.dato}:</td>
+                    <td><h:inputText id="dato" value="#{behandler.tempOkt.dato}" label="Dato">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/>
+                        </h:inputText>
+                        <h:message style="color:black" for="dato" showSummary="true" showDetail="false"/>
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td>#{tekster.varighet}:</td>
+                    <td><h:inputText value="#{behandler.tempOkt.varighet}"></h:inputText></td>
+                </tr>
+                <tr>
+                    <td>#{tekster.kategori}:</td>
+                    <td>
+                        <h:selectOneMenu value="#{behandler.tempOkt.kategori}">
+                            <f:selectItem itemLabel="#{tekster.sykling}" itemValue="#{tekster.sykling}"></f:selectItem>
+                            <f:selectItem itemLabel="#{tekster.svomming}" itemValue="#{tekster.svomming}"></f:selectItem>
+                            <f:selectItem itemLabel="#{tekster.loping}" itemValue="#{tekster.loping}"></f:selectItem>
+                            <f:selectItem itemLabel="#{tekster.styrke}" itemValue="#{tekster.styrke}"></f:selectItem>
+                            <f:selectItem itemLabel="#{tekster.yoga}" itemValue="#{tekster.yoga}"></f:selectItem>
+                            <f:selectItems value="#{behandler.tillegsOkter}" var="tillegg" 
+                                           itemLabel="#{tillegg}" itemValue="#{tillegg}"></f:selectItems>
+                        </h:selectOneMenu>
+                        <h:commandButton value="#{tekster.leggtil}" action="#{behandler.setnykat()}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h:inputText value="#{behandler.tempKat}" size="6" rendered="#{behandler.nykat}"></h:inputText>
+                        <h:commandButton value="#{tekster.lagre}" action="#{behandler.leggTilKategori()}" rendered="#{behandler.nykat}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>#{tekster.tekst}:</td>
+                    <td><h:inputText value="#{behandler.tempOkt.tekst}"></h:inputText></td>
+                </tr>
+                <tr>
+                    <td><h:commandButton value="Send" action="#{behandler.regOkt()}"/></td>
+                </tr>
+            </table>
+        </h:form>
+    </div>
+</html>
+

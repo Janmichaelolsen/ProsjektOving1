@@ -36,7 +36,7 @@ public class Databehandler implements Serializable {
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
-    private InputFilter yolo = new InputFilter();
+    private InputFilter nybruker = new InputFilter();
     
     
 
@@ -455,16 +455,16 @@ public class Databehandler implements Serializable {
         alleslett = ny;
     }
     
-    public InputFilter getYolo() {
-        return yolo;
+    public InputFilter getNybruker() {
+        return nybruker;
     }
 
     public synchronized void registrerBruker() {
-        if (yolo.likePassord(yolo.getPassord1(), yolo.getPassord2()) &&  !yolo.getBrukernavn().isEmpty()) {
-            if (yolo.gyldigPassord(yolo.getPassord1())) {
-                db.registrerBruker(yolo);
-                db.registrerRolle(yolo.getBrukernavn());
-                yolo = new InputFilter();
+        if (nybruker.likePassord(nybruker.getPassord1(), nybruker.getPassord2()) &&  !nybruker.getBrukernavn().isEmpty()) {
+            if (nybruker.gyldigPassord(nybruker.getPassord1())) {
+                db.registrerBruker(nybruker);
+                db.registrerRolle(nybruker.getBrukernavn());
+                nybruker = new InputFilter();
             }
         }
     }

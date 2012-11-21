@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
     <title>#{tekster.Regtittel}</title>
     
     <ui:composition template="logintemp.xhtml">
@@ -11,7 +11,7 @@
                 <h1> #{tekster.Starttittel} </h1>
             </div>
         </ui:define>
-        <ui:define name="left">
+        <ui:define name="login">
             <div align="center">
                 <form method="POST" action="j_security_check">
                     <table>
@@ -26,11 +26,9 @@
                     </table>
                     <input type="submit" value="#{tekster.Login}"/>
                 </form>
-            </div>
-        </ui:define>
-        <ui:define name="content">
-            <div align="center">
-            <h:outputText value="#{tekster.startmelding}"></h:outputText>
+                <h:form>
+                    <h:commandButton value="Ny Bruker" action="nyBruker.xhtml"/>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>
