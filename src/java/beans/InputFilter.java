@@ -15,12 +15,16 @@ public class InputFilter implements Serializable{
   private String resultat = "";
   private DBOkter db = new DBOkter();
   private boolean nyttpass = false;
+  private String brukernavn;
+  private static char[] spesTegn = {'-', '_', '.', ','};
+  private static char[] tall = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
   public void sjekkPassord() {
       int antallspestegn = 0;
       int antallsiffer = 0;
       int antbokstaver = 0;
       int antalltegn = 0;
+      
     if (passord1.equals("")) {
         resultat = "Vennligst skriv inn et passord.";
         return;
@@ -64,6 +68,47 @@ public class InputFilter implements Serializable{
         resultat = "For kort eller ikke nok bokstaver, tall eller spesialtegn";
     }
   }
+  public boolean likePassord(String passA, String passB) {
+      for(int i = 0; i<passA.length(); i++) {
+            if(!passA.equalsIgnoreCase(passB)){
+                return false;
+            }
+            if(passA.charAt(i) != passB.charAt(i)) { 
+                return false;
+            }
+        }
+        return true;
+        
+    }
+  
+  public boolean gyldigPassord(String passA) {
+        if(tekstSiffer(passA) && tekstSpesial(passA)) {
+            return true;
+        }
+        return false;
+    }
+  
+  private boolean tekstSiffer(String passA) {
+        for(int i = 0; i<passA.length(); i++) {
+            for(int j = 0; j<tall.length; j++) {
+                if(passA.charAt(i) == tall[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean tekstSpesial(String passA) {
+        for(int i = 0; i<passA.length(); i++) {
+            for(int j = 0; j<spesTegn.length; j++) {
+                if(passA.charAt(i) == spesTegn[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public boolean isNyttpass() {
         return nyttpass;
@@ -79,6 +124,13 @@ public class InputFilter implements Serializable{
 
     public String getPassord2() {
         return passord2;
+    }
+    public String getBrukernavn(){
+        return brukernavn;
+    }
+    public void setBrukernavn(String brukernavn){
+        this.brukernavn = brukernavn;
+       
     }
 
     public void setPassord1(String passord1) {

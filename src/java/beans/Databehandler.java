@@ -36,6 +36,9 @@ public class Databehandler implements Serializable {
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
+    private InputFilter yolo = new InputFilter();
+    
+    
 
     public Databehandler() {
         tempOkt.setDato(date);
@@ -450,5 +453,19 @@ public class Databehandler implements Serializable {
 
     public void setAlleslett(boolean ny) {
         alleslett = ny;
+    }
+    
+    public InputFilter getYolo() {
+        return yolo;
+    }
+
+    public synchronized void registrerBruker() {
+        if (yolo.likePassord(yolo.getPassord1(), yolo.getPassord2()) &&  !yolo.getBrukernavn().isEmpty()) {
+            if (yolo.gyldigPassord(yolo.getPassord1())) {
+                db.registrerBruker(yolo);
+                db.registrerRolle(yolo.getBrukernavn());
+                yolo = new InputFilter();
+            }
+        }
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="logintemp.xhtml">
+    <title>Lag en Ny bruker YOLOLOOLOLLO</title>
+
+    <ui:define name="top">
+            <div align="center">
+                <h1> Lag ny bruker </h1>
+            </div>
+        </ui:define>
+        <ui:define name="content">
+            <div align="center">
+        <h:form>
+            #{regitest}
+            #{tekster.brukernavn}<h:inputText value="#{behandler.yolo.brukernavn}"/>
+            #{tekster.passord1}<h:inputText value="#{behandler.yolo.passord1}"></h:inputText>
+            #{tekster.passord2}<h:inputText value="#{behandler.yolo.passord2}"></h:inputText>
+            <h:commandButton value ="Registrer ny bruker" action="#{behandler.registrerBruker()}"/>
+        </h:form>
+                <h:form> <h:commandButton value="Registrer" action="index.xhtml"/> 
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
