@@ -36,7 +36,6 @@ public class Databehandler implements Serializable {
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
-    private InputFilter nybruker = new InputFilter();
     
     
 
@@ -87,7 +86,7 @@ public class Databehandler implements Serializable {
         }
     }
 
-    //Henter ut Ã¸ktnummeret som er det neste etter tabellens siste.
+    //Henter ut øktnummeret som er det neste etter tabellens siste.
     public int getSisteOktnr() {
         if (alleOkter.isEmpty()) {
             return 1;
@@ -453,19 +452,5 @@ public class Databehandler implements Serializable {
 
     public void setAlleslett(boolean ny) {
         alleslett = ny;
-    }
-    
-    public InputFilter getNybruker() {
-        return nybruker;
-    }
-
-    public synchronized void registrerBruker() {
-        if (nybruker.likePassord(nybruker.getPassord1(), nybruker.getPassord2()) &&  !nybruker.getBrukernavn().isEmpty()) {
-            if (nybruker.gyldigPassord(nybruker.getPassord1())) {
-                db.registrerBruker(nybruker);
-                db.registrerRolle(nybruker.getBrukernavn());
-                nybruker = new InputFilter();
-            }
-        }
     }
 }

@@ -1,38 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="logintemp.xhtml">
-        <title>Lag en Ny bruker YOLOLOOLOLLO</title>
+        <title>Lag ny bruker</title>
 
         <ui:define name="top">
             <div align="center">
-                <h1> Lag ny bruker </h1>
+                <h1>Lag ny bruker</h1>
             </div>
         </ui:define>
         <ui:define name="login">
-            <div align="center">
+            <div align="left">
                 <table>
                     <h:form>
                         <tr>
                             <td>#{tekster.brukernavn}</td>
-                            <td><h:inputText value="#{behandler.nybruker.brukernavn}"/></td>
+                            <td><h:inputText value="#{valider.brukernavn}"/></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.passord}</td>
-                            <td><h:inputText value="#{behandler.nybruker.passord1}"/></td>
+                            <td>#{tekster.nyttpass}</td>
+                            <td><h:inputText value="#{valider.passord1}"/></td>
                         </tr>
                         <tr>
-                            <td>#{tekster.brukernavn}</td>
-                            <td><h:inputText value="#{behandler.nybruker.passord2}"/></td>
+                            <td>#{tekster.gjenta}</td>
+                            <td><h:inputText value="#{valider.passord2}"/></td>
                         </tr>
                         <tr>
-                            <td><h:commandButton value ="Registrer ny bruker" action="#{behandler.registrerBruker()}"/></td>
-                            <td><h:commandButton value="Registrer" action="index.xhtml"/> </td>
+                            <td><h:commandButton value="#{tekster.tilbake}" action="index.xhtml"/> </td>
+                            <td><h:commandButton value ="#{tekster.registrer}" action="#{valider.lagBruker()}"/></td>
+                            <td><h:outputText value="#{tekster.passkrav}"></h:outputText></td>
                         </tr>
                         <tr>
-                            <td><h:outputText value="#{behandler.nybruker.resultat}"/></td>
+                            <td></td>
+                            <td><h:outputText value="#{valider.resultat}"/></td>
                         </tr>
                     </h:form>
                 </table>
