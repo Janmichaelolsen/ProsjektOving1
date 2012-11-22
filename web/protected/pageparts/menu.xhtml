@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td><h:outputText value="#{tekster.sikker}" rendered="#{behandler.sikker}"></h:outputText></td>
-            </tr>   
+            </tr>
             <tr>
                 <td><h:commandButton value="#{tekster.ja}" action="#{behandler.slettAlleOkter()}" rendered="#{behandler.sikker}"/>
                 <h:commandButton value="#{tekster.nei}" action="#{behandler.setSikkerF()}" rendered="#{behandler.sikker}"/></td>

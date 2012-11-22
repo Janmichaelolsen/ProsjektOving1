@@ -31,26 +31,21 @@ CREATE TABLE rolle(
    CONSTRAINT rolle_pk PRIMARY KEY(brukernavn, rolle));
   
 ALTER TABLE trening
-  ADD CONSTRAINT trening_fk1 FOREIGN KEY (kategorinavn)
-  REFERENCES kategori;
-  
-ALTER TABLE trening
-  ADD CONSTRAINT trening_fk2 FOREIGN KEY (brukernavn)
+  ADD CONSTRAINT trening_fk1 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
 
 ALTER TABLE tilleggskat
-  ADD CONSTRAINT trening_fk3 FOREIGN KEY (brukernavn)
+  ADD CONSTRAINT trening_fk2 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
 
 ALTER TABLE rolle
   ADD CONSTRAINT rolle_fk1 FOREIGN KEY (brukernavn)
   REFERENCES bruker;
 
-
 INSERT INTO kategori(kategorinavn) VALUES('Sykling');
 INSERT INTO kategori(kategorinavn) VALUES('Styrke');
-INSERT INTO kategori(kategorinavn) VALUES('SvÃ¸mming');
-INSERT INTO kategori(kategorinavn) VALUES('LÃ¸ping');
+INSERT INTO kategori(kategorinavn) VALUES('Svømming');
+INSERT INTO kategori(kategorinavn) VALUES('Løping');
 INSERT INTO kategori(kategorinavn) VALUES('Yoga');
 INSERT INTO kategori(kategorinavn) VALUES('Biking');
 INSERT INTO kategori(kategorinavn) VALUES('Strength');
