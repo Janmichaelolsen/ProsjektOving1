@@ -14,7 +14,9 @@ public class Validering implements Serializable {
     private String gammelt;
     private String passord1;
     private String passord2;
-    private String resultat = "";
+    //boolean tabell: gammelfeil, passordtomt, passikkelik, spestegn, lengde/ant, brukernavnfinnes, dbfeil.
+    private boolean[] feil = {false, false, false, false, false, false, false};
+    private boolean riktig = false;
     private DBOkter db = new DBOkter();
     private boolean nyttpass = false;
     private String brukernavn;
@@ -27,27 +29,38 @@ public class Validering implements Serializable {
 
         if (!nybruker) {
             if (db.hentPassord(brukernavn).equals(gammelt)) {
-                resultat = "Feil gammelt passord.";
+                feil[0] = true;
                 return false;
+            }
+            else{
+                feil[0] = false;
             }
         }
 
         if (passord1.equals("")) {
-            resultat = "Vennligst skriv inn et passord.";
+            feil[1] = true;
             return false;
         }
+        else{
+            feil[1] = false;
+        }
         if (!passord1.equals(passord2)) {
-            resultat = "Passordene må være like.";
+            feil[2] = true;
             return false;
+        }
+        else{
+            feil[2] = false;
         }
 
         for (int i = 0; i < passord1.length(); i++) {
             char tegn = passord1.charAt(i);
 
-            /* isLetterOrDigit() bruker tegnsettet som maskinen er satt opp med */
             if (!(Character.isLetterOrDigit(tegn)) && !(spesialtegn.indexOf(tegn) >= 0)) {
-                resultat = "Spesialtegn";
+                feil[3] = true;
                 return false;
+            }
+            else{
+                feil[3] = false;
             }
             if (Character.isLetter(tegn)) {
                 antbokstaver++;
@@ -61,9 +74,10 @@ public class Validering implements Serializable {
             antalltegn++;
         }
         if (antallspestegn > 0 && antallsiffer > 0 && antallspestegn > 0 && antalltegn >= 6) {
+            feil[4] = false;
             return true;
         } else {
-            resultat = "For kort eller ikke nok bokstaver, tall eller spesialtegn.";
+            feil[4] = true;
             return false;
         }
     }
@@ -80,16 +94,20 @@ public class Validering implements Serializable {
     
     public void lagBruker(){
         if(!db.sjekkDuplikat(brukernavn)){
-           resultat = "Brukernavnet finnes fra før.";
+           feil[5] = true;
            return;
+        }
+        else{
+            feil[5] = false;
         }
         if(sjekkPassord(true)){
             if(db.leggtilBruker(brukernavn, passord1)){
                 db.registrerRolle(brukernavn);
-                resultat = "Registrert!";
+                riktig = true;
+                feil[6] = false;
             }
             else{
-                resultat = "Noe gikk galt i databaseforbindelsen.";
+                feil[6] = true;
             }
         }
     }
@@ -107,7 +125,6 @@ public class Validering implements Serializable {
 
     public void setNyttpasst() {
         this.nyttpass = true;
-        resultat="";
     }
 
     public void setNyttpassf() {
@@ -128,7 +145,6 @@ public class Validering implements Serializable {
 
     public void setBrukernavn(String brukernavn) {
         this.brukernavn = brukernavn;
-
     }
 
     public void setPassord1(String passord1) {
@@ -139,14 +155,6 @@ public class Validering implements Serializable {
         this.passord2 = passord2;
     }
 
-    public void setResultat(String resultat) {
-        this.resultat = resultat;
-    }
-
-    public String getResultat() {
-        return resultat;
-    }
-
     public String getGammelt() {
         return gammelt;
     }
@@ -154,4 +162,37 @@ public class Validering implements Serializable {
     public void setGammelt(String gammelt) {
         this.gammelt = gammelt;
     } 
+    
+    public boolean getFeil0(){
+        return feil[0];
+    }
+    
+    public boolean getFeil1(){
+        return feil[1];
+    }
+    
+    public boolean getFeil2(){
+        return feil[2];
+    }
+    
+    public boolean getFeil3(){
+        return feil[3];
+    }
+    
+    public boolean getFeil4(){
+        return feil[4];
+    }
+    
+    public boolean getFeil5(){
+        return feil[5];
+    }
+    
+    public boolean getFeil6(){
+        return feil[6];
+    }
+    
+    public boolean getRiktig(){
+        return riktig;
+    }
+    
 }

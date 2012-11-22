@@ -21,7 +21,14 @@
             </tr>
             <tr>
                 <td><h:commandButton value="#{tekster.endre}" action="#{valider.endrePass()}"></h:commandButton></td>
-                <td><h:outputText value="#{valider.resultat}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.gammelfeil}" rendered="#{valider.feil0}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.passtomt}" rendered="#{valider.feil1}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.passikkelik}" rendered="#{valider.feil2}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.spestegn}" rendered="#{valider.feil3}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.lengdeant}" rendered="#{valider.feil4}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.brukerfinnes}" rendered="#{valider.feil5}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.dbfeil}" rendered="#{valider.feil6}"></h:outputText></td>
+                <td><h:outputText value="#{tekster.riktig}" rendered="#{valider.riktig}"></h:outputText></td>
             </tr>
             <tr>
                 <td><h:commandButton value="#{tekster.ferdig}" action="#{valider.setNyttpassf}"></h:commandButton></td>
