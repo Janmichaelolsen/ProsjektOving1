@@ -9,15 +9,15 @@
             </tr>
             <tr>
                 <td><h:outputText value="#{tekster.gammeltpass}: "></h:outputText></td>
-                <td><h:inputSecret value="#{valider.gammelt}" size="10"></h:inputSecret></td>
+                <td><h:inputSecret value="#{valider.gammelt}" size="10" maxlength="10"></h:inputSecret></td>
             </tr>
             <tr>
                 <td><h:outputText value="#{tekster.nyttpass}: "></h:outputText></td>
-                <td><h:inputSecret value="#{valider.passord1}" size="10"></h:inputSecret></td>
+                <td><h:inputSecret value="#{valider.passord1}" size="10" maxlength="10"></h:inputSecret></td>
             </tr>
             <tr>
                 <td><h:outputText value="#{tekster.gjenta}: "></h:outputText></td>
-                <td><h:inputSecret value="#{valider.passord2}" size="10"></h:inputSecret></td>
+                <td><h:inputSecret value="#{valider.passord2}" size="10" maxlength="10"></h:inputSecret></td>
             </tr>
             <tr>
                 <td><h:commandButton value="#{tekster.endre}" action="#{valider.endrePass()}"></h:commandButton></td>

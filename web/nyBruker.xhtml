@@ -17,15 +17,15 @@
                     <h:form>
                         <tr>
                             <td>#{tekster.brukernavn}</td>
-                            <td><h:inputText value="#{valider.brukernavn}"/></td>
+                            <td><h:inputText value="#{valider.brukernavn}" maxlength="10"/></td>
                         </tr>
                         <tr>
                             <td>#{tekster.nyttpass}</td>
-                            <td><h:inputSecret value="#{valider.passord1}"/></td>
+                            <td><h:inputSecret value="#{valider.passord1}" maxlength="10"/></td>
                         </tr>
                         <tr>
                             <td>#{tekster.gjenta}</td>
-                            <td><h:inputSecret value="#{valider.passord2}"/></td>
+                            <td><h:inputSecret value="#{valider.passord2}" maxlength="10"/></td>
                         </tr>
                         <tr>
                             <td><h:commandButton value="#{tekster.tilbake}" action="index.xhtml"/> </td>

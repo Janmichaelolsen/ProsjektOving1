@@ -13,12 +13,10 @@
                         </h:inputText>
                         <h:message style="color:black" for="dato" showSummary="true" showDetail="false"/>
                     </td>
-
-
                 </tr>
                 <tr>
                     <td>#{tekster.varighet}:</td>
-                    <td><h:inputText id="varighet" value="#{behandler.tempOkt.varighet}" label="Varighet"></h:inputText>
+                    <td><h:inputText id="varighet" value="#{behandler.tempOkt.varighet}" label="Varighet" maxlength="5"></h:inputText>
                     <h:message style="color:black" for="varighet" showSummary="true" showDetail="false"/></td>
                 </tr>
                 <tr>
@@ -39,13 +37,13 @@
                 <tr>
                     <td></td>
                     <td>
-                        <h:inputText value="#{behandler.tempKat}" size="6" rendered="#{behandler.nykat}"></h:inputText>
+                        <h:inputText value="#{behandler.tempKat}" size="6" rendered="#{behandler.nykat}" maxlength="15"></h:inputText>
                         <h:commandButton value="#{tekster.lagre}" action="#{behandler.leggTilKategori()}" rendered="#{behandler.nykat}"/>
                     </td>
                 </tr>
                 <tr>
                     <td>#{tekster.tekst}:</td>
-                    <td><h:inputText value="#{behandler.tempOkt.tekst}"></h:inputText></td>
+                    <td><h:inputText value="#{behandler.tempOkt.tekst}" maxlength="30"></h:inputText></td>
                 </tr>
                 <tr>
                     <td><h:commandButton value="Send" action="#{behandler.regOkt()}"/></td>
