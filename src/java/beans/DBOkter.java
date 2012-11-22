@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
-/**
- *
- * @author Sigve
- */
 import java.sql.*;
 import java.util.ArrayList;
 import javax.annotation.Resource;
@@ -38,21 +30,23 @@ public class DBOkter {
                 throw new SQLException("Ingen forbindelse");
             }
             forbindelse = ds.getConnection();
-            System.out.println("Forbindelse opprettet");
+
         } catch (SQLException e) {
             Opprydder.skrivMelding(e, "Konstruktøren");
         }
     }
 
     private void lukkForbindelse() {
+
         Opprydder.lukkForbindelse(forbindelse);
     }
 
     public ArrayList<TreningsOkt> lesInn() {
         ArrayList<TreningsOkt> dbliste = new ArrayList<TreningsOkt>();
         åpneForbindelse();
+        Statement setning = null;
         try {
-            Statement setning = forbindelse.createStatement();
+            setning = forbindelse.createStatement();
             String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
             ResultSet res = setning.executeQuery("select * from trening where brukernavn = '" + bruker + "'");
             while (res.next()) {
@@ -65,12 +59,14 @@ public class DBOkter {
                 dbliste.add(nyokt);
             }
             System.out.println("Henter");
-            res.close();
-            setning.close();
-            forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(setning);
         }
+        lukkForbindelse();
         return dbliste;
     }
 
@@ -79,18 +75,17 @@ public class DBOkter {
         åpneForbindelse();
         boolean returverdi = true;
         try {
-
             forbindelse.setAutoCommit(false);
-            regnyokt = forbindelse.prepareStatement("insert into trening(oktnr, dato, varighet, kategorinavn, tekst, brukernavn) values(?, ?, ?, ?, ?, ?)");
-            regnyokt.setInt(1, okt.getOktnummer());
-            regnyokt.setDate(2, new java.sql.Date(okt.getDato().getTime()));
-            regnyokt.setInt(3, okt.getVarighet());
-            regnyokt.setString(4, okt.getKategori());
-            regnyokt.setString(5, okt.getTekst());
-            regnyokt.setString(6, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+            regnyokt = forbindelse.prepareStatement("insert into trening(dato, varighet, kategorinavn, tekst, brukernavn) values(?, ?, ?, ?, ?)");
+            regnyokt.setDate(1, new java.sql.Date(okt.getDato().getTime()));
+            regnyokt.setInt(2, okt.getVarighet());
+            regnyokt.setString(3, okt.getKategori());
+            regnyokt.setString(4, okt.getTekst());
+            regnyokt.setString(5, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             regnyokt.executeUpdate();
 
             forbindelse.commit();
+            
         } catch (SQLException e) {
             returverdi = false;
             System.out.println(e);
@@ -107,7 +102,6 @@ public class DBOkter {
         PreparedStatement endre = null;
         åpneForbindelse();
         try {
-            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             endre = forbindelse.prepareStatement("update trening set dato=?, varighet=?, kategorinavn=?, tekst=? where oktnr=? and brukernavn=?");
             endre.setDate(1, new java.sql.Date(okt.getDato().getTime()));
@@ -130,11 +124,11 @@ public class DBOkter {
         lukkForbindelse();
     }
 
-    public void Slette(TreningsOkt okt) {
+    public boolean Slette(TreningsOkt okt) {
         PreparedStatement endre = null;
+        boolean returverdi = true;
         åpneForbindelse();
         try {
-            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             endre = forbindelse.prepareStatement("delete from trening where oktnr=? and brukernavn=?");
             endre.setInt(1, okt.getOktnummer());
@@ -150,6 +144,7 @@ public class DBOkter {
             Opprydder.lukkSetning(endre);
         }
         lukkForbindelse();
+        return returverdi;
     }
 
     public boolean EndrePassord(String nyttpassord) {
@@ -157,10 +152,9 @@ public class DBOkter {
         åpneForbindelse();
         boolean returverdi = true;
         try {
-            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             System.out.println("Passord" + nyttpassord);
-            endre = forbindelse.prepareStatement("update bruker set passord=? where brukernavn = ?");
+            endre = forbindelse.prepareStatement("update bruker set passord=? where brukernavn=?");
             endre.setString(1, nyttpassord);
             endre.setString(2, FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             endre.executeUpdate();
@@ -181,18 +175,21 @@ public class DBOkter {
     public String hentPassord(String brukernavn) {
         åpneForbindelse();
         String passordet = "";
+        Statement setning = null;
         try {
-            Statement setning = forbindelse.createStatement();
+            setning = forbindelse.createStatement();
             ResultSet res = setning.executeQuery("select passord from bruker where brukernavn ='" + brukernavn + "'");
             while (res.next()) {
                 passordet = res.getString("Passord");
             }
-            res.close();
-            setning.close();
-            forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(setning);
         }
+        lukkForbindelse();
         return passordet;
     }
 
@@ -200,8 +197,9 @@ public class DBOkter {
         åpneForbindelse();
         boolean returverdi = true;
         String brukeren;
+        Statement setning = null;
         try {
-            Statement setning = forbindelse.createStatement();
+            setning = forbindelse.createStatement();
             ResultSet res = setning.executeQuery("select brukernavn from bruker");
             while (res.next()) {
                 brukeren = res.getString("brukernavn");
@@ -209,33 +207,37 @@ public class DBOkter {
                     returverdi = false;
                 }
             }
-            res.close();
-            setning.close();
-            forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(setning);
         }
+        lukkForbindelse();
         return returverdi;
     }
 
     public ArrayList lesInnKat() {
         ArrayList katliste = new ArrayList();
         åpneForbindelse();
+        Statement setning = null;
         try {
-            Statement setning = forbindelse.createStatement();
+            setning = forbindelse.createStatement();
             String bruker = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
             ResultSet res = setning.executeQuery("select * from tilleggskat where brukernavn = '" + bruker + "'");
             while (res.next()) {
                 String kat = res.getString("tilleggkat");
                 katliste.add(kat);
             }
-            System.out.println("Henter");
-            res.close();
-            setning.close();
-            forbindelse.close();
         } catch (SQLException e) {
             System.out.println(e);
+            Opprydder.rullTilbake(forbindelse);
+        } finally {
+            Opprydder.settAutoCommit(forbindelse);
+            Opprydder.lukkSetning(setning);
         }
+        lukkForbindelse();
         return katliste;
     }
 
@@ -243,7 +245,6 @@ public class DBOkter {
         PreparedStatement regnykat = null;
         åpneForbindelse();
         try {
-            åpneForbindelse();
             forbindelse.setAutoCommit(false);
             regnykat = forbindelse.prepareStatement("insert into tilleggskat(tilleggkat, brukernavn) values(?, ?)");
             regnykat.setString(1, kat);
@@ -265,12 +266,11 @@ public class DBOkter {
         PreparedStatement setning = null;
         åpneForbindelse();
         try {
-            åpneForbindelse();
             setning = forbindelse.prepareStatement("insert into rolle(brukernavn, rolle) values(?, 'bruker')");
             setning.setString(1, brukernavn);
             setning.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e + "feil i registrerRolle");
+            System.out.println(e);
             Opprydder.rullTilbake(forbindelse);
         } finally {
             Opprydder.settAutoCommit(forbindelse);

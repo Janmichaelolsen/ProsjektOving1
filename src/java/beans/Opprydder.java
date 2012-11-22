@@ -2,7 +2,7 @@ package beans;
 /**
  *
  * Opprydder.java  - "Programmering i Java", 4.utgave
- * Metoder for Ã¥ rydde opp etter databasebruk
+ * Metoder for å rydde opp etter databasebruk
  */
 import java.sql.*;
 public class Opprydder {

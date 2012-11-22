@@ -12,9 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 @Named("behandler")
 @SessionScoped
@@ -31,24 +29,13 @@ public class Databehandler implements Serializable {
     private ArrayList mnd = new ArrayList();
     private boolean nykat = false;
     private boolean ascending = true;
-    private boolean alleslett = false;
-    private boolean alleendre = false;
+    private boolean sikker = false;
     private String tempKat;
     private int valgtaar;
     private int valgtmnd;
-    
-    
 
     public Databehandler() {
-        tempOkt.setDato(date);
-        filtrer();
-    }
-
-    public String logout() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession httpSession = (HttpSession) facesContext.getExternalContext().getSession(false);
-        httpSession.invalidate();
-        return "../index.xhtml?faces-redirect=true";
+        tempOkt.setDato(date); //Setter datoen ny økt registreringen til dagens dato.
     }
 
     //Returnerer true hvis data finnes i tabellen
@@ -60,8 +47,7 @@ public class Databehandler implements Serializable {
     public void regOkt() {
         TreningsOkt nyokt = new TreningsOkt(tempOkt.getDato(), tempOkt.getVarighet(),
                 tempOkt.getKategori(), tempOkt.getTekst());
-        nyokt.setOktnummer(getSisteOktnr());
-        if (skrivtilDB(nyokt)) {
+        if (db.SkrivTil(nyokt)) {
             okter.regNyOkt(nyokt);
             OktStatus nystat = new OktStatus(nyokt);
             synkListe.add(nystat);
@@ -85,41 +71,15 @@ public class Databehandler implements Serializable {
             indeks--;
         }
     }
-
-    //Henter ut øktnummeret som er det neste etter tabellens siste.
-    public int getSisteOktnr() {
-        if (alleOkter.isEmpty()) {
-            return 1;
+    
+    public void slettAlleOkter(){
+        for(int i=0; i<alleOkter.size(); i++){
+            db.Slette(alleOkter.get(i).getOkten());
         }
-        int storst = 0;
-        for (int i = 0; i < alleOkter.size(); i++) {
-            int denne = alleOkter.get(i).getOkten().getOktnummer();
-            if (denne > storst) {
-                storst = denne;
-            }
-        }
-        return storst + 1;
-    }
-
-    public void velgAlleSlett() {
-        for (int i = 0; i < synkListe.size(); i++) {
-            if (alleslett) {
-                synkListe.get(i).setSkalslettes(true);
-            } else {
-                synkListe.get(i).setSkalslettes(false);
-            }
-        }
-    }
-
-    public void velgAlleEndre() {
-        System.out.println("brukes");
-        for (int i = 0; i < synkListe.size(); i++) {
-            if (alleendre) {
-                synkListe.get(i).setEditable(true);
-            } else {
-                synkListe.get(i).setEditable(false);
-            }
-        }
+        okter.liste.clear();
+        alleOkter.clear();
+        synkListe.clear();
+        sikker = false;
     }
 
     public int getAntallokter() {
@@ -159,7 +119,7 @@ public class Databehandler implements Serializable {
         return kateg;
     }
 
-    //Legger til nye Ã¥r i listen til filtreringen.
+    //Legger til nye år i listen til filtreringen.
     public void leggtilFilt() {
         for (int i = 0; i < synkListe.size(); i++) {
             int oktaar = synkListe.get(i).getOkten().getDato().getYear() + 1900;
@@ -175,7 +135,7 @@ public class Databehandler implements Serializable {
         Collections.sort(mnd);
     }
 
-    //Metoden for Ã¥ filtrere og legge til aktuelle Ã¸kter i listen.
+    //Metoden for å filtrere og legge til aktuelle økter i listen.
     public void filtrer() {
         leggtilFilt();
         synkListe.clear();
@@ -208,27 +168,7 @@ public class Databehandler implements Serializable {
         return tz;
     }
 
-    public String sorterListeOktnr() {
-        if (ascending) {
-            Collections.sort(alleOkter, new Comparator<OktStatus>() {
-                @Override
-                public int compare(OktStatus o1, OktStatus o2) {
-                    return o1.getOkten().getOktnummer().compareTo(o2.getOkten().getOktnummer());
-                }
-            });
-            ascending = false;
-        } else {
-            Collections.sort(alleOkter, new Comparator<OktStatus>() {
-                @Override
-                public int compare(OktStatus o1, OktStatus o2) {
-                    return o2.getOkten().getOktnummer().compareTo(o1.getOkten().getOktnummer());
-                }
-            });
-            ascending = true;
-        }
-        filtrer();
-        return null;
-    }
+    //Sorteringsmetoder for å sortere tabellen etter kollonnen man klikker på.
 
     public String sorterListeDato() {
         if (ascending) {
@@ -326,16 +266,6 @@ public class Databehandler implements Serializable {
             dbokter.add(nyokt);
         }
         return dbokter;
-    }
-
-    public boolean skrivtilDB(TreningsOkt okt) {
-        try {
-            db.SkrivTil(okt);
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
     }
 
     public void endreDB(TreningsOkt okt) {
@@ -437,20 +367,14 @@ public class Databehandler implements Serializable {
     public List<OktStatus> getAlleOkter() {
         return alleOkter;
     }
-
-    public boolean getAlleendre() {
-        return alleendre;
+    
+    public boolean getSikker(){
+        return sikker;
     }
-
-    public void setAlleendre(boolean ny) {
-        alleendre = ny;
+    public void setSikkerT(){
+        sikker = true;
     }
-
-    public boolean getAlleslett() {
-        return alleslett;
-    }
-
-    public void setAlleslett(boolean ny) {
-        alleslett = ny;
+    public void setSikkerF(){
+        sikker = false;
     }
 }

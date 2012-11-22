@@ -6,13 +6,9 @@ public class Okter {
 
     ArrayList<TreningsOkt> liste = new ArrayList<TreningsOkt>();
     DBOkter db = new DBOkter();
-    
-    public Okter(){
-        try{
-            liste = db.lesInn();
-        } catch(Exception e){
-            System.out.println(e);
-        }
+
+    public Okter() {
+        liste = db.lesInn();
     }
 
     public void regNyOkt(TreningsOkt okt) {
@@ -20,7 +16,7 @@ public class Okter {
             liste.add(okt);
         }
     }
-    
+
     public void fjernOkt(TreningsOkt okt) {
         liste.remove(okt);
     }

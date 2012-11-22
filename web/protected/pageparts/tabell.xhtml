@@ -11,18 +11,8 @@
                         <h:dataTable value="#{behandler.synkListe}" var="okter" 
                                      rendered="#{behandler.dataFins}" border="1"
                                      rowClasses="oddeRad, likeRad" headerClass="hode" footerClass="fot"
-                                     columnClasses="rad1, rad2, rad3, rad4, rad5, rad6, rad7"
+                                     columnClasses="rad1, rad2, rad3, rad4, rad5, rad6"
                                      styleClass="standard" bgcolor="whitesmoke">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:commandLink action="#{behandler.sorterListeOktnr}">
-                                        #{tekster.oktnummer}
-                                    </h:commandLink>
-                                </f:facet>
-                                <h:outputText value ="#{okter.okten.oktnummer}"></h:outputText>
-                                <f:facet name="footer">#{tekster.antokt}#{behandler.antallokter}</f:facet>
-                            </h:column>
-
                             <h:column>
                                 <f:facet name="header">
                                     <h:commandLink action="#{behandler.sorterListeDato}">
@@ -33,6 +23,7 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/></h:outputText>
                                 <h:inputText value="#{okter.okten.dato}" rendered="#{okter.editable}" size="6">
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/></h:inputText>
+                                <f:facet name="footer">#{tekster.antokt}#{behandler.antallokter}</f:facet>
                             </h:column>
 
                             <h:column>

@@ -4,15 +4,26 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <table>
         <tr>
-            <td><p>Logget inn som: #{request.remoteUser}</p></td>
+            <td><h3>Logget inn som: #{request.remoteUser}</h3></td>
         </tr>
         <h:form>
             <tr>
-                <td><h:commandButton value="#{tekster.Logout}" action="#{behandler.logout()}"/></td>
+                <td><h:commandButton value="#{tekster.Logout}" action="#{valider.logout()}"/></td>
+            </tr>
+            <tr>
+                <td><h:commandButton value="#{tekster.slettalt}" action="#{behandler.setSikkerT()}" rendered="#{not behandler.sikker}"/></td>
+            </tr>
+            <tr>
+                <td><h:outputText value="#{tekster.sikker}" rendered="#{behandler.sikker}"></h:outputText></td>
+            </tr>   
+            <tr>
+                <td><h:commandButton value="#{tekster.ja}" action="#{behandler.slettAlleOkter()}" rendered="#{behandler.sikker}"/>
+                <h:commandButton value="#{tekster.nei}" action="#{behandler.setSikkerF()}" rendered="#{behandler.sikker}"/></td>
             </tr>
             <tr>
                 <td><h:commandButton value="#{tekster.skiftpass}" action="#{valider.setNyttpasst()}" rendered="#{not valider.nyttpass}"/></td>
             </tr>
+            
         </h:form>
     </table>
     

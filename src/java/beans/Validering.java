@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 @Named("valider")
 @SessionScoped
@@ -62,7 +63,7 @@ public class Validering implements Serializable {
         if (antallspestegn > 0 && antallsiffer > 0 && antallspestegn > 0 && antalltegn >= 6) {
             return true;
         } else {
-            resultat = "For kort eller ikke nok bokstaver, tall eller spesialtegn";
+            resultat = "For kort eller ikke nok bokstaver, tall eller spesialtegn.";
             return false;
         }
     }
@@ -79,7 +80,7 @@ public class Validering implements Serializable {
     
     public void lagBruker(){
         if(!db.sjekkDuplikat(brukernavn)){
-           resultat = "Brukernavnet finnes fra før";
+           resultat = "Brukernavnet finnes fra før.";
            return;
         }
         if(sjekkPassord(true)){
@@ -88,9 +89,16 @@ public class Validering implements Serializable {
                 resultat = "Registrert!";
             }
             else{
-                resultat = "Noe gikk galt i databaseforbindelsen";
+                resultat = "Noe gikk galt i databaseforbindelsen.";
             }
         }
+    }
+    
+    public String logout() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession httpSession = (HttpSession) facesContext.getExternalContext().getSession(false);
+        httpSession.invalidate();
+        return "../index.xhtml?faces-redirect=true";
     }
 
     public boolean isNyttpass() {

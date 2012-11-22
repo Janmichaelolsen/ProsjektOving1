@@ -88,6 +88,14 @@ h2 {
     padding: 0px;
     color: #FFFFFF;
 }
+h3{
+    font-family: Arial;
+    font-size:  15px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+}
 p {
     font-family: Arial;
     font-size:  13px;
@@ -122,11 +130,10 @@ p {
     font-weight: bold;
 }
 
-.rad1{ width: 30px; text-align: center}
-.rad2{ width: 200px; text-align: center}
-.rad3{ width: 150px; text-align: center}
-.rad4{ width: 200px; text-align: center}
-.rad5{ width: 500px; text-align: center}
+.rad1{ width: 200px; text-align: center}
+.rad2{ width: 150px; text-align: center}
+.rad3{ width: 200px; text-align: center}
+.rad4{ width: 500px; text-align: center}
+.rad5{ width: 100px; text-align: center}
 .rad6{ width: 100px; text-align: center}
-.rad7{ width: 100px; text-align: center}
 

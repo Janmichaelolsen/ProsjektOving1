@@ -7,10 +7,6 @@
         <h:form>
             <table>
                 <tr>
-                    <td>#{tekster.oktnummer}: </td>
-                    <td><h:outputText value="#{behandler.sisteOktnr}"></h:outputText></td>
-                </tr>
-                <tr>
                     <td>#{tekster.dato}:</td>
                     <td><h:inputText id="dato" value="#{behandler.tempOkt.dato}" label="Dato">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{behandler.timeZone}"/>
@@ -22,7 +18,8 @@
                 </tr>
                 <tr>
                     <td>#{tekster.varighet}:</td>
-                    <td><h:inputText value="#{behandler.tempOkt.varighet}"></h:inputText></td>
+                    <td><h:inputText id="varighet" value="#{behandler.tempOkt.varighet}" label="Varighet"></h:inputText>
+                    <h:message style="color:black" for="varighet" showSummary="true" showDetail="false"/></td>
                 </tr>
                 <tr>
                     <td>#{tekster.kategori}:</td>

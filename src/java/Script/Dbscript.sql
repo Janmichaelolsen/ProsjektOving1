@@ -5,7 +5,7 @@ DROP TABLE kategori;
 DROP TABLE bruker;
 
 CREATE TABLE trening(
-  oktnr        INTEGER NOT NULL,
+  oktnr        INTEGER GENERATED ALWAYS AS IDENTITY,
   dato         DATE NOT NULL,
   varighet     INTEGER,
   kategorinavn VARCHAR(15),
